@@ -311,991 +311,367 @@
   /* SPARKLINE */
   .sparkline-wrap {
     background: var(--surface2);
-    border-radius: 10px;
-    padding: 12px;
-  }
-
-  .sparkline-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-  }
-
-  .sparkline-label { font-size: 12px; color: var(--muted); }
-  .sparkline-delta { font-size: 12px; font-weight: 600; }
-  .delta-up { color: #10b981; }
-  .delta-down { color: #ef4444; }
-
-  canvas.sparkline {
-    width: 100% !important;
-    height: 48px;
-    display: block;
-  }
-
-  /* BOTS SECTION */
-  .bots-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 14px;
-    margin-bottom: 32px;
-  }
-
-  .bot-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    transition: border-color .2s;
-  }
-
-  .bot-card:hover { border-color: var(--border-hover, #7c3aed44); }
-
-  .bot-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    flex-shrink: 0;
-  }
-
-  .bot-info { flex: 1; min-width: 0; }
-
-  .bot-name {
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .bot-task {
-    font-size: 11px;
-    color: var(--muted);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .bot-status {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .bs-active { background: #10b981; box-shadow: 0 0 6px #10b981; animation: pulse 2s infinite; }
-  .bs-idle { background: #f59e0b; }
-  .bs-off { background: #374151; }
-
-  /* ACTIVITY LOG */
-  .log-section {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 22px;
-    margin-bottom: 28px;
-  }
-
-  .log-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-  }
-
-  .log-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-  }
-
-  .log-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    max-height: 220px;
-    overflow-y: auto;
-  }
-
-  .log-list::-webkit-scrollbar { width: 4px; }
-  .log-list::-webkit-scrollbar-track { background: transparent; }
-  .log-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-  .log-item {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-    font-size: 13px;
-    padding: 8px 10px;
-    border-radius: 8px;
-    background: var(--surface2);
-  }
-
-  .log-time { color: var(--muted); font-size: 11px; white-space: nowrap; min-width: 70px; }
-  .log-icon { font-size: 14px; }
-  .log-text { flex: 1; color: #94a3b8; }
-  .log-ch { font-weight: 600; color: var(--text); }
-
-  /* TASKS */
-  .tasks-section {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 22px;
-  }
-
-  .task-item {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 13px;
-  }
-
-  .task-item:last-child { border-bottom: none; }
-
-  .task-check {
-    width: 18px;
-    height: 18px;
-    border-radius: 5px;
-    border: 1.5px solid;
-    display: flex;
-    align-items: center;
-    justify-content: center;
- border-radius: 10px;
-    padding: 12px;
-  }
-
-  .sparkline-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 8px;
-  }
-
-  .sparkline-label { font-size: 12px; color: var(--muted); }
-  .sparkline-delta { font-size: 12px; font-weight: 600; }
-  .delta-up { color: #10b981; }
-  .delta-down { color: #ef4444; }
-
-  canvas.sparkline {
-    width: 100% !important;
-    height: 48px;
-    display: block;
-  }
-
-  /* BOTS SECTION */
-  .bots-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 14px;
-    margin-bottom: 32px;
-  }
-
-  .bot-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 12px;
-    padding: 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    transition: border-color .2s;
-  }
-
-  .bot-card:hover { border-color: var(--border-hover, #7c3aed44); }
-
-  .bot-icon {
-    width: 36px;
-    height: 36px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 16px;
-    flex-shrink: 0;
-  }
-
-  .bot-info { flex: 1; min-width: 0; }
-
-  .bot-name {
-    font-size: 13px;
-    font-weight: 600;
-    margin-bottom: 2px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .bot-task {
-    font-size: 11px;
-    color: var(--muted);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-
-  .bot-status {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    flex-shrink: 0;
-  }
-
-  .bs-active { background: #10b981; box-shadow: 0 0 6px #10b981; animation: pulse 2s infinite; }
-  .bs-idle { background: #f59e0b; }
-  .bs-off { background: #374151; }
-
-  /* ACTIVITY LOG */
-  .log-section {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 22px;
-    margin-bottom: 28px;
-  }
-
-  .log-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-  }
-
-  .log-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 15px;
-    font-weight: 700;
-  }
-
-  .log-list {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    max-height: 220px;
-    overflow-y: auto;
-  }
-
-  .log-list::-webkit-scrollbar { width: 4px; }
-  .log-list::-webkit-scrollbar-track { background: transparent; }
-  .log-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
-
-  .log-item {
-    display: flex;
-    gap: 12px;
-    align-items: flex-start;
-    font-size: 13px;
-    padding: 8px 10px;
-    border-radius: 8px;
-    background: var(--surface2);
-  }
-
-  .log-time { color: var(--muted); font-size: 11px; white-space: nowrap; min-width: 70px; }
-  .log-icon { font-size: 14px; }
-  .log-text { flex: 1; color: #94a3b8; }
-  .log-ch { font-weight: 600; color: var(--text); }
-
-  /* TASKS */
-  .tasks-section {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 22px;
-  }
-
-  .task-item {
-    display: flex;
-    gap: 12px;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid var(--border);
-    font-size: 13px;
-  }
-
-  .task-item:last-child { border-bottom: none; }
-
-  .task-check {
-    width: 18px;
-    height: 18px;
-    border-radius: 5px;
-    border: 1.5px solid;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 10px;
-    flex-shrink: 0;
-  }
-
-  .task-done { border-color: #10b981; background: #10b98120; color: #10b981; }
-  .task-todo { border-color: var(--border); color: transparent; }
-  .task-inprog { border-color: #f59e0b; background: #f59e0b15; color: #f59e0b; }
-
-  .task-label { flex: 1; }
-  .task-label.done-lbl { color: var(--muted); text-decoration: line-through; }
-  .task-tag { font-size: 11px; padding: 2px 8px; border-radius: 100px; font-weight: 500; }
-
-  /* ERROR */
-  #error-banner {
-    display: none;
-    background: #ef444415;
-    border: 1px solid #ef444433;
-    border-radius: 10px;
-    padding: 10px 14px;
-    font-size: 13px;
-    color: #ef4444;
-    margin-bottom: 20px;
-  }
-
-  /* LAST UPDATED */
-  #last-update {
-    text-align: center;
-    color: var(--muted);
-    font-size: 12px;
-    padding: 20px 0;
-  }
-
-  /* RESPONSIVE */
-  @media (max-width: 768px) {
-    main { padding: 16px; }
-    header { padding: 14px 16px; }
-    .hero { padding: 20px; }
-    .hero-stats { gap: 20px; }
-  }
-</style>
-</head>
-<body>
-
-<header>
-  <div class="logo">
-    <span class="logo-icon">🎵</span>
-    AI Music Empire
-  </div>
-  <div class="header-right">
-    <div class="status-pill">
-      <span class="dot"></span>
-      Live Dashboard
-    </div>
-    <button class="refresh-btn" onclick="loadAllStats()">⟳ Refresh</button>
-  </div>
-</header>
-
-<main>
-  <!-- HERO -->
-  <div class="hero">
-    <div class="hero-left">
-      <h1>🚀 Revenue Target: ฿50,000/mo</h1>
-      <p>4 YouTube channels · AI-generated music · Fully automated pipeline</p>
-    </div>
-    <div class="hero-stats">
-      <div class="hero-stat">
-        <span class="val" id="total-subs" style="color:#a78bfa">—</span>
-        <span class="lbl">Total Subscribers</span>
-      </div>
-      <div class="hero-stat">
-        <span class="val" id="total-views" style="color:#06b6d4">—</span>
-        <span class="lbl">Total Views</span>
-      </div>
-      <div class="hero-stat">
-        <span class="val" id="total-videos" style="color:#f59e0b">—</span>
-        <span class="lbl">Videos Live</span>
-      </div>
-      <div class="hero-stat">
-        <span class="val" style="color:#10b981">4</span>
-        <span class="lbl">Channels</span>
-      </div>
-    </div>
-    <div class="progress-section">
-      <div class="progress-label">
-        <span style="color:#a78bfa;font-weight:600">Monthly Progress</span>
-        <span id="progress-pct" style="color:#a78bfa;font-weight:600">0%</span>
-      </div>
-      <div class="progress-bar">
-        <div class="progress-fill" id="progress-fill" style="width:0%"></div>
-      </div>
-      <div style="font-size:11px;color:var(--muted);margin-top:6px">
-        Est. ฿<span id="est-revenue">0</span> / ฿50,000
-      </div>
-    </div>
-  </div>
-
-  <div id="error-banner"></div>
-
-  <!-- CHANNELS -->
-  <div class="section-title">📺 YouTube Channels</div>
-  <div class="channels-grid" id="channels-grid">
-
-    <!-- Channel 1: Lofi Barista -->
-    <div class="channel-card ch1" id="card-ch1">
-      <div class="card-top">
-        <div class="channel-info">
-          <div class="channel-avatar" style="background:#7c3aed20">☕</div>
-          <div>
-            <div class="channel-name">Lofi Barista</div>
-            <div class="channel-niche">Lofi Hip-Hop · Study · Chill</div>
-          </div>
-        </div>
-        <span class="badge badge-live">● Live</span>
-      </div>
-      <div class="stats-row">
-        <div class="stat-box">
-          <span class="stat-val" id="ch1-subs" style="color:#a78bfa">—</span>
-          <span class="stat-lbl">Subscribers</span>
-        </div>
-        <div class="stat-box">
-          <span class="stat-val" id="ch1-views" style="color:#a78bfa">—</span>
-          <span class="stat-lbl">Views</span>
-        </div>
-        <div class="stat-box">
-          <span class="stat-val" id="ch1-videos" style="color:#a78bfa">—</span>
-          <span class="stat-lbl">Videos</span>
-        </div>
-      </div>
-      <div class="sparkline-wrap">
-        <div class="sparkline-header">
-          <span class="sparkline-label">View trend (7d)</span>
-          <span class="sparkline-delta delta-up" id="ch1-delta">+0%</span>
-        </div>
-        <canvas class="sparkline" id="spark1"></canvas>
-      </div>
-    </div>
-
-    <!-- Channel 2: Rain Walker -->
-    <div class="channel-card ch2" id="card-ch2">
-      <div class="card-top">
-        <div class="channel-info">
-          <div class="channel-avatar" style="background:#06b6d420">🌧️</div>
-          <div>
-            <div class="channel-name">Rain Walker</div>
-            <div class="channel-niche">Rain Sounds · Ambient · Sleep</div>
-          </div>
-        </div>
-        <span class="badge badge-setup">◐ Setting Up</span>
-      </div>
-      <div class="stats-row">
-        <div class="stat-box">
-          <span class="stat-val" id="ch2-subs" style="color:#06b6d4">—</span>
-          <span class="stat-lbl">Subscribers</span>
-        </div>
-        <div class="stat-box">
-          <span class="stat-val" id="ch2-views" style="color:#06b6d4">—</span>
-          <span class="stat-lbl">Views</span>
-        </div>
-        <div class="stat-box">
-          <span class="stat-val" id="ch2-videos" style="color:#06b6d4">—</span>
-          <span class="stat-lbl">Videos</span>
-        </div>
-      </div>
-      <div class="sparkline-wrap">
-        <div class="sparkline-header">
-          <span class="sparkline-label">View trend (7d)</span>
-          <span class="sparkline-delta" id="ch2-delta" style="color:var(--muted)">Pending</span>
-        </div>
-        <canvas class="sparkline" id="spark2"></canvas>
-      </div>
-    </div>
-
-    <!-- Channel 3: Velvet Groove -->
-    <div class="channel-card ch3" id="card-ch3">
-      <div class="card-top">
-        <div class="channel-info">
-          <div class="channel-avatar" style="background:#f59e0b20">🎷</div>
-          <div>
-            <div class="channel-name">Velvet Groove</div>
-            <div class="channel-niche">Jazz · Neo Soul · Background</div>
-          </div>
-        </div>
-        <span class="badge badge-setup">◐ Setting Up</span>
-      </div>
-      <div class="stats-row">
-        <div class="stat-box">
-          <span class="stat-val" id="ch3-subs" style="color:#f59e0b">—</span>
-          <span class="stat-lbl">Subscribers</span>
-        </div>
-        <div class="stat-box">
-          <span class="stat-val" id="ch3-views" style="color:#f59e0b">—</span>
-          <span class="stat-lbl">Views</span>
-        </div>
-        <div class="stat-box">
-          <span class="stat-val" id="ch3-videos" style="color:#f59e0b">—</span>
-          <span class="stat-lbl">Videos</span>
-        </div>
-      </div>
-      <div class="sparkline-wrap">
-        <div class="sparkline-header">
-          <span class="sparkline-label">View trend (7d)</span>
-          <span class="sparkline-delta" id="ch3-delta" style="color:var(--muted)">Pending</span>
-        </div>
-        <canvas class="sparkline" id="spark3"></canvas>
-      </div>
-    </div>
-
-    <!-- Channel 4: Piano Ghost -->
-    <div class="channel-card ch4" id="card-ch4">
-      <div class="card-top">
-        <div class="channel-info">
-          <div class="channel-avatar" style="background:#10b98120">🎹</div>
-          <div>
-            <div class="channel-name">Piano Ghost</div>
-            <div class="channel-niche">Piano · Classical · Focus</div>
-          </div>
-        </div>
-        <span class="badge badge-setup">◐ Setting Up</span>
-      </div>
-      <div class="stats-row">
-        <div class="stat-box">
-          <span class="stat-val" id="ch4-subs" style="color:#10b981">—</span>
-          <span class="stat-lbl">Subscribers</span>
-        </div>
-        <div class="stat-box">
-          <span class="stat-val" id="ch4-views" style="color:#10b981">—</span>
-          <span class="stat-lbl">Views</span>
-        </div>
-        <div class="stat-box">
-          <span class="stat-val" id="ch4-videos" style="color:#10b981">—</span>
-          <span class="stat-lbl">Videos</span>
-        </div>
-      </div>
-      <div class="sparkline-wrap">
-        <div class="sparkline-header">
-          <span class="sparkline-label">View trend (7d)</span>
-          <span class="sparkline-delta" id="ch4-delta" style="color:var(--muted)">Pending</span>
-        </div>
-        <canvas class="sparkline" id="spark4"></canvas>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- BOT CREW -->
-  <div class="section-title">🤖 Automation Bots</div>
-  <div class="bots-grid">
-    <div class="bot-card">
-      <div class="bot-icon" style="background:#7c3aed20">🎵</div>
-      <div class="bot-info">
-        <div class="bot-name">Suno Generator</div>
-        <div class="bot-task">Generates daily music</div>
-      </div>
-      <div class="bot-status bs-active"></div>
-    </div>
-    <div class="bot-card">
-      <div class="bot-icon" style="background:#06b6d420">🎬</div>
-      <div class="bot-info">
-        <div class="bot-name">Video Concat</div>
-        <div class="bot-task">ffmpeg 1-hour videos</div>
-      </div>
-      <div class="bot-status bs-idle"></div>
-    </div>
-    <div class="bot-card">
-      <div class="bot-icon" style="background:#f59e0b20">🖼️</div>
-      <div class="bot-info">
-        <div class="bot-name">Canva Thumbnailer</div>
-        <div class="bot-task">Auto-generate thumbnails</div>
-      </div>
-      <div class="bot-status bs-active"></div>
-    </div>
-    <div class="bot-card">
-      <div class="bot-icon" style="background:#10b98120">📤</div>
-      <div class="bot-info">
-        <div class="bot-name">YT Uploader</div>
-        <div class="bot-task">Schedules video posts</div>
-      </div>
-      <div class="bot-status bs-idle"></div>
-    </div>
-    <div class="bot-card">
-      <div class="bot-icon" style="background:#ec489920">📊</div>
-      <div class="bot-info">
-        <div class="bot-name">Stats Tracker</div>
-        <div class="bot-task">YouTube API monitor</div>
-      </div>
-      <div class="bot-status bs-active"></div>
-    </div>
-    <div class="bot-card">
-      <div class="bot-icon" style="background:#8b5cf620">🔄</div>
-      <div class="bot-info">
-        <div class="bot-name">Loop Scheduler</div>
-        <div class="bot-task">Nightly at 22:00</div>
-      </div>
-      <div class="bot-status bs-idle"></div>
-    </div>
-    <div class="bot-card">
-      <div class="bot-icon" style="background:#0ea5e920">💬</div>
-      <div class="bot-info">
-        <div class="bot-name">Title Optimizer</div>
-        <div class="bot-task">SEO + tags writer</div>
-      </div>
-      <div class="bot-status bs-idle"></div>
-    </div>
-    <div class="bot-card">
-      <div class="bot-icon" style="background:#14b8a620">💰</div>
-      <div class="bot-info">
-        <div class="bot-name">Revenue Tracker</div>
-        <div class="bot-task">AdSense + Analytics</div>
-      </div>
-      <div class="bot-status bs-off"></div>
-    </div>
-  </div>
-
-  <!-- ACTIVITY LOG -->
-  <div class="log-section">
-    <div class="log-header">
-      <span class="log-title">⚡ Activity Log</span>
-      <span style="font-size:12px;color:var(--muted)" id="log-time">—</span>
-    </div>
-    <div class="log-list" id="log-list">
-      <div class="log-item">
-        <span class="log-time">Just now</span>
-        <span class="log-icon">🚀</span>
-        <span class="log-text">Dashboard loaded · Fetching YouTube stats...</span>
-      </div>
-    </div>
-  </div>
-
-  <!-- CHECKLIST -->
-  <div class="tasks-section">
-    <div class="log-header" style="margin-bottom:8px">
-      <span class="log-title">✅ Launch Checklist</span>
-    </div>
-    <div class="task-item">
-      <div class="task-check task-done">✓</div>
-      <div class="task-label done-lbl">Create Lofi Barista YouTube channel</div>
-      <span class="task-tag" style="background:#10b98115;color:#10b981">Done</span>
-    </div>
-    <div class="task-item">
-      <div class="task-check task-done">✓</div>
-      <div class="task-label done-lbl">Generate thumbnails in Canva (4 channels)</div>
-      <span class="task-tag" style="background:#10b98115;color:#10b981">Done</span>
-    </div>
-    <div class="task-item">
-      <div class="task-check task-done">✓</div>
-      <div class="task-label done-lbl">Build ffmpeg concat script (concat_songs.bat)</div>
-      <span class="task-tag" style="background:#10b98115;color:#10b981">Done</span>
-    </div>
-    <div class="task-item">
-      <div class="task-check task-done">✓</div>
-      <div class="task-label done-lbl">Get YouTube Data API v3 key</div>
-      <span class="task-tag" style="background:#10b98115;color:#10b981">Done</span>
-    </div>
-    <div class="task-item">
-      <div class="task-check task-inprog">●</div>
-      <div class="task-label">Create Rain Walker, Velvet Groove, Piano Ghost channels</div>
-      <span class="task-tag" style="background:#f59e0b15;color:#f59e0b">24h Review</span>
-    </div>
-    <div class="task-item">
-      <div class="task-check task-inprog">●</div>
-      <div class="task-label">Generate + download Suno songs (all 4 channels)</div>
-      <span class="task-tag" style="background:#f59e0b15;color:#f59e0b">In Progress</span>
-    </div>
-    <div class="task-item">
-      <div class="task-check task-todo"></div>
-      <div class="task-label">Set up nightly automation (22:00 daily)</div>
-      <span class="task-tag" style="background:#64748b15;color:#64748b">Todo</span>
-    </div>
-    <div class="task-item">
-      <div class="task-check task-todo"></div>
-      <div class="task-label">Upload first 1-hour videos to all channels</div>
-      <span class="task-tag" style="background:#64748b15;color:#64748b">Todo</span>
-    </div>
-    <div class="task-item">
-      <div class="task-check task-todo"></div>
-      <div class="task-label">Apply for YouTube Partner Program (1000 subs / 4000 hours)</div>
-      <span class="task-tag" style="background:#64748b15;color:#64748b">Todo</span>
-    </div>
-  </div>
-
-  <div id="last-update">Last updated: <span id="update-time">Loading...</span></div>
-</main>
-
-<script>
-// ============================================================
-//  CONFIG — PRE-CONFIGURED (no need to enter API key manually)
-// ============================================================
-const API_KEY = 'AIzaSyCMMRD0xBkQ4IEGvS5GXED0E8DhtWWpSOc';
-
-const CHANNELS = [
-  {
-    id: 'UCC76tzAG4JH8YYtehJAhwCg',
-    name: 'Lofi Barista',
-    shortId: 'ch1',
-    color: '#a78bfa',
-    sparkId: 'spark1',
-    deltaId: 'ch1-delta'
-  },
-  {
-    id: '', // TODO: Add Rain Walker channel ID
-    name: 'Rain Walker',
-    shortId: 'ch2',
-    color: '#06b6d4',
-    sparkId: 'spark2',
-    deltaId: 'ch2-delta'
-  },
-  {
-    id: '', // TODO: Add Velvet Groove channel ID
-    name: 'Velvet Groove',
-    shortId: 'ch3',
-    color: '#f59e0b',
-    sparkId: 'spark3',
-    deltaId: 'ch3-delta'
-  },
-  {
-    id: '', // TODO: Add Piano Ghost channel ID
-    name: 'Piano Ghost',
-    shortId: 'ch4',
-    color: '#10b981',
-    sparkId: 'spark4',
-    deltaId: 'ch4-delta'
-  }
-];
-
-// ============================================================
-//  SPARKLINE RENDERER
-// ============================================================
-function drawSparkline(canvasId, data, color) {
-  const canvas = document.getElementById(canvasId);
-  if (!canvas) return;
-  const ctx = canvas.getContext('2d');
-  const W = canvas.offsetWidth || 260;
-  const H = 48;
-  canvas.width = W;
-  canvas.height = H;
-
-  if (!data || data.length < 2) {
-    // Draw flat dotted line
-    ctx.setLineDash([3, 4]);
-    ctx.strokeStyle = '#2a2d3a';
-    ctx.lineWidth = 1.5;
-    ctx.beginPath();
-    ctx.moveTo(0, H/2);
-    ctx.lineTo(W, H/2);
-    ctx.stroke();
-    return;
-  }
-
-  const min = Math.min(...data);
-  const max = Math.max(...data);
-  const range = max - min || 1;
-  const pts = data.map((v, i) => ({
-    x: (i / (data.length - 1)) * W,
-    y: H - ((v - min) / range) * (H - 8) - 4
-  }));
-
-  // Gradient fill
-  const grad = ctx.createLinearGradient(0, 0, 0, H);
-  grad.addColorStop(0, color + '44');
-  grad.addColorStop(1, color + '00');
-
-  ctx.beginPath();
-  ctx.moveTo(pts[0].x, H);
-  pts.forEach(p => ctx.lineTo(p.x, p.y));
-  ctx.lineTo(pts[pts.length-1].x, H);
-  ctx.closePath();
-  ctx.fillStyle = grad;
-  ctx.fill();
-
-  // Line
-  ctx.beginPath();
-  pts.forEach((p, i) => i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y));
-  ctx.strokeStyle = color;
-  ctx.lineWidth = 2;
-  ctx.lineJoin = 'round';
-  ctx.setLineDash([]);
-  ctx.stroke();
-
-  // Dot at end
-  const last = pts[pts.length - 1];
-  ctx.beginPath();
-  ctx.arc(last.x, last.y, 3.5, 0, Math.PI * 2);
-  ctx.fillStyle = color;
-  ctx.fill();
-}
-
-// ============================================================
-//  FORMAT NUMBERS
-// ============================================================
-function fmt(n) {
-  if (n === null || n === undefined || isNaN(n)) return '—';
-  n = parseInt(n);
-  if (n >= 1e6) return (n/1e6).toFixed(1) + 'M';
-  if (n >= 1e3) return (n/1e3).toFixed(1) + 'K';
-  return n.toString();
-}
-
-// ============================================================
-//  ADD LOG ENTRY
-// ============================================================
-function addLog(icon, text) {
-  const list = document.getElementById('log-list');
-  const now = new Date();
-  const time = now.toLocaleTimeString('th-TH', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
-  const item = document.createElement('div');
-  item.className = 'log-item';
-  item.innerHTML = `
-    <span class="log-time">${time}</span>
-    <span class="log-icon">${icon}</span>
-    <span class="log-text">${text}</span>
-  `;
-  list.insertBefore(item, list.firstChild);
-  // Keep max 30 entries
-  while (list.children.length > 30) list.removeChild(list.lastChild);
-  document.getElementById('log-time').textContent = 'Updated ' + time;
-}
-
-// ============================================================
-//  FETCH CHANNEL STATS FROM YOUTUBE API
-// ============================================================
-async function fetchChannelStats(channelId) {
-  if (!channelId) return null;
-  const url = `https://www.googleapis.com/youtube/v3/channels?part=statistics,snippet&id=${channelId}&key=${API_KEY}`;
-  try {
-    const res = await fetch(url);
-    const data = await res.json();
-    if (data.error) {
-      console.error('YT API error:', data.error);
-      return { error: data.error.message };
-    }
-    if (!data.items || data.items.length === 0) return null;
-    const ch = data.items[0];
-    return {
-      name: ch.snippet.title,
-      subs: ch.statistics.subscriberCount,
-      views: ch.statistics.viewCount,
-      videos: ch.statistics.videoCount
-    };
-  } catch(e) {
-    return { error: e.message };
-  }
-}
-
-// ============================================================
-//  GENERATE MOCK SPARKLINE DATA (until we have real history)
-// ============================================================
-function mockSparkData(seed, length = 14) {
-  const data = [];
-  let v = 100 + (seed * 37 % 200);
-  for (let i = 0; i < length; i++) {
-    v += (Math.random() - 0.4) * 20 + 2;
-    v = Math.max(50, v);
-    data.push(Math.round(v));
-  }
-  return data;
-}
-
-// ============================================================
-//  LOAD ALL STATS
-// ============================================================
-async function loadAllStats() {
-  addLog('⟳', 'Fetching YouTube stats...');
-  const errBanner = document.getElementById('error-banner');
-  errBanner.style.display = 'none';
-
-  let totalSubs = 0, totalViews = 0, totalVideos = 0;
-  let anyError = false;
-
-  for (let i = 0; i < CHANNELS.length; i++) {
-    const ch = CHANNELS[i];
-    const shortId = ch.shortId;
-
-    if (!ch.id) {
-      // Channel not yet created
-      document.getElementById(shortId + '-subs').textContent = '—';
-      document.getElementById(shortId + '-views').textContent = '—';
-      document.getElementById(shortId + '-videos').textContent = '—';
-      drawSparkline(ch.sparkId, null, ch.color);
-      continue;
-    }
-
-    const stats = await fetchChannelStats(ch.id);
-
-    if (!stats) {
-      document.getElementById(shortId + '-subs').textContent = 'N/A';
-      continue;
-    }
-
-    if (stats.error) {
-      anyError = true;
-      document.getElementById(shortId + '-subs').textContent = 'ERR';
-      addLog('❌', `${ch.name}: ${stats.error}`);
-      continue;
-    }
-
-    const subs = parseInt(stats.subs || 0);
-    const views = parseInt(stats.views || 0);
-    const videos = parseInt(stats.videos || 0);
-
-    document.getElementById(shortId + '-subs').textContent = fmt(subs);
-    document.getElementById(shortId + '-views').textContent = fmt(views);
-    document.getElementById(shortId + '-videos').textContent = videos;
-
-    totalSubs += subs;
-    totalViews += views;
-    totalVideos += videos;
-
-    // Sparkline
-    const sparkData = mockSparkData(i + 1);
-    drawSparkline(ch.sparkId, sparkData, ch.color);
-    const delta = ((sparkData[sparkData.length-1] - sparkData[0]) / sparkData[0] * 100).toFixed(1);
-    const deltaEl = document.getElementById(ch.deltaId);
-    if (delta > 0) {
-      deltaEl.textContent = '+' + delta + '%';
-      deltaEl.className = 'sparkline-delta delta-up';
-    } else {
-      deltaEl.textContent = delta + '%';
-      deltaEl.className = 'sparkline-delta delta-down';
-    }
-
-    addLog('✅', `${ch.name} · ${fmt(subs)} subs · ${fmt(views)} views`);
-  }
-
-  // Update totals
-  document.getElementById('total-subs').textContent = fmt(totalSubs) !== '0' ? fmt(totalSubs) : '—';
-  document.getElementById('total-views').textContent = fmt(totalViews) !== '0' ? fmt(totalViews) : '—';
-  document.getElementById('total-videos').textContent = totalVideos || '—';
-
-  // Estimate revenue: ~$1 RPM, 30 days
-  const estMonthlyViews = totalViews * 0.1; // rough monthly
-  const estRevenue = Math.round(estMonthlyViews * 0.001 * 35); // $1 RPM, ×35 THB
-  document.getElementById('est-revenue').textContent = estRevenue.toLocaleString();
-  const pct = Math.min(100, Math.round((estRevenue / 50000) * 100));
-  document.getElementById('progress-pct').textContent = pct + '%';
-  document.getElementById('progress-fill').style.width = pct + '%';
-
-  if (anyError) {
-    errBanner.style.display = 'block';
-    errBanner.textContent = '⚠️ Some channels returned API errors. Check the log for details.';
-  }
-
-  document.getElementById('update-time').textContent = new Date().toLocaleString('th-TH');
-}
-
-// ============================================================
-//  INIT
-// ============================================================
-window.addEventListener('load', () => {
-  // Draw empty sparklines immediately
-  CHANNELS.forEach((ch, i) => drawSparkline(ch.sparkId, null, ch.color));
-
-  // Load stats
-  loadAllStats();
-
-  // Auto-refresh every 5 minutes
-  setInterval(loadAllStats, 5 * 60 * 1000);
-});
-
-// Redraw sparklines on resize
-window.addEventListener('resize', () => {
-  CHANNELS.forEach((ch, i) => {
-    // Re-draw with whatever data was last used
-    drawSparkline(ch.sparkId, null, ch.color);
-  });
-});
-</script>
-</body>
-</html>
+   �ܙ\�\�Y]\ΈLY[�ΈL�B����\��[�KZXY\�\�^N��^�\�Y�KX�۝[���X�KX�]�Y[�[YۋZ][\Έ�[�\�X\��[�X���N�B����\��[�K[X�[��۝\�^�N�L����܎��\�K[]]Y
+N�B���\��[�KY[H��۝\�^�N�L���۝]�ZY��
+��B��[K]\���܎��L�NN�B��[KY�ۈ���܎��Y�
+
+
+�B���[��\˜�\��[�H�Y�L	HZ[\ܝ[�ZY��
+\�^N�����B��ʈ����P�Sӈ
+�����YܚY\�^N�ܚYܚY][\]KX��[[�Έ�\X]
+]]�Y�[Z[�X^
+�Y��JN�\�MX\��[�X���N�̜B�����X�\��X��ܛ�[���\�K\�\��X�JN�ܙ\��\��Y�\�KX�ܙ\�N�ܙ\�\�Y]\ΈL�Y[�ΈM�\�^N��^[YۋZ][\Έ�[�\��\�L��[��][ێ��ܙ\�X��܈���B�����X�\��ݙ\���ܙ\�X��܎��\�KX�ܙ\�Zݙ\�����YY
+
+
+N�B�����ZX�ۈ�Y�͜ZY��͜�ܙ\�\�Y]\ΈL\�^N��^[YۋZ][\Έ�[�\��\�Y�KX�۝[���[�\��۝\�^�N�M��^\��[�ΈB�����Z[�����^�N�Z[�]�Y��B�����[�[YH�۝\�^�N�L��۝]�ZY��
+�X\��[�X���N���]K\�X�N���ܘ\ݙ\���ΈY[�^[ݙ\���Έ[\�\�B�����]\���۝\�^�N�L\��܎��\�K[]]Y
+N�]K\�X�N���ܘ\ݙ\���ΈY[�^[ݙ\���Έ[\�\�B�����\�]\��Y�ZY���ܙ\�\�Y]\Έ
+L	N�^\��[�ΈB�����XX�]�H��X��ܛ�[���L�NN���\�Y�Έ
+��L�NN�[�[X][ێ�[�H��[��[�]N�B����ZYH��X��ܛ�[��ٍNYL��B����[ٙ���X��ܛ�[�����MLN�B��ʈP�U�UH��
+����\�X�[ۈ�X��ܛ�[���\�K\�\��X�JN�ܙ\��\��Y�\�KX�ܙ\�N�ܙ\�\�Y]\ΈM�Y[�Έ��X\��[�X���N��B�����ZXY\�\�^N��^�\�Y�KX�۝[���X�KX�]�Y[�[YۋZ][\Έ�[�\�X\��[�X���N�M�B�����]]H�۝Y�[Z[N�	��X�Hܛ�\����[��\�\�Y��۝\�^�N�M\�۝]�ZY��
+�B�����[\�\�^N��^�^Y\�X�[ێ���[[��\�X^ZZY����ݙ\����^N�]]�B�����[\���]�X��]\�ܛ��\���Y�
+�B����[\���]�X��]\�ܛ��\�]�X����X��ܛ�[���[��\�[��B����[\���]�X��]\�ܛ��\�][X���X��ܛ�[���\�KX�ܙ\�N��ܙ\�\�Y]\Έ��B�����Z][H\�^N��^�\�L�[YۋZ][\Έ�^\�\��۝\�^�N�L�Y[�ΈL�ܙ\�\�Y]\Έ�X��ܛ�[���\�K\�\��X�L�NB�����][YH���܎��\�K[]]Y
+N��۝\�^�N�L\��]K\�X�N���ܘ\�Z[�]�Y�
+��B����ZX�ۈ��۝\�^�N�M�B����]^��^�N���܎��ML؎�B����X���۝]�ZY��
+����܎��\�K]^
+N�B��ʈT���
+��\���\�X�[ۈ�X��ܛ�[���\�K\�\��X�JN�ܙ\��\��Y�\�KX�ܙ\�N�ܙ\�\�Y]\ΈM�Y[�Έ��B���\��Z][H\�^N��^�\�L�[YۋZ][\Έ�[�\�Y[�ΈL�ܙ\�X���N�\��Y�\�KX�ܙ\�N�۝\�^�N�L�B���\��Z][N�\�X�[��ܙ\�X���N��ۙN�B���\��X�X���Y�NZY��N�ܙ\�\�Y]\Έ
+\�ܙ\��K�\��Y\�^N��^[YۋZ][\Έ�[�\��\�Y�KX�۝[���[�\��۝\�^�N�L�^\��[�ΈB���\��YۙH��ܙ\�X��܎��L�NN��X��ܛ�[���L�NL����܎��L�NN�B��\��]����ܙ\�X��܎��\�KX�ܙ\�N���܎��[��\�[��B��\��Z[������ܙ\�X��܎�ٍNYL���X��ܛ�[��ٍNYL�MN���܎�ٍNYL��B���\��[X�[��^�N�B��\��[X�[�ۙK[����܎��\�K[]]Y
+N�^YX�ܘ][ێ�[�K]��Y��B��\��]Y���۝\�^�N�L\�Y[�Έ���ܙ\�\�Y]\ΈL��۝]�ZY��
+L�B��ʈT��Ԉ
+��\��܋X�[��\�\�^N��ۙN�X��ܛ�[���Y�
+
+
+MN�ܙ\��\��Y�Y�
+
+
+���ܙ\�\�Y]\ΈLY[�ΈLM�۝\�^�N�L���܎��Y�
+
+
+X\��[�X���N��B��ʈUT�P�S�
+��]\�X�\[�YܚY\�^N�ܚYܚY][\]KX��[[�Έ�\X]
+]]�Y�[Z[�X^
+̌Y��JN�\�M�X\��[�X���N��B��]\�X�X�\��X��ܛ�[���\�K\�\��X�JN�ܙ\��\��Y�\�KX�ܙ\�N�ܙ\�\�Y]\ΈM�ݙ\���ΈY[��[��][ێ��[�ٛܛH�M\�B��]\�X�X�\��ݙ\���[�ٛܛN��[��]VJL�
+N�B��X�ZXY\�\�^N��^[YۋZ][\Έ�[�\��\�L�Y[�ΈMN�ܙ\�X���N�\��Y�\�KX�ܙ\�NB��X�ZX�ۈ��۝\�^�N���B��X�[�[YH��۝\�^�N�M\��۝]�ZY��
+���۝Y�[Z[N�	��X�Hܛ�\����[��\�\�Y��B��X�Y�[��H��۝\�^�N�L\���܎��\�K[]]Y
+N�X\��[�]����B��X�\�]\��X\��[�[Y��]]���۝\�^�N�L\��۝]�ZY��
+��Y[�Έ�L��ܙ\�\�Y]\Έ���]K\�X�N���ܘ\�B��X�X��H�Y[�ΈMN�\�^N��^��^Y\�X�[ێ���[[���\��B��X�\����\�^N��^��\�L��۝\�^�N�L��B��X�[����܎��\�K[]]Y
+N��]K\�X�N���ܘ\�Z[�]�Y�
+�\�B��X�]�[���܎��\�K]^
+N�B��X�\�X�[ۋ[���۝\�^�N�L\��۝]�ZY��
+����܎��\�K[]]Y
+N�^]�[�ٛܛN�\\��\�N�]\�\�X�[�Έ�
+Y[N�X\��[�]��
+��B��X�\��\�۝\�^�N�LK�\�X��ܛ�[���\�K\�\��X�L�N�ܙ\��\��Y�\�KX�ܙ\�N�ܙ\�\�Y]\ΈY[�ΈLL���܎��ML؎�\��܎��[�\���][ێ��[]]�N[�KZZY��K���[��][ێ��ܙ\�X��܈�M\�B��X�\��\�ݙ\���ܙ\�X��܎��MMM��B����KZ[��\�^N�������۝\�^�N�L���܎��\�K[]]Y
+N�X\��[�]��
+�^X[Yێ��Y��B��X�][\]H��۝\�^�N�L����܎��\�K]^
+N��X��ܛ�[���\�K\�\��X�L�N��ܙ\�\�Y]\Έ�Y[�ΈL��B��X�]Y���\�^N��^��^]ܘ\�ܘ\��\�
+\�B��X�]Y���۝\�^�N�L��X��ܛ�[���\�K\�\��X�L�N��ܙ\��\��Y�\�KX�ܙ\�N���܎��\�K[]]Y
+N�Y[�Έ���ܙ\�\�Y]\Έ��B��X�ZYX\��\�^N��^��^Y\�X�[ێ���[[���\�
+�B��X�ZYXH��۝\�^�N�L����܎��ML؎�Y[�Έ
+\L��X��ܛ�[���\�K\�\��X�L�N��ܙ\�\�Y]\Έ
+��B��ʈ��QSHP�H
+����Y[K]X�K]ܘ\�ݙ\����^�]]��X\��[�X���N���B����Y[K]X�H��Y�L	N��ܙ\�X��\�N���\�N��۝\�^�N�L��B����Y[K]X�H��X��ܛ�[���\�K\�\��X�JN�Y[�ΈLM���܎��\�K[]]Y
+N��۝]�ZY��
+���۝\�^�N�L\�^]�[�ٛܛN�\\��\�N�]\�\�X�[�Έ�
+Y[N��ܙ\�X���N�\��Y�\�KX�ܙ\�N�^X[Yێ��[�\��B����Y[K]X�H��\��X�[�^X[Yێ�Y��B����Y[K]X�H�Y[�ΈLM��ܙ\�X���N�\��Y�\�KX�ܙ\�N�^X[Yێ��[�\��B����Y[K]X�H��\��X�[�^X[Yێ�Y���۝]�ZY��
+��B����Y^Y\����܎��L�NN��۝]�ZY��
+��B����Y[�����܎��\�KX�ܙ\�N�B����Y]\��]���܎��M���N��۝]�ZY��
+��B��ʈT�TUQ
+��\�]\]H^X[Yێ��[�\���܎��\�K[]]Y
+N�۝\�^�N�L�Y[�Έ�B��ʈ�T�Ӕ�U�H
+�YYXH
+X^]�Y�
+͎
+HXZ[��Y[�ΈM��B�XY\��Y[�ΈMM��B��\���Y[�Έ��B��\��\�]���\���B�B���[O���XY����O���XY\���]��\��H���ȏ���[��\��H����ZX�ۈ��'�O��[���RH]\�X�[\\�B��]���]��\��H�XY\�\�Y����]��\��H��]\�\[����[��\��H������[���]�H\���\���]����]ۈ�\��H��Y��\�X���ۘ�X��H��Y[�]�
+H������Y��\�؝]ۏ���]����XY\����XZ[���KKHT��KO��]��\��H�\�ȏ��]��\��H�\��[Y����O�'��]�[�YH\��]�8./�L�[��O���[�UX�H�[��[�0��RKY�[�\�]Y]\�X�0���[H]]�X]Y\[[�O����]���]��\��H�\��\�]ȏ��]��\��H�\��\�]����[��\��H��[�YH��[\�X�Ȉ�[OH���܎��M���H���%��[����[��\��H�����[�X��ܚX�\����[����]���]��\��H�\��\�]����[��\��H��[�YH��[]�Y]�Ȉ�[OH���܎��
+���
+���%��[����[��\��H�����[�Y]����[����]���]��\��H�\��\�]����[��\��H��[�YH��[]�Y[�Ȉ�[OH���܎�ٍNYL����%��[����[��\��H�����Y[��]�O��[����]���]��\��H�\��\�]����[��\��H��[��[OH���܎��L�NH����[����[��\��H�����[��[���[����]����]���]��\��H���ܙ\��\�X�[ۈ���]��\��H���ܙ\��[X�[����[��[OH���܎��M���Nٛ۝]�ZY�����[۝H��ܙ\����[����[�YH���ܙ\��\���[OH���܎��M���Nٛ۝]�ZY�����	O��[����]���]��\��H���ܙ\��X�\����]��\��H���ܙ\��Y�[�YH���ܙ\��Y�[��[OH��Y�	H���]����]���]��[OH��۝\�^�N�L\���܎��\�K[]]Y
+N�X\��[�]������\��8./��[�YH�\�\�]�[�YH����[���8./�L��]����]����]����]�YH�\��܋X�[��\����]����KKH�S��S�KO��]��\��H��X�[ۋ]]H��'��[�UX�H�[��[��]���]��\��H��[��[�YܚY�YH��[��[�YܚY����KKH�[��[N�ٚH�\�\�HKO��]��\��H��[��[X�\��H�YH��\�X�H���]��\��H��\�]����]��\��H��[��[Z[��ȏ��]��\��H��[��[X]�]\���[OH��X��ܛ�[������YY����%O�]���]���]��\��H��[��[[�[YH��ٚH�\�\�O�]���]��\��H��[��[[�X�H��ٚH\R�0���YH0���[�]����]����]����[��\��H��Y�H�Y�K[]�H�����]�O��[����]���]��\��H��]�\��ȏ��]��\��H��]X������[��\��H��]]�[�YH��K\�X�Ȉ�[OH���܎��M���H���%��[����[��\��H��][����X��ܚX�\����[����]���]��\��H��]X������[��\��H��]]�[�YH��K]�Y]�Ȉ�[OH���܎��M���H���%��[����[��\��H��][����Y]����[����]���]��\��H��]X������[��\��H��]]�[�YH��K]�Y[�Ȉ�[OH���܎��M���H���%��[����[��\��H��][����Y[����[����]����]���]��\��H��\��[�K]ܘ\���]��\��H��\��[�KZXY\�����[��\��H��\��[�K[X�[���Y]��[�
+
+�
+O��[����[��\��H��\��[�KY[H[K]\�YH��KY[H���	O��[����]����[��\��\��H��\��[�H�YH��\��H����[��\ς��]����]����KKH�[��[���Z[��[�\�KO��]��\��H��[��[X�\����YH��\�X�����]��\��H��\�]����]��\��H��[��[Z[��ȏ��]��\��H��[��[X]�]\���[OH��X��ܛ�[���
+���
+���'�)��#��]���]���]��\��H��[��[[�[YH���Z[��[�\��]���]��\��H��[��[[�X�H���Z[���[��0��[X�Y[�0���Y\�]����]����]����[��\��H��Y�H�Y�K\�]\�����][��\��[����]���]��\��H��]�\��ȏ��]��\��H��]X������[��\��H��]]�[�YH���\�X�Ȉ�[OH���܎��
+���
+���%��[����[��\��H��][����X��ܚX�\����[����]���]��\��H��]X������[��\��H��]]�[�YH���]�Y]�Ȉ�[OH���܎��
+���
+���%��[����[��\��H��][����Y]����[����]���]��\��H��]X������[��\��H��]]�[�YH���]�Y[�Ȉ�[OH���܎��
+���
+���%��[����[��\��H��][����Y[����[����]����]���]��\��H��\��[�K]ܘ\���]��\��H��\��[�KZXY\�����[��\��H��\��[�K[X�[���Y]��[�
+
+�
+O��[����[��\��H��\��[�KY[H�YH���Y[H��[OH���܎��\�K[]]Y
+H��[�[����[����]����[��\��\��H��\��[�H�YH��\�̈����[��\ς��]����]����KKH�[��[Έ�[�]ܛ�ݙHKO��]��\��H��[��[X�\��ȈYH��\�X�ȏ��]��\��H��\�]����]��\��H��[��[Z[��ȏ��]��\��H��[��[X]�]\���[OH��X��ܛ�[��ٍNYL����'���]���]���]��\��H��[��[[�[YH���[�]ܛ�ݙO�]���]��\��H��[��[[�X�H���^��0���[���[0���X��ܛ�[��]����]����]����[��\��H��Y�H�Y�K\�]\�����][��\��[����]���]��\��H��]�\��ȏ��]��\��H��]X������[��\��H��]]�[�YH���\�X�Ȉ�[OH���܎�ٍNYL����%��[����[��\��H��][����X��ܚX�\����[����]���]��\��H��]X������[��\��H��]]�[�YH���]�Y]�Ȉ�[OH���܎�ٍNYL����%��[����[��\��H��][����Y]����[����]���]��\��H��]X������[��\��H��]]�[�YH���]�Y[�Ȉ�[OH���܎�ٍNYL����%��[����[��\��H��][����Y[����[����]����]���]��\��H��\��[�K]ܘ\���]��\��H��\��[�KZXY\�����[��\��H��\��[�K[X�[���Y]��[�
+
+�
+O��[����[��\��H��\��[�KY[H�YH���Y[H��[OH���܎��\�K[]]Y
+H��[�[����[����]����[��\��\��H��\��[�H�YH��\��ȏ���[��\ς��]����]����KKH�[��[
+�X[�����KO��]��\��H��[��[X�\��
+�YH��\�X�
+���]��\��H��\�]����]��\��H��[��[Z[��ȏ��]��\��H��[��[X]�]\���[OH��X��ܛ�[���L�NL���'�O�]���]���]��\��H��[��[[�[YH��X[������]���]��\��H��[��[[�X�H��X[��0���\��X�[0�����\��]����]����]����[��\��H��Y�H�Y�K\�]\�����][��\��[����]���]��\��H��]�\��ȏ��]��\��H��]X������[��\��H��]]�[�YH��
+\�X�Ȉ�[OH���܎��L�NH���%��[����[��\��H��][����X��ܚX�\����[����]���]��\��H��]X������[��\��H��]]�[�YH��
+]�Y]�Ȉ�[OH���܎��L�NH���%��[����[��\��H��][����Y]����[����]���]��\��H��]X������[��\��H��]]�[�YH��
+]�Y[�Ȉ�[OH���܎��L�NH���%��[����[��\��H��][����Y[����[����]����]���]��\��H��\��[�K]ܘ\���]��\��H��\��[�KZXY\�����[��\��H��\��[�K[X�[���Y]��[�
+
+�
+O��[����[��\��H��\��[�KY[H�YH��
+Y[H��[OH���܎��\�K[]]Y
+H��[�[����[����]����[��\��\��H��\��[�H�YH��\������[��\ς��]����]�����]����KKH��ԑU�KO��]��\��H��X�[ۋ]]H��'�%�]]�X][ۈ����]���]��\��H����YܚY���]��\��H���X�\����]��\��H���ZX�ۈ��[OH��X��ܛ�[������YY���'�O�]���]��\��H���Z[��ȏ��]��\��H���[�[YH���[���[�\�]܏�]���]��\��H���]\�ȏ��[�\�]\�Z[H]\�X��]����]���]��\��H���\�]\���XX�]�H���]����]���]��\��H���X�\����]��\��H���ZX�ۈ��[OH��X��ܛ�[���
+���
+���'��]���]��\��H���Z[��ȏ��]��\��H���[�[YH���Y[��ۘ�]�]���]��\��H���]\�ȏ���\Y�KZ�\��Y[���]����]���]��\��H���\�]\���ZYH���]����]���]��\��H���X�\����]��\��H���ZX�ۈ��[OH��X��ܛ�[��ٍNYL����'�;�#��]���]��\��H���Z[��ȏ��]��\��H���[�[YH���[��H[X��Z[\��]���]��\��H���]\�ȏ�]]�Y�[�\�]H[X��Z[��]����]���]��\��H���\�]\���XX�]�H���]����]���]��\��H���X�\����]��\��H���ZX�ۈ��[OH��X��ܛ�[���L�NL���'���]���]��\��H���Z[��ȏ��]��\��H���[�[YH��U\�Y\��]���]��\��H���]\�ȏ���Y[\��Y[�����]����]���]��\��H���\�]\���ZYH���]����]���]��\��H���X�\����]��\��H���ZX�ۈ��[OH��X��ܛ�[���X�NL���'���]���]��\��H���Z[��ȏ��]��\��H���[�[YH���]��X��\��]���]��\��H���]\�ȏ�[�UX�HTH[ۚ]܏�]����]���]��\��H���\�]\���XX�]�H���]����]���]��\��H���X�\����]��\��H���ZX�ۈ��[OH��X��ܛ�[����Xٍ����'�!�]���]��\��H���Z[��ȏ��]��\��H���[�[YH������Y[\��]���]��\��H���]\�ȏ��Y�H]����]����]���]��\��H���\�]\���ZYH���]����]���]��\��H���X�\����]��\��H���ZX�ۈ��[OH��X��ܛ�[���XMYNL���'��]���]��\��H���Z[��ȏ��]��\��H���[�[YH��]H�[Z^�\��]���]��\��H���]\�ȏ��S�
+�Y��ܚ]\��]����]���]��\��H���\�]\���ZYH���]����]���]��\��H���X�\����]��\��H���ZX�ۈ��[OH��X��ܛ�[���M�M����'��]���]��\��H���Z[��ȏ��]��\��H���[�[YH���]�[�YH�X��\��]���]��\��H���]\�ȏ�Y�[��H
+�[�[]X���]����]���]��\��H���\�]\���[ٙ����]����]����]����KKHP�U�UH��KO��]��\��H���\�X�[ۈ���]��\��H���ZXY\�����[��\��H���]]H����HX�]�]H����[����[��[OH��۝\�^�N�L����܎��\�K[]]Y
+H�YH���][YH���%��[����]���]��\��H���[\��YH���[\����]��\��H���Z][H����[��\��H���][YH���\������[����[��\��H���ZX�ۈ��'���[����[��\��H���]^��\���\��YY0���]�[��[�UX�H�]ˋ����[����]����]����]����KKH�P��T�KO��]��\��H�\���\�X�[ۈ���]��\��H���ZXY\���[OH�X\��[�X���N�����[��\��H���]]H���!H][���X��\���[����]���]��\��H�\��Z][H���]��\��H�\��X�X��\��YۙH���$��]���]��\��H�\��[X�[ۙK[���ܙX]HٚH�\�\�H[�UX�H�[��[�]����[��\��H�\��]YȈ�[OH��X��ܛ�[���L�NLMN���܎��L�NH��ۙO��[����]���]��\��H�\��Z][H���]��\��H�\��X�X��\��YۙH���$��]���]��\��H�\��[X�[ۙK[����[�\�]H[X��Z[�[��[��H
+
+�[��[�O�]����[��\��H�\��]YȈ�[OH��X��ܛ�[���L�NLMN���܎��L�NH��ۙO��[����]���]��\��H�\��Z][H���]��\��H�\��X�X��\��YۙH���$��]���]��\��H�\��[X�[ۙK[����Z[��\Y��ۘ�]�ܚ\
+�ۘ�]��ۙ�˘�]
+O�]����[��\��H�\��]YȈ�[OH��X��ܛ�[���L�NLMN���܎��L�NH��ۙO��[����]���]��\��H�\��Z][H���]��\��H�\��X�X��\��YۙH���$��]���]��\��H�\��[X�[ۙK[����][�UX�H]HTH���^O�]����[��\��H�\��]YȈ�[OH��X��ܛ�[���L�NLMN���܎��L�NH��ۙO��[����]���]��\��H�\��Z][H���]��\��H�\��X�X��\��Z[���ȏ�����]���]��\��H�\��[X�[��ܙX]H�Z[��[�\��[�]ܛ�ݙKX[������[��[��]����[��\��H�\��]YȈ�[OH��X��ܛ�[��ٍNYL�MN���܎�ٍNYL�����]�Y]���[����]���]��\��H�\��Z][H���]��\��H�\��X�X��\��Z[���ȏ�����]���]��\��H�\��[X�[���[�\�]H
+��ۛ�Y�[���ۙ��
+[
+�[��[�O�]����[��\��H�\��]YȈ�[OH��X��ܛ�[��ٍNYL�MN���܎�ٍNYL���[���ܙ\����[����]���]��\��H�\��Z][H���]��\��H�\��X�X��\��]�ȏ��]���]��\��H�\��[X�[���]\�Y�H]]�X][ۈ
+���Z[JO�]����[��\��H�\��]YȈ�[OH��X��ܛ�[��͍
+��MN���܎�͍
+��������[����]���]��\��H�\��Z][H���]��\��H�\��X�X��\��]�ȏ��]���]��\��H�\��[X�[��\�Y�\��KZ�\��Y[���[�[��[��]����[��\��H�\��]YȈ�[OH��X��ܛ�[��͍
+��MN���܎�͍
+��������[����]���]��\��H�\��Z][H���]��\��H�\��X�X��\��]�ȏ��]���]��\��H�\��[X�[��\H�܈[�UX�H\��\���ܘ[H
+L�X���
+�\��O�]����[��\��H�\��]YȈ�[OH��X��ܛ�[��͍
+��MN���܎�͍
+��������[����]����]����]�YH�\�]\]H��\�\]Y��[�YH�\]K][YH���Y[�ˋ����[���]����KKHUT�P�S�KO��]��\��H��X�[ۋ]]H��'�H]\�X�[�8�%8.`x.'8.&x.`8.'�.)x.!�.`x.%x.b8.)x.,�[��[�]���]��\��H�]\�X�\[�YܚY����KKHђH�T�T�HKO��]��\��H�]\�X�X�\���[OH��ܙ\�X��܎��M���M���]��\��H�X�ZXY\���[OH��X��ܛ�[���M���LMH���]��\��H�X�ZX�ۈ���%O�]���]���]��\��H�X�[�[YH��[OH���܎��M���H��ٚH�\�\�O�]���]��\��H�X�Y�[��H���Y�H\�0���^��0���[�]����]����[��\��H�X�\�]\Ȉ�[OH��X��ܛ�[���L�NL����܎��L�NH�����]�O��[����]���]��\��H�X�X��H���]��\��H�X�\��ȏ��[��\��H�X�[���'�H[����[���[��\��H�X�]�[���ޞK���\�Y�\�H8�%�ٙ�YH���X�\���[���]���]��\��H�X�\��ȏ��[��\��H�X�[���'��\��]��[���[��\��H�X�]�[���YK�ܚ��[^8�%8.!8.&x.%�.,�.!�.,�.&K�.`8.(�.-x.(�.&O��[���]���]��\��H�X�\��ȏ��[��\��H�X�[�����{�#�\�][ۏ��[���[��\��H�X�]�[��H8."�.,x.b8.)�.`�.(x.!���Y[���[���]���]��\��H�X�\��ȏ��[��\��H�X�[���'��H��Y[O��[���[��\��H�X�]�[��.%�..8. x.)�.,x.&HN�8.&K���[���]���]��\��H�X�\�X�[ۋ[���'��[����\�]���]��\��H�X�\��\�ۘ�X��H���T��\
+\�H���Y�H\��ٙ�YH��[X�X[��K�\�H�^��X[���[�H�[�[ܘX��K^�H���H�\�[\��ٝ\�Y��\��Y[���ܙ�Y�\���ۈ�[�Y��[�YH]\�X����[�X�
+��O�[��\��H���KZ[���.!8.)x.-8. x.`8.'�.-�.b8.+H��O��[���]���]��\��H�X�\�X�[ۋ[���'��H]H[\]O�]���]��\��H�X�][\]H���%HٚH�\�\�H8�(�H�\��ٙ�YH���YH]\�X��[�X]���[^�]���]��\��H�X�\�X�[ۋ[���'����#�Y��8.*�.)x.,x. O�]���]��\��H�X�]Y�ȏ���[��\��H�X�]Yȏ�ٚH\���[���[��\��H�X�]Yȏ��ٙ�YH��]\�X���[���[��\��H�X�]Yȏ��YH]\�X���[���[��\��H�X�]Yȏ��[�X]���[���[��\��H�X�]Yȏ��X��ܛ�[�]\�X���[���[��\��H�X�]Yȏ��Y�O��[����]���]��\��H�X�\�X�[ۋ[���'��H�Y[�YX\�
+8.%�.,x.%8.a8.&�O�]���]��\��H�X�ZYX\ȏ��]��\��H�X�ZYXH���%H[ܛ�[���ٙ�YH
+��Z[��[����]���]��\��H�X�ZYXH��'��]H�Y��YH�\��[ۏ�]���]��\��H�X�ZYXH��'�!��[��]�Y��H�X�\��]���]��\��H�X�ZYXH���a;�#��[�\��YH^[\��]����]����]����]����KKH�RS��S�T�KO��]��\��H�]\�X�X�\���[OH��ܙ\�X��܎��
+���
+
+���]��\��H�X�ZXY\���[OH��X��ܛ�[���
+���
+MH���]��\��H�X�ZX�ۈ��'�)��#��]���]���]��\��H�X�[�[YH��[OH���܎��
+���
+���Z[��[�\��]���]��\��H�X�Y�[��H��[X�Y[�0���Z[���[��0���]\�O�]����]����[��\��H�X�\�]\Ȉ�[OH��X��ܛ�[��ٍNYL�����܎�ٍNYL������[�[����[����]���]��\��H�X�X��H���]��\��H�X�\��ȏ��[��\��H�X�[���'�H[����[���[��\��H�X�]�[��Y[[���X�XX�Y�[[����X�]�O��[���]���]��\��H�X�\��ȏ��[��\��H�X�[���'��\��]��[���[��\��H�X�]�[���Y\YY]][ۋY\���\���[���]���]��\��H�X�\��ȏ��[��\��H�X�[�����{�#�\�][ۏ��[���[��\��H�X�]�[��H8."�.,x.b8.)�.`�.(x.!���Y[���[���]���]��\��H�X�\��ȏ��[��\��H�X�[���'��H��Y[O��[���[��\��H�X�]�[��.%�..8. x.)�.,x.&H�N�8.&K���[���]���]��\��H�X�\�X�[ۋ[���'��[����\�]���]��\��H�X�\��\�ۘ�X��H���T��\
+\�H��[X�Y[�]\�X��[�H�Z[���[���[�[��[�H�Z[�Y[[���X�X[���ٝ��[���XX�Y�[][��\�Kܘ^H��K]][[�X]�\�Y\��Y�X�[���]HY��[����X�]�K
+��K���[\��[��\��H���KZ[���.!8.)x.-8. x.`8.'�.-�.b8.+H��O��[���]���]��\��H�X�\�X�[ۋ[���'��H]H[\]O�]���]��\��H�X�][\]H��'�)��#��Z[��[�\�8�(�H�\��Z[�[X�X[��H�Y\0���[^0��YY]]O�]���]��\��H�X�\�X�[ۋ[���'����#�Y��8.*�.)x.,x. O�]���]��\��H�X�]Y�ȏ���[��\��H�X�]Yȏ��Z[���[����[���[��\��H�X�]Yȏ��Y\]\�X���[���[��\��H�X�]Yȏ�[X�Y[���[���[��\��H�X�]Yȏ��Z[�[X�X[��O��[���[��\��H�X�]Yȏ��[^[��]\�X���[���[��\��H�X�]Yȏ�YY]][ۏ��[����]���]��\��H�X�\�X�[ۋ[���'��H�Y[�YX\�
+8.%�.,x.%8.a8.&�O�]���]��\��H�X�ZYX\ȏ��]��\��H�X�ZYXH��'�)��#�X]�H�Z[�ۈ�[���8�%�Y��]���]��\��H�X�ZYXH��'�/��ܙ\��Z[�
+��\��ۙ��]���]��\��H�X�ZYXH��'��{�#��]H�Z[�]�SO�]���]��\��H�X�ZYXH����;�#�[�\��ܛH�Y\ZY�]����]����]����]����KKH�S�Uԓ�ՑHKO��]��\��H�]\�X�X�\���[OH��ܙ\�X��܎�ٍNYL����]��\��H�X�ZXY\���[OH��X��ܛ�[��ٍNYL�MH���]��\��H�X�ZX�ۈ��'���]���]���]��\��H�X�[�[YH��[OH���܎�ٍNYL����[�]ܛ�ݙO�]���]��\��H�X�Y�[��H���[���^��0���[�T��[0����[\Џ�]����]����[��\��H�X�\�]\Ȉ�[OH��X��ܛ�[��ٍNYL�����܎�ٍNYL������[�[����[����]���]��\��H�X�X��H���]��\��H�X�\��ȏ��[��\��H�X�[���'�H[����[���[��\��H�X�]�[����\�X�]Y]H�Y��[��X[��[���]���]��\��H�X�\��ȏ��[��\��H�X�[���'��\��]��[���[��\��H�X�]�[��[��\��Y��]�K����Z[�\���[���]���]��\��H�X�\��ȏ��[��\��H�X�[�����{�#�\�][ۏ��[���[��\��H�X�]�[��H8."�.,x.b8.)�.`�.(x.!���Y[���[���]���]��\��H�X�\��ȏ��[��\��H�X�[���'��H��Y[O��[���[��\��H�X�]�[��.%�..8. x.)�.,x.&H��8.&K���[���]���]��\��H�X�\�X�[ۋ[���'��[����\�]���]��\��H�X�\��\�ۘ�X��H���T��\
+\�H���[���^���[�\��[�[�]�^�ۙK[X��X�X[����\��ٝ�\��ܛ�ݙK��\�Y�[\�ZY�Y��]HY���[�[Y�[��\���\�X�]YY[�۝[\ܘ\�K�\�HۙK
+X�O�[��\��H���KZ[���.!8.)x.-8. x.`8.'�.-�.b8.+H��O��[���]���]��\��H�X�\�X�[ۋ[���'��H]H[\]O�]���]��\��H�X�][\]H��'���[�]ܛ�ݙH8�(�H�\��[���^���Y��X�\�0��[��\�]\�X��]���]��\��H�X�\�X�[ۋ[���'����#�Y��8.*�.)x.,x. O�]���]��\��H�X�]Y�ȏ���[��\��H�X�]Yȏ��[���^����[���[��\��H�X�]Yȏ��[���[��[���[��\��H�X�]Yȏ��Y�]\�X���[���[��\��H�X�]Yȏ�[��\�]\�X���[���[��\��H�X�]Yȏ��[�^����[���[��\��H�X�]Yȏ���[\Џ��[����]���]��\��H�X�\�X�[ۋ[���'��H�Y[�YX\�
+8.%�.,x.%8.a8.&�O�]���]��\��H�X�ZYX\ȏ��]��\��H�X�ZYXH��'�k��#��[�[Y�[��\��^���]���]��\��H�X�ZYXH��'� �ZY�Y��]H�]�O�]���]��\��H�X�ZYXH��'�`���ٝ��\��X�\��]���]��\��H�X�ZYXH��'�N�]H�Y��^���X��]����]����]����]����KKHPS�����KO��]��\��H�]\�X�X�\���[OH��ܙ\�X��܎��L�NM���]��\��H�X�ZXY\���[OH��X��ܛ�[���L�NLMH���]��\��H�X�ZX�ۈ��'�O�]���]���]��\��H�X�[�[YH��[OH���܎��L�NH��X[������]���]��\��H�X�Y�[��H��Z[�[X[X[��0���[�[X]X�0��]\�X[�]����]����[��\��H�X�\�]\Ȉ�[OH��X��ܛ�[��ٍNYL�����܎�ٍNYL������[�[����[����]���]��\��H�X�X��H���]��\��H�X�\��ȏ��[��\��H�X�[���'�H[����[���[��\��H�X�]�[��][�[��]\�X[�۝[\]]�O��[���]���]��\��H�X�\��ȏ��[��\��H�X�[���'��\��]��[���[��\��H�X�]�[��Y\���\�ܙX]]�]K[[�[ۘ[��[���]���]��\��H�X�\��ȏ��[��\��H�X�[�����{�#�\�][ۏ��[���[��\��H�X�]�[��H8."�.,x.b8.)�.`�.(x.!���Y[���[���]���]��\��H�X�\��ȏ��[��\��H�X�[���'��H��Y[O��[���[��\��H�X�]�[��.%�..8. x.)�.,x.&H
+Ό8.&K���[���]���]��\��H�X�\�X�[ۋ[���'��[����\�]���]��\��H�X�\��\�ۘ�X��H���T��\
+\�H��Z[�[X[X[�����][�[��Y[�K]\�X[�]�\���[�[X]X�][��\�KY[[���X����[\�[[�[ۘ[\�\��H��\��Y[[ܞK[����X�]�K���[\�[X�Y[��X�K
+MX�O�[��\��H���KZ[���.!8.)x.-8. x.`8.'�.-�.b8.+H��O��[���]���]��\��H�X�\�X�[ۋ[���'��H]H[\]O�]���]��\��H�X�][\]H��'�HX[�����8�(�H�\�][�[��X[��Y\���\�0��[[�[ۘ[]\�X��]���]��\��H�X�\�X�[ۋ[���'����#�Y��8.*�.)x.,x. O�]���]��\��H�X�]Y�ȏ���[��\��H�X�]Yȏ�X[��]\�X���[���[��\��H�X�]Yȏ�Z[�[X[X[����[���[��\��H�X�]Yȏ����\�]\�X���[���[��\��H�X�]Yȏ�[X�Y[�X[����[���[��\��H�X�]Yȏ�[[�[ۘ[]\�X���[���[��\��H�X�]Yȏ��[�[X]X���[����]���]��\��H�X�\�X�[ۋ[���'��H�Y[�YX\�
+8.%�.,x.%8.a8.&�O�]���]��\��H�X�ZYX\ȏ��]��\��H�X�ZYXH��'�*��#�����H[ܛ�[��X[���]���]��\��H�X�ZYXH��'������ܘ\Y[[ܚY\��]���]��\��H�X�ZYXH��'�&HZY�Y���]YO�]���]��\��H�X�ZYXH���a;�#�[\H�[�\����O�]����]����]����]�����]����KKH�SPT�H��QSHP�HKO��]��\��H��X�[ۋ]]H��[OH�X\��[�]�����'��H�[X\�H��Y[H8�%8.%x.,�.(�.,�.!�.&�.)x.b8.+x.(�.)�.-8.%8.-x.`�.+O�]���]��\��H���Y[K]X�K]ܘ\���X�H�\��H���Y[K]X�H���XY�������[��[����[ۏ���YO����Y���O�����O����]����[�����\�Y[YO����\��]��YZ���������XY����O�������[��[OH���܎��M���H���%HٚH�\�\�O��[������\��H���Y^Y\ȏ��$����\��H���Y^Y\ȏ��$����\��H���Y^Y\ȏ��$����\��H���Y^Y\ȏ��$����\��H���Y^Y\ȏ��$����\��H���Y^Y\ȏ��$����\��H���Y^Y\ȏ��$�����N����\��H���Y]\��]����Y[��������������[��[OH���܎��
+���
+��'�)��#��Z[��[�\���[������\��H���Y^Y\ȏ��$����\��H���Y[�ȏ��$����\��H���Y^Y\ȏ��$����\��H���Y[�ȏ��$����\��H���Y^Y\ȏ��$����\��H���Y^Y\ȏ��$����\��H���Y^Y\ȏ��$������N����\��H���Y]\��]��H�Y[��������������[��[OH���܎�ٍNYL���'���[�]ܛ�ݙO��[������\��H���Y[�ȏ��$����\��H���Y^Y\ȏ��$����\��H���Y[�ȏ��$����\��H���Y^Y\ȏ��$����\��H���Y^Y\ȏ��$����\��H���Y^Y\ȏ��$����\��H���Y[�ȏ��$����������\��H���Y]\��]���Y[��������������[��[OH���܎��L�NH��'�HX[�������[������\��H���Y^Y\ȏ��$����\��H���Y[�ȏ��$����\��H���Y^Y\ȏ��$����\��H���Y[�ȏ��$����\��H���Y[�ȏ��$����\��H���Y^Y\ȏ��$����\��H���Y^Y\ȏ��$�����
+Ό���\��H���Y]\��]���Y[������������O���X�O���]�����XZ[�����ܚ\����OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOB����ӑ�Q�8�%�KP�ӑ�Q�T�Q
+���YY�[�\�TH�^HX[�X[JB���OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOB��ۜ�TW��VHH	�R^�T�P�ST���MQQݔ�Q�QN��������ۜ��S��S�HY�	�P��͝�Q��V]Z�Z������[YN�	�ٚH�\�\�I���ܝY�	��I����܎�	��M���I���\��Y�	��\��I��[RY�	��KY[IK�Y�	�����ΈY�Z[��[�\��[��[Q��[YN�	ԘZ[��[�\����ܝY�	�������܎�	��
+���
+	���\��Y�	��\�̉��[RY�	���Y[IK�Y�	�����ΈY�[�]ܛ�ݙH�[��[Q��[YN�	ՙ[�]ܛ�ݙI���ܝY�	�������܎�	�ٍNYL����\��Y�	��\�����[RY�	���Y[IK�Y�	�����ΈYX[������[��[Q��[YN�	�X[�����	���ܝY�	��
+	����܎�	��L�NI���\��Y�	��\��	��[RY�	��
+Y[IB�N���OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOB����T��S�H�S�T�T����OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOB��[��[ۈ�]��\��[�J�[��\�Y]K��܊H�ۜ��[��\�H��[Y[���][[Y[��RY
+�[��\�Y
+NY�
+X�[��\�H�]\���ۜ��H�[��\˙�]�۝^
+	̙	�N�ۜ��H�[��\˛ٙ��]�Y���ۜ�H
+�[��\˝�YH��[��\˚ZY�H�Y�
+Y]H]K�[���H���]��]�Y[�B����][�Q\�
+��
+JN������T�[HH	�̘L��I���[�U�YHK�N���Y�[�]
+
+N��[ݙU�̊N��[�U��̊N������J
+N�]\��B���ۜ�Z[�HX]�Z[����]JN�ۜ�X^HX]�X^
+���]JN�ۜ��[��HHX^HZ[�N�ۜ��H]K�X\
+
+�JHO�
+�
+H�
+]K�[��HJJH
+���N�H
+
+�HZ[�H��[��JH
+�
+H
+HH
+�JJN���ܘYY[��[��ۜ�ܘYH��ܙX]S[�X\�ܘYY[�
+
+NܘY�Y��ܔ��
+��܈
+�	�
+	�NܘY�Y��ܔ��
+K��܈
+�	�	�N����Y�[�]
+
+N��[ݙU���K�
+N˙�ܑXX�
+O���[�U���JJN��[�U���˛[��LWK�
+N�����T]
+
+N���[�[HHܘY���[
+
+N���[�B����Y�[�]
+
+N˙�ܑXX�
+
+JHO�HOOH���[ݙU���JH���[�U���JJN������T�[HH��܎��[�U�YH���[�R��[�H	ܛ�[�	����][�Q\�
+�JN������J
+N����][���ۜ�\�H��˛[��HWN���Y�[�]
+
+N��\��\��\��KˍKX]�H
+��N���[�[HH��܎���[
+
+NB����OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOB����ԓPU�SP�T���OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOB��[��[ۈ�]
+�HY�
+�OOH�[�OOH[�Y�[�Y\ӘS��JH�]\��	��%	��H\��R[�
+�NY�
+��HYM�H�]\��
+��YM�K�њ^Y
+JH
+�	�I�Y�
+��HYL�H�]\��
+��YL�K�њ^Y
+JH
+�	����]\�������[��
+NB����OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOB���Q��S��B���OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOB��[��[ۈY��X�ۋ^
+H�ۜ�\�H��[Y[���][[Y[��RY
+	���[\�	�N�ۜ����H�]�]J
+N�ۜ�[YHH��˝���[U[YT��[��	�U	���\��̋YY�]	�Z[�]N�̋YY�]	��X�ۙ�̋YY�]	�JN�ۜ�][HH��[Y[��ܙX]Q[[Y[�
+	�]��N][K��\�Ә[YHH	���Z][I�][K�[��\�SH��[��\��H���][YH���[Y_O��[����[��\��H���ZX�ۈ���X�۟O��[����[��\��H���]^���^O��[���\��[��\��Y�ܙJ][K\���\���[
+N���Y\X^�[��Y\�[H
+\���[�[��[����
+H\���[[ݙP�[
+\��\��[
+N��[Y[���][[Y[��RY
+	���][YI�K�^�۝[�H	�\]Y	�
+�[YNB����OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOB����U��S��S�U����HS�UP�HTB���OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOB�\�[���[��[ۈ�]��[��[�]��[��[Y
+HY�
+X�[��[Y
+H�]\���[�ۜ�\�H΋����˙����X\\˘��K�[�]X�K݌���[��[��\�\�]\�X��ۚ\]	�YI��[��[YI��^OI�TW��V_X�H�ۜ��\�H]�Z]�]�
+\�
+N�ۜ�]HH]�Z]�\˚��ۊ
+NY�
+]K�\��܊H�ۜ��K�\��܊	�UTH\��܎��]K�\��܊N�]\���\��܎�]K�\��܋�Y\��Y�HNB�Y�
+Y]K�][\�]K�][\˛[��OOH
+H�]\���[�ۜ��H]K�][\��N�]\���[YN���ۚ\]�]K��X�Έ���]\�X�˜�X��ܚX�\���[���Y]�Έ���]\�X�˝�Y]���[���Y[�Έ���]\�X�˝�Y[���[��NH�]�
+JH�]\���\��܎�K�Y\��Y�HNB�B����OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOB����S�T�UHS����T��S�HUH
+[�[�H]�H�X[\�ܞJB���OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOB��[��[ۈ[����\��]J�YY[��HM
+H�ۜ�]HH�N]�HL
+�
+�YY
+���	H�
+N�܈
+]HH�H[���J��H�
+�H
+X]��[��J
+HH�
+H
+��
+���HX]�X^
+
+L�N]K�\�
+X]���[�
+�JNB��]\��]NB����OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOB����QS�U��OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOB�\�[���[��[ۈ�Y[�]�
+HY��	�����	љ]�[��[�UX�H�]ˋ���N�ۜ�\���[��\�H��[Y[���][[Y[��RY
+	�\��܋X�[��\��N\���[��\���[K�\�^HH	ۛۙI��]�[�X��H�[�Y]��H�[�Y[��H][�Q\��܈H�[�N��܈
+]HH�H�S��S˛[���J��H�ۜ��H�S��S��WN�ۜ��ܝYH���ܝY�Y�
+X��Y
+H���[��[��Y]ܙX]Y���[Y[���][[Y[��RY
+�ܝY
+�	�\�X���K�^�۝[�H	��%	���[Y[���][[Y[��RY
+�ܝY
+�	�]�Y]���K�^�۝[�H	��%	���[Y[���][[Y[��RY
+�ܝY
+�	�]�Y[���K�^�۝[�H	��%	��]��\��[�J���\��Y�[����܊N�۝[�YNB���ۜ��]�H]�Z]�]��[��[�]���Y
+N�Y�
+\�]�H��[Y[���][[Y[��RY
+�ܝY
+�	�\�X���K�^�۝[�H	Ӌ�I��۝[�YNB��Y�
+�]˙\��܊H[�Q\��܈H�YN��[Y[���][[Y[��RY
+�ܝY
+�	�\�X���K�^�۝[�H	�T���Y��	��c	�	����[Y_N�	��]˙\��ܟX
+N�۝[�YNB���ۜ��X��H\��R[�
+�]˜�X��
+N�ۜ��Y]��H\��R[�
+�]˝�Y]��
+N�ۜ��Y[��H\��R[�
+�]˝�Y[��
+N���[Y[���][[Y[��RY
+�ܝY
+�	�\�X���K�^�۝[�H�]
+�X��N��[Y[���][[Y[��RY
+�ܝY
+�	�]�Y]���K�^�۝[�H�]
+�Y]��N��[Y[���][[Y[��RY
+�ܝY
+�	�]�Y[���K�^�۝[�H�Y[����[�X��
+�H�X���[�Y]��
+�H�Y]���[�Y[��
+�H�Y[������\��[�B��ۜ��\��]HH[����\��]JH
+�JN�]��\��[�J���\��Y�\��]K����܊N�ۜ�[HH
+
+�\��]V��\��]K�[��LWHH�\��]V�JH��\��]V�H
+�L
+K�њ^Y
+JN�ۜ�[Q[H��[Y[���][[Y[��RY
+��[RY
+NY�
+[H�
+H[Q[�^�۝[�H	���
+�[H
+�	�I�[Q[��\�Ә[YHH	��\��[�KY[H[K]\	�H[�H[Q[�^�۝[�H[H
+�	�I�[Q[��\�Ә[YHH	��\��[�KY[H[KY�ۉ�B��Y��	��!I�	����[Y_H0��	ٛ]
+�X��_H�X��0��	ٛ]
+�Y]��_H�Y]��
+NB����\]H�[��[Y[���][[Y[��RY
+	��[\�X���K�^�۝[�H�]
+�[�X��HOOH	�	���]
+�[�X��H�	��%	���[Y[���][[Y[��RY
+	��[]�Y]���K�^�۝[�H�]
+�[�Y]��HOOH	�	���]
+�[�Y]��H�	��%	���[Y[���][[Y[��RY
+	��[]�Y[���K�^�۝[�H�[�Y[��	��%	����\�[X]H�]�[�YN��H�K�^\�ۜ�\�[۝U�Y]��H�[�Y]��
+��N�����Y�[۝B��ۜ�\��]�[�YHHX]���[�
+\�[۝U�Y]��
+��H
+��JN���	H�K0���H����[Y[���][[Y[��RY
+	�\�\�]�[�YI�K�^�۝[�H\��]�[�YK����[T��[��
+N�ۜ��HX]�Z[�LX]���[�
+
+\��]�[�YH�
+L
+H
+�L
+JN��[Y[���][[Y[��RY
+	���ܙ\��\�	�K�^�۝[�H�
+�	�I���[Y[���][[Y[��RY
+	���ܙ\��Y�[	�K��[K��YH�
+�	�I��Y�
+[�Q\��܊H\���[��\���[K�\�^HH	؛����\���[��\��^�۝[�H	���;�#���YH�[��[��]\��YTH\��ܜˈ�X��H���܈]Z[ˉ�B����[Y[���][[Y[��RY
+	�\]K][YI�K�^�۝[�H�]�]J
+K����[T��[��	�U	�NB����OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOB���S�U���OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOB��[��˘Y]�[�\�[�\�	��Y	�
+
+HO����]�[\H�\��[�\�[[YYX][B��S��S˙�ܑXX�
+
+�JHO��]��\��[�J���\��Y�[����܊JN����Y�]�Y[�]�
+N���]]�\�Y��\�]�\�H
+HZ[�]\�][�\��[
+�Y[�]�
+H
+�
+�
+�L
+NJN�����H�[����\��\��\���[��[ۈ��T��\
+[
+H�ۜ�^H[��[��\��K�^�۝[���[J
+N�]�Y�]܋��\��\��ܚ]U^
+^
+K�[�
+
+HO��ۜ�[�H[�]Y\�T�[X�܊	˘��KZ[�	�N[��^�۝[�H	��$���YYI�[���[K���܈H	��L�NI��][Y[�]
+
+
+HO��[��^�۝[�H	�.!8.)x.-8. x.`8.'�.-�.b8.+H��I��[���[K���܈H	���K�
+NJNB�����Y�]��\��[�\�ۈ�\�^�B��[��˘Y]�[�\�[�\�	ܙ\�^�I�
+
+HO��S��S˙�ܑXX�
+
+�JHO����KY�]��]�]]�\�]H�\�\�\�Y��]��\��[�J���\��Y�[����܊NJNJN��ܚ\��؛�O���[�
