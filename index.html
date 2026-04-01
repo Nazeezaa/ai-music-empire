@@ -1,0 +1,1301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Music Empire 🎵</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap');
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --bg: #0a0b0f;
+    --surface: #12141a;
+    --surface2: #1a1d26;
+    --border: #2a2d3a;
+    --accent1: #7c3aed;
+    --accent2: #06b6d4;
+    --accent3: #f59e0b;
+    --accent4: #10b981;
+    --red: #ef4444;
+    --text: #e2e8f0;
+    --muted: #64748b;
+  }
+
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* HEADER */
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 32px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    backdrop-filter: blur(12px);
+  }
+
+  .logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 20px;
+    font-weight: 700;
+    background: linear-gradient(135deg, #a78bfa, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  .logo-icon { font-size: 24px; filter: drop-shadow(0 0 8px #7c3aed88); }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .status-pill {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    background: #10b98115;
+    border: 1px solid #10b98133;
+    border-radius: 100px;
+    padding: 5px 12px;
+    font-size: 12px;
+    color: var(--accent4);
+    font-weight: 500;
+  }
+
+  .dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent4); animation: pulse 2s infinite; }
+  @keyframes pulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:.5;transform:scale(1.2)} }
+
+  .refresh-btn {
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    color: var(--muted);
+    border-radius: 8px;
+    padding: 6px 14px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: all .2s;
+    font-family: inherit;
+  }
+  .refresh-btn:hover { background: var(--border); color: var(--text); }
+
+  /* MAIN */
+  main {
+    padding: 28px 32px;
+    max-width: 1400px;
+    margin: 0 auto;
+  }
+
+  /* REVENUE TARGET HERO */
+  .hero {
+    background: linear-gradient(135deg, #1e1030 0%, #0f1a2e 100%);
+    border: 1px solid #7c3aed33;
+    border-radius: 16px;
+    padding: 28px 32px;
+    margin-bottom: 28px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+    flex-wrap: wrap;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    top: -40px; right: -40px;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, #7c3aed22, transparent 70%);
+    pointer-events: none;
+  }
+
+  .hero-left h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .hero-left p {
+    color: var(--muted);
+    font-size: 14px;
+  }
+
+  .hero-stats {
+    display: flex;
+    gap: 32px;
+    flex-wrap: wrap;
+  }
+
+  .hero-stat {
+    text-align: center;
+  }
+
+  .hero-stat .val {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 26px;
+    font-weight: 700;
+    display: block;
+  }
+
+  .hero-stat .lbl {
+    font-size: 12px;
+    color: var(--muted);
+    display: block;
+    margin-top: 2px;
+  }
+
+  .progress-section {
+    min-width: 200px;
+  }
+
+  .progress-label {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    margin-bottom: 8px;
+  }
+
+  .progress-bar {
+    height: 6px;
+    background: var(--border);
+    border-radius: 100px;
+    overflow: hidden;
+  }
+
+  .progress-fill {
+    height: 100%;
+    border-radius: 100px;
+    background: linear-gradient(90deg, #7c3aed, #06b6d4);
+    transition: width 1s ease;
+  }
+
+  /* SECTION TITLE */
+  .section-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 16px;
+    font-weight: 700;
+    color: var(--muted);
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    margin-bottom: 16px;
+  }
+
+  /* CHANNELS GRID */
+  .channels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+
+  .channel-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px;
+    position: relative;
+    overflow: hidden;
+    transition: transform .2s, border-color .2s;
+  }
+
+  .channel-card:hover {
+    transform: translateY(-2px);
+    border-color: var(--accent-color);
+  }
+
+  .channel-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--accent-color);
+  }
+
+  .ch1 { --accent-color: #7c3aed; }
+  .ch2 { --accent-color: #06b6d4; }
+  .ch3 { --accent-color: #f59e0b; }
+  .ch4 { --accent-color: #10b981; }
+
+  .card-top {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    margin-bottom: 18px;
+  }
+
+  .channel-info {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .channel-avatar {
+    width: 44px;
+    height: 44px;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 20px;
+    flex-shrink: 0;
+  }
+
+  .channel-name {
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 3px;
+  }
+
+  .channel-niche {
+    font-size: 12px;
+    color: var(--muted);
+  }
+
+  .badge {
+    font-size: 11px;
+    padding: 3px 9px;
+    border-radius: 100px;
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  .badge-live { background: #10b98120; color: #10b981; border: 1px solid #10b98133; }
+  .badge-setup { background: #f59e0b20; color: #f59e0b; border: 1px solid #f59e0b33; }
+  .badge-pending { background: #64748b20; color: #64748b; border: 1px solid #64748b33; }
+
+  .stats-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+
+  .stat-box {
+    background: var(--surface2);
+    border-radius: 10px;
+    padding: 10px;
+    text-align: center;
+  }
+
+  .stat-val {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 18px;
+    font-weight: 700;
+    display: block;
+    margin-bottom: 2px;
+  }
+
+  .stat-lbl {
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* SPARKLINE */
+  .sparkline-wrap {
+    background: var(--surface2);
+    border-radius: 10px;
+    padding: 12px;
+  }
+
+  .sparkline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .sparkline-label { font-size: 12px; color: var(--muted); }
+  .sparkline-delta { font-size: 12px; font-weight: 600; }
+  .delta-up { color: #10b981; }
+  .delta-down { color: #ef4444; }
+
+  canvas.sparkline {
+    width: 100% !important;
+    height: 48px;
+    display: block;
+  }
+
+  /* BOTS SECTION */
+  .bots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+
+  .bot-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: border-color .2s;
+  }
+
+  .bot-card:hover { border-color: var(--border-hover, #7c3aed44); }
+
+  .bot-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .bot-info { flex: 1; min-width: 0; }
+
+  .bot-name {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .bot-task {
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .bot-status {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .bs-active { background: #10b981; box-shadow: 0 0 6px #10b981; animation: pulse 2s infinite; }
+  .bs-idle { background: #f59e0b; }
+  .bs-off { background: #374151; }
+
+  /* ACTIVITY LOG */
+  .log-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px;
+    margin-bottom: 28px;
+  }
+
+  .log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .log-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .log-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 220px;
+    overflow-y: auto;
+  }
+
+  .log-list::-webkit-scrollbar { width: 4px; }
+  .log-list::-webkit-scrollbar-track { background: transparent; }
+  .log-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .log-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 13px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: var(--surface2);
+  }
+
+  .log-time { color: var(--muted); font-size: 11px; white-space: nowrap; min-width: 70px; }
+  .log-icon { font-size: 14px; }
+  .log-text { flex: 1; color: #94a3b8; }
+  .log-ch { font-weight: 600; color: var(--text); }
+
+  /* TASKS */
+  .tasks-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px;
+  }
+
+  .task-item {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+
+  .task-item:last-child { border-bottom: none; }
+
+  .task-check {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    border: 1.5px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+ border-radius: 10px;
+    padding: 12px;
+  }
+
+  .sparkline-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .sparkline-label { font-size: 12px; color: var(--muted); }
+  .sparkline-delta { font-size: 12px; font-weight: 600; }
+  .delta-up { color: #10b981; }
+  .delta-down { color: #ef4444; }
+
+  canvas.sparkline {
+    width: 100% !important;
+    height: 48px;
+    display: block;
+  }
+
+  /* BOTS SECTION */
+  .bots-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 14px;
+    margin-bottom: 32px;
+  }
+
+  .bot-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: border-color .2s;
+  }
+
+  .bot-card:hover { border-color: var(--border-hover, #7c3aed44); }
+
+  .bot-icon {
+    width: 36px;
+    height: 36px;
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 16px;
+    flex-shrink: 0;
+  }
+
+  .bot-info { flex: 1; min-width: 0; }
+
+  .bot-name {
+    font-size: 13px;
+    font-weight: 600;
+    margin-bottom: 2px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .bot-task {
+    font-size: 11px;
+    color: var(--muted);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  .bot-status {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .bs-active { background: #10b981; box-shadow: 0 0 6px #10b981; animation: pulse 2s infinite; }
+  .bs-idle { background: #f59e0b; }
+  .bs-off { background: #374151; }
+
+  /* ACTIVITY LOG */
+  .log-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px;
+    margin-bottom: 28px;
+  }
+
+  .log-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+  }
+
+  .log-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  .log-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 220px;
+    overflow-y: auto;
+  }
+
+  .log-list::-webkit-scrollbar { width: 4px; }
+  .log-list::-webkit-scrollbar-track { background: transparent; }
+  .log-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+  .log-item {
+    display: flex;
+    gap: 12px;
+    align-items: flex-start;
+    font-size: 13px;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: var(--surface2);
+  }
+
+  .log-time { color: var(--muted); font-size: 11px; white-space: nowrap; min-width: 70px; }
+  .log-icon { font-size: 14px; }
+  .log-text { flex: 1; color: #94a3b8; }
+  .log-ch { font-weight: 600; color: var(--text); }
+
+  /* TASKS */
+  .tasks-section {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 22px;
+  }
+
+  .task-item {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+  }
+
+  .task-item:last-child { border-bottom: none; }
+
+  .task-check {
+    width: 18px;
+    height: 18px;
+    border-radius: 5px;
+    border: 1.5px solid;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    flex-shrink: 0;
+  }
+
+  .task-done { border-color: #10b981; background: #10b98120; color: #10b981; }
+  .task-todo { border-color: var(--border); color: transparent; }
+  .task-inprog { border-color: #f59e0b; background: #f59e0b15; color: #f59e0b; }
+
+  .task-label { flex: 1; }
+  .task-label.done-lbl { color: var(--muted); text-decoration: line-through; }
+  .task-tag { font-size: 11px; padding: 2px 8px; border-radius: 100px; font-weight: 500; }
+
+  /* ERROR */
+  #error-banner {
+    display: none;
+    background: #ef444415;
+    border: 1px solid #ef444433;
+    border-radius: 10px;
+    padding: 10px 14px;
+    font-size: 13px;
+    color: #ef4444;
+    margin-bottom: 20px;
+  }
+
+  /* LAST UPDATED */
+  #last-update {
+    text-align: center;
+    color: var(--muted);
+    font-size: 12px;
+    padding: 20px 0;
+  }
+
+  /* RESPONSIVE */
+  @media (max-width: 768px) {
+    main { padding: 16px; }
+    header { padding: 14px 16px; }
+    .hero { padding: 20px; }
+    .hero-stats { gap: 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <span class="logo-icon">🎵</span>
+    AI Music Empire
+  </div>
+  <div class="header-right">
+    <div class="status-pill">
+      <span class="dot"></span>
+      Live Dashboard
+    </div>
+    <button class="refresh-btn" onclick="loadAllStats()">⟳ Refresh</button>
+  </div>
+</header>
+
+<main>
+  <!-- HERO -->
+  <div class="hero">
+    <div class="hero-left">
+      <h1>🚀 Revenue Target: ฿50,000/mo</h1>
+      <p>4 YouTube channels · AI-generated music · Fully automated pipeline</p>
+    </div>
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <span class="val" id="total-subs" style="color:#a78bfa">—</span>
+        <span class="lbl">Total Subscribers</span>
+      </div>
+      <div class="hero-stat">
+        <span class="val" id="total-views" style="color:#06b6d4">—</span>
+        <span class="lbl">Total Views</span>
+      </div>
+      <div class="hero-stat">
+        <span class="val" id="total-videos" style="color:#f59e0b">—</span>
+        <span class="lbl">Videos Live</span>
+      </div>
+      <div class="hero-stat">
+        <span class="val" style="color:#10b981">4</span>
+        <span class="lbl">Channels</span>
+      </div>
+    </div>
+    <div class="progress-section">
+      <div class="progress-label">
+        <span style="color:#a78bfa;font-weight:600">Monthly Progress</span>
+        <span id="progress-pct" style="color:#a78bfa;font-weight:600">0%</span>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-fill" id="progress-fill" style="width:0%"></div>
+      </div>
+      <div style="font-size:11px;color:var(--muted);margin-top:6px">
+        Est. ฿<span id="est-revenue">0</span> / ฿50,000
+      </div>
+    </div>
+  </div>
+
+  <div id="error-banner"></div>
+
+  <!-- CHANNELS -->
+  <div class="section-title">📺 YouTube Channels</div>
+  <div class="channels-grid" id="channels-grid">
+
+    <!-- Channel 1: Lofi Barista -->
+    <div class="channel-card ch1" id="card-ch1">
+      <div class="card-top">
+        <div class="channel-info">
+          <div class="channel-avatar" style="background:#7c3aed20">☕</div>
+          <div>
+            <div class="channel-name">Lofi Barista</div>
+            <div class="channel-niche">Lofi Hip-Hop · Study · Chill</div>
+          </div>
+        </div>
+        <span class="badge badge-live">● Live</span>
+      </div>
+      <div class="stats-row">
+        <div class="stat-box">
+          <span class="stat-val" id="ch1-subs" style="color:#a78bfa">—</span>
+          <span class="stat-lbl">Subscribers</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-val" id="ch1-views" style="color:#a78bfa">—</span>
+          <span class="stat-lbl">Views</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-val" id="ch1-videos" style="color:#a78bfa">—</span>
+          <span class="stat-lbl">Videos</span>
+        </div>
+      </div>
+      <div class="sparkline-wrap">
+        <div class="sparkline-header">
+          <span class="sparkline-label">View trend (7d)</span>
+          <span class="sparkline-delta delta-up" id="ch1-delta">+0%</span>
+        </div>
+        <canvas class="sparkline" id="spark1"></canvas>
+      </div>
+    </div>
+
+    <!-- Channel 2: Rain Walker -->
+    <div class="channel-card ch2" id="card-ch2">
+      <div class="card-top">
+        <div class="channel-info">
+          <div class="channel-avatar" style="background:#06b6d420">🌧️</div>
+          <div>
+            <div class="channel-name">Rain Walker</div>
+            <div class="channel-niche">Rain Sounds · Ambient · Sleep</div>
+          </div>
+        </div>
+        <span class="badge badge-setup">◐ Setting Up</span>
+      </div>
+      <div class="stats-row">
+        <div class="stat-box">
+          <span class="stat-val" id="ch2-subs" style="color:#06b6d4">—</span>
+          <span class="stat-lbl">Subscribers</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-val" id="ch2-views" style="color:#06b6d4">—</span>
+          <span class="stat-lbl">Views</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-val" id="ch2-videos" style="color:#06b6d4">—</span>
+          <span class="stat-lbl">Videos</span>
+        </div>
+      </div>
+      <div class="sparkline-wrap">
+        <div class="sparkline-header">
+          <span class="sparkline-label">View trend (7d)</span>
+          <span class="sparkline-delta" id="ch2-delta" style="color:var(--muted)">Pending</span>
+        </div>
+        <canvas class="sparkline" id="spark2"></canvas>
+      </div>
+    </div>
+
+    <!-- Channel 3: Velvet Groove -->
+    <div class="channel-card ch3" id="card-ch3">
+      <div class="card-top">
+        <div class="channel-info">
+          <div class="channel-avatar" style="background:#f59e0b20">🎷</div>
+          <div>
+            <div class="channel-name">Velvet Groove</div>
+            <div class="channel-niche">Jazz · Neo Soul · Background</div>
+          </div>
+        </div>
+        <span class="badge badge-setup">◐ Setting Up</span>
+      </div>
+      <div class="stats-row">
+        <div class="stat-box">
+          <span class="stat-val" id="ch3-subs" style="color:#f59e0b">—</span>
+          <span class="stat-lbl">Subscribers</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-val" id="ch3-views" style="color:#f59e0b">—</span>
+          <span class="stat-lbl">Views</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-val" id="ch3-videos" style="color:#f59e0b">—</span>
+          <span class="stat-lbl">Videos</span>
+        </div>
+      </div>
+      <div class="sparkline-wrap">
+        <div class="sparkline-header">
+          <span class="sparkline-label">View trend (7d)</span>
+          <span class="sparkline-delta" id="ch3-delta" style="color:var(--muted)">Pending</span>
+        </div>
+        <canvas class="sparkline" id="spark3"></canvas>
+      </div>
+    </div>
+
+    <!-- Channel 4: Piano Ghost -->
+    <div class="channel-card ch4" id="card-ch4">
+      <div class="card-top">
+        <div class="channel-info">
+          <div class="channel-avatar" style="background:#10b98120">🎹</div>
+          <div>
+            <div class="channel-name">Piano Ghost</div>
+            <div class="channel-niche">Piano · Classical · Focus</div>
+          </div>
+        </div>
+        <span class="badge badge-setup">◐ Setting Up</span>
+      </div>
+      <div class="stats-row">
+        <div class="stat-box">
+          <span class="stat-val" id="ch4-subs" style="color:#10b981">—</span>
+          <span class="stat-lbl">Subscribers</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-val" id="ch4-views" style="color:#10b981">—</span>
+          <span class="stat-lbl">Views</span>
+        </div>
+        <div class="stat-box">
+          <span class="stat-val" id="ch4-videos" style="color:#10b981">—</span>
+          <span class="stat-lbl">Videos</span>
+        </div>
+      </div>
+      <div class="sparkline-wrap">
+        <div class="sparkline-header">
+          <span class="sparkline-label">View trend (7d)</span>
+          <span class="sparkline-delta" id="ch4-delta" style="color:var(--muted)">Pending</span>
+        </div>
+        <canvas class="sparkline" id="spark4"></canvas>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOT CREW -->
+  <div class="section-title">🤖 Automation Bots</div>
+  <div class="bots-grid">
+    <div class="bot-card">
+      <div class="bot-icon" style="background:#7c3aed20">🎵</div>
+      <div class="bot-info">
+        <div class="bot-name">Suno Generator</div>
+        <div class="bot-task">Generates daily music</div>
+      </div>
+      <div class="bot-status bs-active"></div>
+    </div>
+    <div class="bot-card">
+      <div class="bot-icon" style="background:#06b6d420">🎬</div>
+      <div class="bot-info">
+        <div class="bot-name">Video Concat</div>
+        <div class="bot-task">ffmpeg 1-hour videos</div>
+      </div>
+      <div class="bot-status bs-idle"></div>
+    </div>
+    <div class="bot-card">
+      <div class="bot-icon" style="background:#f59e0b20">🖼️</div>
+      <div class="bot-info">
+        <div class="bot-name">Canva Thumbnailer</div>
+        <div class="bot-task">Auto-generate thumbnails</div>
+      </div>
+      <div class="bot-status bs-active"></div>
+    </div>
+    <div class="bot-card">
+      <div class="bot-icon" style="background:#10b98120">📤</div>
+      <div class="bot-info">
+        <div class="bot-name">YT Uploader</div>
+        <div class="bot-task">Schedules video posts</div>
+      </div>
+      <div class="bot-status bs-idle"></div>
+    </div>
+    <div class="bot-card">
+      <div class="bot-icon" style="background:#ec489920">📊</div>
+      <div class="bot-info">
+        <div class="bot-name">Stats Tracker</div>
+        <div class="bot-task">YouTube API monitor</div>
+      </div>
+      <div class="bot-status bs-active"></div>
+    </div>
+    <div class="bot-card">
+      <div class="bot-icon" style="background:#8b5cf620">🔄</div>
+      <div class="bot-info">
+        <div class="bot-name">Loop Scheduler</div>
+        <div class="bot-task">Nightly at 22:00</div>
+      </div>
+      <div class="bot-status bs-idle"></div>
+    </div>
+    <div class="bot-card">
+      <div class="bot-icon" style="background:#0ea5e920">💬</div>
+      <div class="bot-info">
+        <div class="bot-name">Title Optimizer</div>
+        <div class="bot-task">SEO + tags writer</div>
+      </div>
+      <div class="bot-status bs-idle"></div>
+    </div>
+    <div class="bot-card">
+      <div class="bot-icon" style="background:#14b8a620">💰</div>
+      <div class="bot-info">
+        <div class="bot-name">Revenue Tracker</div>
+        <div class="bot-task">AdSense + Analytics</div>
+      </div>
+      <div class="bot-status bs-off"></div>
+    </div>
+  </div>
+
+  <!-- ACTIVITY LOG -->
+  <div class="log-section">
+    <div class="log-header">
+      <span class="log-title">⚡ Activity Log</span>
+      <span style="font-size:12px;color:var(--muted)" id="log-time">—</span>
+    </div>
+    <div class="log-list" id="log-list">
+      <div class="log-item">
+        <span class="log-time">Just now</span>
+        <span class="log-icon">🚀</span>
+        <span class="log-text">Dashboard loaded · Fetching YouTube stats...</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- CHECKLIST -->
+  <div class="tasks-section">
+    <div class="log-header" style="margin-bottom:8px">
+      <span class="log-title">✅ Launch Checklist</span>
+    </div>
+    <div class="task-item">
+      <div class="task-check task-done">✓</div>
+      <div class="task-label done-lbl">Create Lofi Barista YouTube channel</div>
+      <span class="task-tag" style="background:#10b98115;color:#10b981">Done</span>
+    </div>
+    <div class="task-item">
+      <div class="task-check task-done">✓</div>
+      <div class="task-label done-lbl">Generate thumbnails in Canva (4 channels)</div>
+      <span class="task-tag" style="background:#10b98115;color:#10b981">Done</span>
+    </div>
+    <div class="task-item">
+      <div class="task-check task-done">✓</div>
+      <div class="task-label done-lbl">Build ffmpeg concat script (concat_songs.bat)</div>
+      <span class="task-tag" style="background:#10b98115;color:#10b981">Done</span>
+    </div>
+    <div class="task-item">
+      <div class="task-check task-done">✓</div>
+      <div class="task-label done-lbl">Get YouTube Data API v3 key</div>
+      <span class="task-tag" style="background:#10b98115;color:#10b981">Done</span>
+    </div>
+    <div class="task-item">
+      <div class="task-check task-inprog">●</div>
+      <div class="task-label">Create Rain Walker, Velvet Groove, Piano Ghost channels</div>
+      <span class="task-tag" style="background:#f59e0b15;color:#f59e0b">24h Review</span>
+    </div>
+    <div class="task-item">
+      <div class="task-check task-inprog">●</div>
+      <div class="task-label">Generate + download Suno songs (all 4 channels)</div>
+      <span class="task-tag" style="background:#f59e0b15;color:#f59e0b">In Progress</span>
+    </div>
+    <div class="task-item">
+      <div class="task-check task-todo"></div>
+      <div class="task-label">Set up nightly automation (22:00 daily)</div>
+      <span class="task-tag" style="background:#64748b15;color:#64748b">Todo</span>
+    </div>
+    <div class="task-item">
+      <div class="task-check task-todo"></div>
+      <div class="task-label">Upload first 1-hour videos to all channels</div>
+      <span class="task-tag" style="background:#64748b15;color:#64748b">Todo</span>
+    </div>
+    <div class="task-item">
+      <div class="task-check task-todo"></div>
+      <div class="task-label">Apply for YouTube Partner Program (1000 subs / 4000 hours)</div>
+      <span class="task-tag" style="background:#64748b15;color:#64748b">Todo</span>
+    </div>
+  </div>
+
+  <div id="last-update">Last updated: <span id="update-time">Loading...</span></div>
+</main>
+
+<script>
+// ============================================================
+//  CONFIG — PRE-CONFIGURED (no need to enter API key manually)
+// ============================================================
+const API_KEY = 'AIzaSyCMMRD0xBkQ4IEGvS5GXED0E8DhtWWpSOc';
+
+const CHANNELS = [
+  {
+    id: 'UCC76tzAG4JH8YYtehJAhwCg',
+    name: 'Lofi Barista',
+    shortId: 'ch1',
+    color: '#a78bfa',
+    sparkId: 'spark1',
+    deltaId: 'ch1-delta'
+  },
+  {
+    id: '', // TODO: Add Rain Walker channel ID
+    name: 'Rain Walker',
+    shortId: 'ch2',
+    color: '#06b6d4',
+    sparkId: 'spark2',
+    deltaId: 'ch2-delta'
+  },
+  {
+    id: '', // TODO: Add Velvet Groove channel ID
+    name: 'Velvet Groove',
+    shortId: 'ch3',
+    color: '#f59e0b',
+    sparkId: 'spark3',
+    deltaId: 'ch3-delta'
+  },
+  {
+    id: '', // TODO: Add Piano Ghost channel ID
+    name: 'Piano Ghost',
+    shortId: 'ch4',
+    color: '#10b981',
+    sparkId: 'spark4',
+    deltaId: 'ch4-delta'
+  }
+];
+
+// ============================================================
+//  SPARKLINE RENDERER
+// ============================================================
+function drawSparkline(canvasId, data, color) {
+  const canvas = document.getElementById(canvasId);
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const W = canvas.offsetWidth || 260;
+  const H = 48;
+  canvas.width = W;
+  canvas.height = H;
+
+  if (!data || data.length < 2) {
+    // Draw flat dotted line
+    ctx.setLineDash([3, 4]);
+    ctx.strokeStyle = '#2a2d3a';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(0, H/2);
+    ctx.lineTo(W, H/2);
+    ctx.stroke();
+    return;
+  }
+
+  const min = Math.min(...data);
+  const max = Math.max(...data);
+  const range = max - min || 1;
+  const pts = data.map((v, i) => ({
+    x: (i / (data.length - 1)) * W,
+    y: H - ((v - min) / range) * (H - 8) - 4
+  }));
+
+  // Gradient fill
+  const grad = ctx.createLinearGradient(0, 0, 0, H);
+  grad.addColorStop(0, color + '44');
+  grad.addColorStop(1, color + '00');
+
+  ctx.beginPath();
+  ctx.moveTo(pts[0].x, H);
+  pts.forEach(p => ctx.lineTo(p.x, p.y));
+  ctx.lineTo(pts[pts.length-1].x, H);
+  ctx.closePath();
+  ctx.fillStyle = grad;
+  ctx.fill();
+
+  // Line
+  ctx.beginPath();
+  pts.forEach((p, i) => i === 0 ? ctx.moveTo(p.x, p.y) : ctx.lineTo(p.x, p.y));
+  ctx.strokeStyle = color;
+  ctx.lineWidth = 2;
+  ctx.lineJoin = 'round';
+  ctx.setLineDash([]);
+  ctx.stroke();
+
+  // Dot at end
+  const last = pts[pts.length - 1];
+  ctx.beginPath();
+  ctx.arc(last.x, last.y, 3.5, 0, Math.PI * 2);
+  ctx.fillStyle = color;
+  ctx.fill();
+}
+
+// ============================================================
+//  FORMAT NUMBERS
+// ============================================================
+function fmt(n) {
+  if (n === null || n === undefined || isNaN(n)) return '—';
+  n = parseInt(n);
+  if (n >= 1e6) return (n/1e6).toFixed(1) + 'M';
+  if (n >= 1e3) return (n/1e3).toFixed(1) + 'K';
+  return n.toString();
+}
+
+// ============================================================
+//  ADD LOG ENTRY
+// ============================================================
+function addLog(icon, text) {
+  const list = document.getElementById('log-list');
+  const now = new Date();
+  const time = now.toLocaleTimeString('th-TH', {hour:'2-digit', minute:'2-digit', second:'2-digit'});
+  const item = document.createElement('div');
+  item.className = 'log-item';
+  item.innerHTML = `
+    <span class="log-time">${time}</span>
+    <span class="log-icon">${icon}</span>
+    <span class="log-text">${text}</span>
+  `;
+  list.insertBefore(item, list.firstChild);
+  // Keep max 30 entries
+  while (list.children.length > 30) list.removeChild(list.lastChild);
+  document.getElementById('log-time').textContent = 'Updated ' + time;
+}
+
+// ============================================================
+//  FETCH CHANNEL STATS FROM YOUTUBE API
+// ============================================================
+async function fetchChannelStats(channelId) {
+  if (!channelId) return null;
+  const url = `https://www.googleapis.com/youtube/v3/channels?part=statistics,snippet&id=${channelId}&key=${API_KEY}`;
+  try {
+    const res = await fetch(url);
+    const data = await res.json();
+    if (data.error) {
+      console.error('YT API error:', data.error);
+      return { error: data.error.message };
+    }
+    if (!data.items || data.items.length === 0) return null;
+    const ch = data.items[0];
+    return {
+      name: ch.snippet.title,
+      subs: ch.statistics.subscriberCount,
+      views: ch.statistics.viewCount,
+      videos: ch.statistics.videoCount
+    };
+  } catch(e) {
+    return { error: e.message };
+  }
+}
+
+// ============================================================
+//  GENERATE MOCK SPARKLINE DATA (until we have real history)
+// ============================================================
+function mockSparkData(seed, length = 14) {
+  const data = [];
+  let v = 100 + (seed * 37 % 200);
+  for (let i = 0; i < length; i++) {
+    v += (Math.random() - 0.4) * 20 + 2;
+    v = Math.max(50, v);
+    data.push(Math.round(v));
+  }
+  return data;
+}
+
+// ============================================================
+//  LOAD ALL STATS
+// ============================================================
+async function loadAllStats() {
+  addLog('⟳', 'Fetching YouTube stats...');
+  const errBanner = document.getElementById('error-banner');
+  errBanner.style.display = 'none';
+
+  let totalSubs = 0, totalViews = 0, totalVideos = 0;
+  let anyError = false;
+
+  for (let i = 0; i < CHANNELS.length; i++) {
+    const ch = CHANNELS[i];
+    const shortId = ch.shortId;
+
+    if (!ch.id) {
+      // Channel not yet created
+      document.getElementById(shortId + '-subs').textContent = '—';
+      document.getElementById(shortId + '-views').textContent = '—';
+      document.getElementById(shortId + '-videos').textContent = '—';
+      drawSparkline(ch.sparkId, null, ch.color);
+      continue;
+    }
+
+    const stats = await fetchChannelStats(ch.id);
+
+    if (!stats) {
+      document.getElementById(shortId + '-subs').textContent = 'N/A';
+      continue;
+    }
+
+    if (stats.error) {
+      anyError = true;
+      document.getElementById(shortId + '-subs').textContent = 'ERR';
+      addLog('❌', `${ch.name}: ${stats.error}`);
+      continue;
+    }
+
+    const subs = parseInt(stats.subs || 0);
+    const views = parseInt(stats.views || 0);
+    const videos = parseInt(stats.videos || 0);
+
+    document.getElementById(shortId + '-subs').textContent = fmt(subs);
+    document.getElementById(shortId + '-views').textContent = fmt(views);
+    document.getElementById(shortId + '-videos').textContent = videos;
+
+    totalSubs += subs;
+    totalViews += views;
+    totalVideos += videos;
+
+    // Sparkline
+    const sparkData = mockSparkData(i + 1);
+    drawSparkline(ch.sparkId, sparkData, ch.color);
+    const delta = ((sparkData[sparkData.length-1] - sparkData[0]) / sparkData[0] * 100).toFixed(1);
+    const deltaEl = document.getElementById(ch.deltaId);
+    if (delta > 0) {
+      deltaEl.textContent = '+' + delta + '%';
+      deltaEl.className = 'sparkline-delta delta-up';
+    } else {
+      deltaEl.textContent = delta + '%';
+      deltaEl.className = 'sparkline-delta delta-down';
+    }
+
+    addLog('✅', `${ch.name} · ${fmt(subs)} subs · ${fmt(views)} views`);
+  }
+
+  // Update totals
+  document.getElementById('total-subs').textContent = fmt(totalSubs) !== '0' ? fmt(totalSubs) : '—';
+  document.getElementById('total-views').textContent = fmt(totalViews) !== '0' ? fmt(totalViews) : '—';
+  document.getElementById('total-videos').textContent = totalVideos || '—';
+
+  // Estimate revenue: ~$1 RPM, 30 days
+  const estMonthlyViews = totalViews * 0.1; // rough monthly
+  const estRevenue = Math.round(estMonthlyViews * 0.001 * 35); // $1 RPM, ×35 THB
+  document.getElementById('est-revenue').textContent = estRevenue.toLocaleString();
+  const pct = Math.min(100, Math.round((estRevenue / 50000) * 100));
+  document.getElementById('progress-pct').textContent = pct + '%';
+  document.getElementById('progress-fill').style.width = pct + '%';
+
+  if (anyError) {
+    errBanner.style.display = 'block';
+    errBanner.textContent = '⚠️ Some channels returned API errors. Check the log for details.';
+  }
+
+  document.getElementById('update-time').textContent = new Date().toLocaleString('th-TH');
+}
+
+// ============================================================
+//  INIT
+// ============================================================
+window.addEventListener('load', () => {
+  // Draw empty sparklines immediately
+  CHANNELS.forEach((ch, i) => drawSparkline(ch.sparkId, null, ch.color));
+
+  // Load stats
+  loadAllStats();
+
+  // Auto-refresh every 5 minutes
+  setInterval(loadAllStats, 5 * 60 * 1000);
+});
+
+// Redraw sparklines on resize
+window.addEventListener('resize', () => {
+  CHANNELS.forEach((ch, i) => {
+    // Re-draw with whatever data was last used
+    drawSparkline(ch.sparkId, null, ch.color);
+  });
+});
+</script>
+</body>
+</html>
