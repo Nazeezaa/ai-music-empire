@@ -58,12 +58,44 @@ def process_track(input_path, config=None):
         result = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
         if result.returncode == 0:
             logger.info(f"Processed: {output_path} ({os.path.getsize(output_path)/1024/1024:.1f} MB)")
-            return output_path
+            # Create video for YouTube upload
+            video_path = audio_to_video(output_path)
+            return video_path or output_path
         else:
             logger.error(f"FFmpeg error: {result.stderr[-500:]}")
             return None
     except subprocess.TimeoutExpired:
         logger.error("FFmpeg timed out")
+        return None
+
+
+def audio_to_video(audio_path):
+    """Convert audio to mp4 video with solid color background for YouTube upload."""
+    base = os.path.splitext(audio_path)[0]
+    video_path = f"{base}.mp4"
+    duration = get_duration(audio_path)
+    if duration is None:
+        duration = 300  # fallback 5 min
+    # Create video with dark purple background + audio
+    cmd = [
+        "ffmpeg", "-y",
+        "-f", "lavfi", "-i", f"color=c=0x1a0a2e:s=1920x1080:d={duration}:r=1",
+        "-i", audio_path,
+        "-c:v", "libx264", "-tune", "stillimage", "-preset", "ultrafast",
+        "-c:a", "aac", "-b:a", "192k",
+        "-shortest", "-pix_fmt", "yuv420p",
+        video_path
+    ]
+    try:
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=600)
+        if result.returncode == 0:
+            logger.info(f"Video created: {video_path} ({os.path.getsize(video_path)/1024/1024:.1f} MB)")
+            return video_path
+        else:
+            logger.error(f"Video creation failed: {result.stderr[-500:]}")
+            return None
+    except subprocess.TimeoutExpired:
+        logger.error("Video creation timed out")
         return None
 
 
