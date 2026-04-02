@@ -34,12 +34,19 @@ def generate_track(config, genre=None, mood=None, duration=None):
     base_url = kie_config["base_url"]
     logger.info(f"Generating: genre={genre}, mood={mood}, duration={duration}s")
     headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
-    payload = {"prompt": f"{genre} {mood} music, high quality", "duration": duration, "format": kie_config.get("output_format", "mp3"), "callBackUrl": kie_config.get("callback_url", "https://example.com/callback")}
+    payload = {
+            "prompt": f"{genre} {mood} music, high quality",
+            "customMode": False,
+            "instrumental": True,
+            "model": kie_config.get("model", "V4"),
+            "callBackUrl": kie_config.get("callback_url", "https://example.com/callback")
+        }
     try:
         response = requests.post(f"{base_url}/generate", headers=headers, json=payload, timeout=30)
         response.raise_for_status()
         result = response.json()
-        task_id = result.get("task_id") or result.get("id")
+        data = result.get("data", {})
+        task_id = data.get("taskId") if isinstance(data, dict) else None
         if not task_id:
             logger.error(f"No task_id: {result}")
             return None
@@ -51,16 +58,20 @@ def generate_track(config, genre=None, mood=None, duration=None):
     for attempt in range(60):
         time.sleep(retry_delay)
         try:
-            sr = requests.get(f"{base_url}/tasks/{task_id}", headers=headers, timeout=30)
+            sr = requests.get(f"{base_url}/generate/record-info", headers=headers, params={"taskId": task_id}, timeout=30)
             sr.raise_for_status()
             sd = sr.json()
-            status = sd.get("status", "").lower()
-            if status in ("completed", "done", "success"):
-                audio_url = sd.get("audio_url") or sd.get("download_url") or sd.get("result", {}).get("url")
-                if audio_url:
-                    return download_audio(audio_url, config, genre, mood)
+            task_data = sd.get("data", {})
+            status = task_data.get("status", "").upper() if isinstance(task_data, dict) else ""
+            if status == "SUCCESS":
+                suno_data = task_data.get("response", {}).get("sunoData", [])
+                if suno_data and len(suno_data) > 0:
+                    audio_url = suno_data[0].get("audioUrl")
+                    if audio_url:
+                        return download_audio(audio_url, config, genre, mood)
+                logger.error(f"No audio URL in response: {sd}")
                 return None
-            elif status in ("failed", "error"):
+            elif status in ("FAILED", "ERROR"):
                 logger.error(f"Failed: {sd}")
                 return None
             else:
