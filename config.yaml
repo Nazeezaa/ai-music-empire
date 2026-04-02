@@ -39,7 +39,7 @@ pipeline:
 
 content:
   # Templates for YouTube metadata
-  title_template: "\u{1F3B5} {genre} {mood} Music - AI Generated | {date}"
+  title_template: '🎵 {genre} {mood} Music - AI Generated | {date}'
   description_template: |
     \u{1F3A7} AI-generated {genre} music for {mood} vibes.
 
