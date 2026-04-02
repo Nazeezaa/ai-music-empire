@@ -70,7 +70,7 @@ def upload_to_youtube(audio_path, config=None, genre=None, mood=None):
     metadata = build_metadata(config, genre, mood)
     logger.info(f"Uploading: {metadata['snippet']['title']}")
     upload_url = "https://www.googleapis.com/upload/youtube/v3/videos"
-    headers = {"Authorization": f"Bearer {access_token}", "Content-Type": "application/json; charset=UTF-8", "X-Upload-Content-Type": "audio/mpeg", "X-Upload-Content-Length": str(os.path.getsize(audio_path))}
+    headers = {"Authorization": f"Bearer {access_token}", "Content-Type": "application/json; charset=UTF-8", "X-Upload-Content-Type": "video/mp4", "X-Upload-Content-Length": str(os.path.getsize(audio_path))}
     params = {"uploadType": "resumable", "part": "snippet,status"}
     try:
         init_response = requests.post(upload_url, headers=headers, params=params, json=metadata, timeout=30)
@@ -86,7 +86,7 @@ def upload_to_youtube(audio_path, config=None, genre=None, mood=None):
         return None
     try:
         with open(audio_path, "rb") as f:
-            upload_response = requests.put(resumable_url, headers={"Authorization": f"Bearer {access_token}", "Content-Type": "audio/mpeg"}, data=f, timeout=600)
+            upload_response = requests.put(resumable_url, headers={"Authorization": f"Bearer {access_token}", "Content-Type": "video/mp4"}, data=f, timeout=600)
             upload_response.raise_for_status()
         video_data = upload_response.json()
         video_id = video_data.get("id")
