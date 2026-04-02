@@ -56,7 +56,7 @@ def build_metadata(config, genre=None, mood=None):
     title = content["title_template"].format(genre=genre.title(), mood=mood.title(), date=date_str)
     description = content["description_template"].format(genre=genre, mood=mood)
     return {
-        "snippet": {"title": title[:100], "description": description[:5000], "tags": content["tags"], "categoryId": yt["category_id"], "defaultLanguage": yt.get("default_language", "en")},
+        "snippet": {"title": title[:100], "description": description[:5000], "tags": content["tags"], "categoryId": str(yt["category_id"]), "defaultLanguage": yt.get("default_language", "en")},
         "status": {"privacyStatus": yt["privacy_status"], "selfDeclaredMadeForKids": False}
     }
 
@@ -81,6 +81,8 @@ def upload_to_youtube(audio_path, config=None, genre=None, mood=None):
             return None
     except requests.exceptions.RequestException as e:
         logger.error(f"Upload init failed: {e}")
+        if hasattr(e, 'response') and e.response is not None:
+            logger.error(f"Response body: {e.response.text}")
         return None
     try:
         with open(audio_path, "rb") as f:
