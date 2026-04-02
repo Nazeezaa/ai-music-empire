@@ -41,12 +41,12 @@ content:
   # Templates for YouTube metadata
   title_template: '🎵 {genre} {mood} Music - AI Generated | {date}'
   description_template: |
-    \u{1F3A7} AI-generated {genre} music for {mood} vibes.
+    🎧 AI-generated {genre} music for {mood} vibes.
 
     Created with AI Music Empire pipeline.
     Genre: {genre} | Mood: {mood}
 
-    \u{1F514} Subscribe for daily AI music!
+    🔔 Subscribe for daily AI music!
 
     #AIMusic #LoFi #ChillBeats #StudyMusic #AIGenerated
   tags:
