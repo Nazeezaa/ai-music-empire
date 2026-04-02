@@ -1,0 +1,119 @@
+# AI Music Empire - Smart Agent Configuration
+
+# Scoring Weights (must sum to ~1.0)
+scoring_weights:
+  views: 0.25
+  watch_time_hours: 0.20
+  ctr_percent: 0.20
+  retention_percent: 0.15
+  likes_ratio: 0.10
+  comments: 0.10
+
+# Learning Settings
+learning_rate: 0.1
+history_max_entries: 5000
+min_data_points_for_adjustment: 10
+
+# Channels
+channels:
+  - name: "LoFi Dreams"
+    channel_id: "UC_LOFI_DREAMS_ID"
+    primary_genre: "lofi"
+    upload_frequency: "daily"
+    target_duration_minutes: 60
+    monetization: true
+
+  - name: "Ambient Escapes"
+    channel_id: "UC_AMBIENT_ESCAPES_ID"
+    primary_genre: "ambient"
+    upload_frequency: "every_2_days"
+    target_duration_minutes: 120
+    monetization: true
+
+  - name: "Synthwave Drive"
+    channel_id: "UC_SYNTHWAVE_DRIVE_ID"
+    primary_genre: "synthwave"
+    upload_frequency: "every_2_days"
+    target_duration_minutes: 45
+    monetization: true
+
+  - name: "Classical Calm"
+    channel_id: "UC_CLASSICAL_CALM_ID"
+    primary_genre: "classical"
+    upload_frequency: "3_per_week"
+    target_duration_minutes: 90
+    monetization: true
+
+# Genre Settings
+genres:
+  lofi:
+    bpm_range: [70, 85]
+    prompt_style: "jazzy, vinyl crackle, chill, mellow"
+    tags: ["lofi", "study music", "chill beats", "lofi hip hop"]
+    thumbnail_style: "anime girl studying, warm colors"
+
+  ambient:
+    bpm_range: [50, 70]
+    prompt_style: "ethereal pads, atmospheric, dreamy, spacious"
+    tags: ["ambient", "relaxing", "meditation", "sleep music"]
+    thumbnail_style: "nature landscape, soft gradients"
+
+  synthwave:
+    bpm_range: [100, 130]
+    prompt_style: "retro 80s synths, punchy bass, neon, driving"
+    tags: ["synthwave", "retrowave", "80s", "cyberpunk"]
+    thumbnail_style: "neon grid, sunset, retro car"
+
+  classical:
+    bpm_range: [60, 120]
+    prompt_style: "piano, orchestral, emotional, dynamic"
+    tags: ["classical", "piano", "orchestra", "relaxing classical"]
+    thumbnail_style: "grand piano, concert hall, elegant"
+
+  chillhop:
+    bpm_range: [75, 95]
+    prompt_style: "boom bap drums, Rhodes, tape saturation, mellow"
+    tags: ["chillhop", "jazz hop", "chill beats", "instrumental hip hop"]
+    thumbnail_style: "cozy room, coffee, rainy window"
+
+# Upload Schedule
+upload_schedule:
+  optimal_hours_utc: [14, 16, 18]
+  avoid_hours_utc: [2, 3, 4, 5]
+  best_days: ["Tuesday", "Thursday", "Saturday"]
+
+# A/B Testing
+ab_testing:
+  enabled: true
+  min_impressions_per_variant: 500
+  significance_level: 0.05
+  max_concurrent_tests: 5
+  auto_apply_winners: true
+
+# Competitor Tracking
+competitors:
+  - name: "Lofi Girl"
+    channel_id: "UCSJ4gkVC6NrvII8umztf0Aw"
+  - name: "Chillhop Music"
+    channel_id: "UCOxqgCwgOqC2lMqC5PYbDMg"
+  - name: "The Soul of Wind"
+    channel_id: "UCKGxEkbSfDGLmplDs1Ov2Ng"
+
+# Notifications
+notifications:
+  slack_webhook: ""  # Set via SLACK_WEBHOOK_URL env var
+  email: ""          # Set via NOTIFICATION_EMAIL env var
+  notify_on:
+    - "weekly_report"
+    - "ab_test_winner"
+    - "score_drop_alert"
+    - "revenue_milestone"
+
+# Paths
+paths:
+  learning_history: "data/learning_history.json"
+  analytics_cache: "data/analytics_cache.json"
+  trend_cache: "data/trend_cache.json"
+  ab_tests: "data/ab_tests.json"
+  revenue: "data/revenue.json"
+  reports: "reports/"
