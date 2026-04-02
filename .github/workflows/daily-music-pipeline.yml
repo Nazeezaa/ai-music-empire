@@ -1,0 +1,66 @@
+name: AI Music Empire - Daily Pipeline
+
+on:
+  schedule:
+    - cron: '0 15 * * *'
+  workflow_dispatch:
+    inputs:
+      genre:
+        description: 'Music genre (e.g., lofi, ambient, jazz)'
+        required: false
+        default: 'lofi'
+      mood:
+        description: 'Music mood (e.g., chill, energetic, focus)'
+        required: false
+        default: 'chill'
+
+jobs:
+  generate-and-upload:
+    runs-on: ubuntu-latest
+    env:
+      KIE_API_KEY: ${{ secrets.KIE_API_KEY }}
+      YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
+      YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
+      YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+          cache: 'pip'
+
+      - name: Install FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Install Python dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+
+      - name: Verify secrets are set
+        run: |
+          echo "Checking required secrets..."
+          if [ -z "$KIE_API_KEY" ]; then echo "KIE_API_KEY is not set!" && exit 1; fi
+          if [ -z "$YOUTUBE_CLIENT_ID" ]; then echo "YOUTUBE_CLIENT_ID is not set!" && exit 1; fi
+          if [ -z "$YOUTUBE_CLIENT_SECRET" ]; then echo "YOUTUBE_CLIENT_SECRET is not set!" && exit 1; fi
+          if [ -z "$YOUTUBE_REFRESH_TOKEN" ]; then echo "YOUTUBE_REFRESH_TOKEN is not set!" && exit 1; fi
+          echo "All secrets are configured"
+
+      - name: Run AI Music Pipeline
+        run: python run_pipeline.py
+
+      - name: Upload pipeline logs
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-logs-${{ github.run_number }}
+          path: |
+            pipeline.log
+            output/analytics_*.json
+          retention-days: 30
