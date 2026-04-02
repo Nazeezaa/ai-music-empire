@@ -34,7 +34,7 @@ def generate_track(config, genre=None, mood=None, duration=None):
     base_url = kie_config["base_url"]
     logger.info(f"Generating: genre={genre}, mood={mood}, duration={duration}s")
     headers = {"Authorization": f"Bearer {api_key}", "Content-Type": "application/json"}
-    payload = {"prompt": f"{genre} {mood} music, high quality", "duration": duration, "format": kie_config.get("output_format", "mp3")}
+    payload = {"prompt": f"{genre} {mood} music, high quality", "duration": duration, "format": kie_config.get("output_format", "mp3"), "callBackUrl": kie_config.get("callback_url", "https://example.com/callback")}
     try:
         response = requests.post(f"{base_url}/generate", headers=headers, json=payload, timeout=30)
         response.raise_for_status()
