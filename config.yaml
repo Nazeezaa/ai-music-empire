@@ -35,6 +35,8 @@ pipeline:
   max_retries: 3
   retry_delay: 10              # seconds
   tracks_per_run: 1
+  target_video_duration: 3600  # 1 hour
+  tracks_per_video: 30  # ~30 tracks x 2min = 1 hour
   log_file: "pipeline.log"
 
 content:
