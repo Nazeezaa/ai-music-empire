@@ -79,8 +79,8 @@
         if (!prefix) return;
 
         var subs = d.subscribers || 0;
-        var views = d.total_views || 0;
-        var vids = d.video_count || 0;
+        var views = d.views || 0;
+        var vids = d.videos || 0;
 
         totalSubs += subs;
         totalViews += views;
