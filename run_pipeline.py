@@ -11,6 +11,7 @@ from generate_music import generate_track, load_config
 from process_audio import process_track
 from upload_youtube import upload_to_youtube
 from check_analytics import get_channel_analytics
+from firestore_sync import init_firestore, log_pipeline_run, log_upload, log_activity
 
 log_format = "%(asctime)s [%(levelname)s] %(name)s: %(message)s"
 
@@ -30,6 +31,14 @@ def run_pipeline():
     logger.info("=" * 60)
     logger.info(f"AI Music Empire Pipeline - {datetime.now().isoformat()}")
     logger.info("=" * 60)
+
+    # Initialize Firestore
+    db = None
+    try:
+        db = init_firestore()
+    except Exception as e:
+        logger.warning(f"Failed to initialize Firestore: {e}")
+
     tracks_per_run = config["pipeline"].get("tracks_per_run", 1)
     results = []
     for i in range(tracks_per_run):
@@ -54,11 +63,27 @@ def run_pipeline():
         video_url = f"https://www.youtube.com/watch?v={video_id}"
         logger.info(f"Uploaded: {video_url}")
         results.append({"track": i+1, "status": "success", "video_id": video_id, "video_url": video_url})
+
+        # Log upload to Firestore
+        if db:
+            try:
+                channel_name = config["youtube"].get("channel_name", "AI Music Empire")
+                title = config["content"]["title_template"].format(
+                    genre=config["kie"].get("default_genre", "unknown"),
+                    mood=config["kie"].get("default_mood", "unknown"),
+                    date=datetime.now().strftime("%Y-%m-%d")
+                )
+                log_upload(db, title, channel_name, video_id)
+                log_activity(db, "📤", f"Uploaded video: {title[:50]}")
+            except Exception as e:
+                logger.warning(f"Failed to log upload to Firestore: {e}")
+
     logger.info("Step 4: Checking analytics...")
     try:
         analytics = get_channel_analytics(config, days=7)
     except Exception as e:
         logger.warning(f"Analytics check failed: {e}")
+
     logger.info("=" * 60)
     success = sum(1 for r in results if r["status"] == "success")
     failed = sum(1 for r in results if r["status"] == "failed")
@@ -68,6 +93,18 @@ def run_pipeline():
             logger.info(f"  Track {r['track']}: {r['video_url']}")
         else:
             logger.info(f"  Track {r['track']}: FAILED at {r['step']}")
+
+    # Log pipeline run to Firestore
+    if db:
+        try:
+            channel_name = config["youtube"].get("channel_name", "AI Music Empire")
+            run_status = "success" if failed == 0 else "failed"
+            log_pipeline_run(db, run_status, channel_name, success, 0)
+            log_activity(db, "✅" if run_status == "success" else "❌",
+                        f"Pipeline run completed: {success} success, {failed} failed")
+        except Exception as e:
+            logger.warning(f"Failed to log pipeline run to Firestore: {e}")
+
     if failed > 0:
         sys.exit(1)
 
