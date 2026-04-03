@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html><head><title>Seed Firestore</title></head>
+<body style="background:#111;color:#eee;font-family:monospace;padding:20px">
+<h2>AI Music Empire - Firestore Seeder</h2>
+<div id="log" style="white-space:pre-wrap;font-size:13px;margin-top:20px"></div>
+
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore-compat.js"></script>
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyD0s3b77TswtXEdXCR8wBaya75WJMQQ71E",
+  authDomain: "ai-music-empire-d9ab3.firebaseapp.com",
+  projectId: "ai-music-empire-d9ab3",
+  storageBucket: "ai-music-empire-d9ab3.firebasestorage.app",
+  messagingSenderId: "156384083622",
+  appId: "1:156384083622:web:c4acf71a52c5cb008abe67",
+  measurementId: "G-NDMWGDMF5V"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const log = (msg) => { document.getElementById('log').textContent += msg + '\n'; };
+
+async function seed() {
+  log('Starting Firestore seed...');
+  const now = firebase.firestore.Timestamp.now();
+
+  // 1. Channels
+  const channels = [
+    { id: 'ch1', name: 'Lofi Barista', subs: 47, views: 1823, videos: 12, status: 'active', color: '#a78bfa', handle: '@LofiBarista', youtubeId: 'UCLeWC_XL0ptnYZNpn7YEhfA', viewHistory: [120, 145, 168, 192, 210, 245, 280, 310, 350, 392, 430, 478, 520, 560], lastUpdated: now },
+    { id: 'ch2', name: 'Rain Walker', subs: 12, views: 340, videos: 5, status: 'active', color: '#06b6d4', handle: '@RainWalkerSounds', youtubeId: '', viewHistory: [30, 42, 55, 68, 72, 85, 92, 110, 125, 148, 170, 195, 220, 240], lastUpdated: now },
+    { id: 'ch3', name: 'Velvet Groove', subs: 5, views: 98, videos: 2, status: 'setup', color: '#f59e0b', handle: '@VelvetGrooveJazz', youtubeId: '', viewHistory: [8, 12, 18, 25, 30, 35, 42, 50, 58, 65, 72, 78, 85, 92], lastUpdated: now },
+    { id: 'ch4', name: 'Piano Ghost', subs: 3, views: 42, videos: 1, status: 'setup', color: '#10b981', handle: '@PianoGhostMusic', youtubeId: '', viewHistory: [5, 8, 10, 12, 15, 18, 20, 22, 25, 28, 30, 33, 38, 42], lastUpdated: now }
+  ];
+
+  for (const ch of channels) {
+    await db.collection('channels').doc(ch.id).set(ch);
+    log('  + Channel: ' + ch.name);
+  }
+
+  // 2. Pipeline Runs
+  const runs = [
+    { status: 'success', channel: 'Lofi Barista', tracksGenerated: 3, videoDuration: 3600, runNumber: 42, timestamp: new Date(Date.now() - 2*3600*1000) },
+    { status: 'success', channel: 'Rain Walker', tracksGenerated: 2, videoDuration: 7200, runNumber: 41, timestamp: new Date(Date.now() - 26*3600*1000) },
+    { status: 'failure', channel: 'Velvet Groove', tracksGenerated: 0, videoDuration: 0, runNumber: 40, timestamp: new Date(Date.now() - 50*3600*1000) },
+    { status: 'success', channel: 'Lofi Barista', tracksGenerated: 5, videoDuration: 3600, runNumber: 39, timestamp: new Date(Date.now() - 74*3600*1000) },
+    { status: 'success', channel: 'Piano Ghost', tracksGenerated: 1, videoDuration: 5400, runNumber: 38, timestamp: new Date(Date.now() - 98*3600*1000) }
+  ];
+
+  for (const run of runs) {
+    await db.collection('pipeline_runs').add(run);
+    log('  + Pipeline run #' + run.runNumber + ': ' + run.status);
+  }
+
+  // 3. Uploads
+  const uploads = [
+    { title: '3 Hours Lofi Hip Hop - Study & Chill Beats', channel: 'Lofi Barista', uploadDate: new Date(Date.now() - 1*3600*1000), views: 342, thumbnailUrl: 'https://img.youtube.com/vi/jfKfPfyJRdk/default.jpg', videoId: 'example1' },
+    { title: 'Midnight Rain Ambience - Deep Sleep Sounds', channel: 'Rain Walker', uploadDate: new Date(Date.now() - 24*3600*1000), views: 128, thumbnailUrl: 'https://img.youtube.com/vi/jfKfPfyJRdk/default.jpg', videoId: 'example2' },
+    { title: 'Smooth Jazz Piano - Work From Home', channel: 'Velvet Groove', uploadDate: new Date(Date.now() - 48*3600*1000), views: 55, thumbnailUrl: 'https://img.youtube.com/vi/jfKfPfyJRdk/default.jpg', videoId: 'example3' },
+    { title: 'Gentle Piano Melodies - Focus & Study', channel: 'Piano Ghost', uploadDate: new Date(Date.now() - 72*3600*1000), views: 22, thumbnailUrl: 'https://img.youtube.com/vi/jfKfPfyJRdk/default.jpg', videoId: 'example4' },
+    { title: 'Lofi Beats to Relax To - Coffee Shop Vibes', channel: 'Lofi Barista', uploadDate: new Date(Date.now() - 96*3600*1000), views: 891, thumbnailUrl: 'https://img.youtube.com/vi/jfKfPfyJRdk/default.jpg', videoId: 'example5' }
+  ];
+
+  for (const up of uploads) {
+    await db.collection('uploads').add(up);
+    log('  + Upload: ' + up.title.substring(0, 40) + '...');
+  }
+
+  // 4. Revenue
+  await db.collection('revenue').doc('current').set({
+    estimated: 245,
+    target: 50000,
+    progress: 0.49,
+    lastUpdated: now,
+    currency: 'THB',
+    monthlyViews: 7000
+  });
+  log('  + Revenue: 245 THB');
+
+  // 5. Activity Log
+  const activities = [
+    { icon: '\u{1F3B5}', text: 'Generated 3 Lofi tracks via Suno AI', timestamp: new Date(Date.now() - 1*3600*1000) },
+    { icon: '\u{1F3AC}', text: 'Created 1-hour video compilation for Lofi Barista', timestamp: new Date(Date.now() - 2*3600*1000) },
+    { icon: '\u{1F4E4}', text: 'Uploaded "3 Hours Lofi Hip Hop" to YouTube', timestamp: new Date(Date.now() - 3*3600*1000) },
+    { icon: '\u2705', text: 'Pipeline #42 completed successfully', timestamp: new Date(Date.now() - 4*3600*1000) },
+    { icon: '\u{1F4CA}', text: 'Lofi Barista reached 47 subscribers!', timestamp: new Date(Date.now() - 8*3600*1000) },
+    { icon: '\u{1F327}\uFE0F', text: 'Rain Walker: 2 ambient tracks generated', timestamp: new Date(Date.now() - 24*3600*1000) },
+    { icon: '\u274C', text: 'Pipeline #40 failed - Suno API rate limit', timestamp: new Date(Date.now() - 48*3600*1000) },
+    { icon: '\u{1F3B9}', text: 'Piano Ghost channel created and configured', timestamp: new Date(Date.now() - 72*3600*1000) },
+    { icon: '\u{1F680}', text: 'AI Music Empire dashboard deployed!', timestamp: new Date(Date.now() - 96*3600*1000) },
+    { icon: '\u{1F527}', text: 'Firebase Firestore integration activated', timestamp: new Date() }
+  ];
+
+  for (const act of activities) {
+    await db.collection('activity_log').add(act);
+    log('  + Activity: ' + act.text.substring(0, 50));
+  }
+
+  log('\n\u2705 Seeding complete! All collections populated.');
+  log('Go check your dashboard at nazeezaa.github.io/ai-music-empire/');
+}
+
+seed().catch(e => log('ERROR: ' + e.message));
+</script>
+</body>
+</html>
