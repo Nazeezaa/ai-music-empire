@@ -2,7 +2,7 @@ name: AI Music Empire - Daily Pipeline
 
 on:
   schedule:
-    - cron: '0 15 * * *'  # Runs at 15:00 UTC daily
+        - cron: '0 15 */2 * *'  # Runs at 15:00 UTC every other day
   workflow_dispatch:
     inputs:
       genre:
@@ -23,7 +23,7 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 120
     env:
-      KIE_API_KEY: ${{ secrets.KIE_API_KEY }}
+              SUNO_COOKIE: ${{ secrets.SUNO_COOKIE }}
       YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
       YOUTUBE_CLIENT_SECRET: ${{ secrets.YOUTUBE_CLIENT_SECRET }}
       YOUTUBE_REFRESH_TOKEN: ${{ secrets.YOUTUBE_REFRESH_TOKEN }}
