@@ -1,10 +1,11 @@
 """
-process_audio.py - Process and normalize audio using FFmpeg
+process_audio.py - Process, concatenate, and normalize audio using FFmpeg
 """
 import os
 import subprocess
 import json
 import logging
+import tempfile
 import yaml
 
 logger = logging.getLogger(__name__)
@@ -25,6 +26,83 @@ def check_ffmpeg():
         pass
     logger.error("FFmpeg not found")
     return False
+
+
+def concatenate_audio(audio_files, output_path=None, config=None):
+    """Concatenate multiple audio files into a single file using FFmpeg concat demuxer.
+
+    Args:
+        audio_files: List of audio file paths to concatenate.
+        output_path: Output file path. If None, auto-generates in output_dir.
+        config: Pipeline config dict. Loaded from config.yaml if None.
+
+    Returns:
+        Path to concatenated audio file, or None on failure.
+    """
+    if config is None:
+        config = load_config()
+    if not check_ffmpeg():
+        return None
+    if not audio_files:
+        logger.error("No audio files to concatenate")
+        return None
+    if len(audio_files) == 1:
+        logger.info("Only one audio file, skipping concatenation")
+        return audio_files[0]
+
+    # Verify all input files exist
+    for f in audio_files:
+        if not os.path.exists(f):
+            logger.error(f"Input file not found: {f}")
+            return None
+
+    if output_path is None:
+        output_dir = config["pipeline"]["output_dir"]
+        os.makedirs(output_dir, exist_ok=True)
+        from datetime import datetime
+        ts = datetime.now().strftime("%Y%m%d_%H%M%S")
+        output_path = os.path.join(output_dir, f"concatenated_{ts}.mp3")
+
+    # Create concat list file for FFmpeg demuxer
+    try:
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.txt', delete=False, dir=config["pipeline"]["output_dir"]) as list_file:
+            for audio_file in audio_files:
+                # FFmpeg concat demuxer requires absolute paths with proper escaping
+                abs_path = os.path.abspath(audio_file)
+                escaped = abs_path.replace("'", "'\\''")
+                list_file.write(f"file '{escaped}'\n")
+            list_path = list_file.name
+        logger.info(f"Concatenating {len(audio_files)} files into {output_path}")
+
+        cmd = [
+            "ffmpeg", "-y",
+            "-f", "concat",
+            "-safe", "0",
+            "-i", list_path,
+            "-c", "copy",
+            output_path
+        ]
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=600)
+        if result.returncode == 0:
+            size_mb = os.path.getsize(output_path) / 1024 / 1024
+            duration = get_duration(output_path)
+            logger.info(f"Concatenated: {output_path} ({size_mb:.1f} MB, {duration:.0f}s)")
+            return output_path
+        else:
+            logger.error(f"Concatenation failed: {result.stderr[-500:]}")
+            return None
+    except subprocess.TimeoutExpired:
+        logger.error("Concatenation timed out")
+        return None
+    except Exception as e:
+        logger.error(f"Concatenation error: {e}")
+        return None
+    finally:
+        # Clean up the temp concat list file
+        try:
+            os.unlink(list_path)
+        except Exception:
+            pass
 
 
 def process_track(input_path, config=None):
@@ -114,10 +192,22 @@ if __name__ == "__main__":
     import sys
     logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
     if len(sys.argv) < 2:
-        print("Usage: python process_audio.py <input_file>")
+        print("Usage: python process_audio.py <input_file> [input_file2 ...]")
+        print("  Single file: processes and converts to video")
+        print("  Multiple files: concatenates first, then processes")
         sys.exit(1)
     config = load_config()
-    result = process_track(sys.argv[1], config)
+    if len(sys.argv) > 2:
+        # Multiple files: concatenate first
+        audio_files = sys.argv[1:]
+        concatenated = concatenate_audio(audio_files, config=config)
+        if concatenated:
+            result = process_track(concatenated, config)
+        else:
+            print("FAILED: Concatenation failed")
+            sys.exit(1)
+    else:
+        result = process_track(sys.argv[1], config)
     if result:
         print(f"SUCCESS: {result}")
     else:
