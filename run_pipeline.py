@@ -1,5 +1,7 @@
 """
 run_pipeline.py - Main orchestrator for AI Music Empire pipeline
+
+Flow: generate_multiple_tracks() â concatenate_audio() â process_track() â upload_to_youtube()
 """
 import os
 import sys
@@ -7,8 +9,8 @@ import logging
 from datetime import datetime
 import yaml
 
-from generate_music import generate_track, load_config
-from process_audio import process_track
+from generate_music import generate_track, generate_multiple_tracks, load_config
+from process_audio import process_track, concatenate_audio, get_duration
 from upload_youtube import upload_to_youtube
 from check_analytics import get_channel_analytics
 from firestore_sync import init_firestore, log_pipeline_run, log_upload, log_activity
@@ -36,77 +38,97 @@ def run_pipeline():
     db = None
     try:
         db = init_firestore()
+        if db:
+            log_activity(db, "ð", "Pipeline run started")
     except Exception as e:
         logger.warning(f"Failed to initialize Firestore: {e}")
 
-    tracks_per_run = config["pipeline"].get("tracks_per_run", 1)
-    results = []
-    for i in range(tracks_per_run):
-        logger.info(f"--- Track {i+1}/{tracks_per_run} ---")
-        logger.info("Step 1: Generating music...")
-        audio_path = generate_track(config)
-        if not audio_path:
-            logger.error("Generation failed")
-            results.append({"track": i+1, "status": "failed", "step": "generate"})
-            continue
-        logger.info("Step 2: Processing audio...")
-        processed_path = process_track(audio_path, config)
-        if not processed_path:
-            logger.warning("Processing failed, using raw audio")
-            processed_path = audio_path
-        logger.info("Step 3: Uploading to YouTube...")
-        video_id = upload_to_youtube(processed_path, config)
-        if not video_id:
-            logger.error("Upload failed")
-            results.append({"track": i+1, "status": "failed", "step": "upload"})
-            continue
-        video_url = f"https://www.youtube.com/watch?v={video_id}"
-        logger.info(f"Uploaded: {video_url}")
-        results.append({"track": i+1, "status": "success", "video_id": video_id, "video_url": video_url})
+    tracks_per_video = config["pipeline"].get("tracks_per_video", 30)
+    genre = config["kie"].get("default_genre", "lofi")
+    mood = config["kie"].get("default_mood", "chill")
+    channel_name = config["youtube"].get("channel_name", "AI Music Empire")
 
-        # Log upload to Firestore
+    # Step 1: Generate multiple tracks
+    logger.info(f"Step 1: Generating {tracks_per_video} tracks...")
+    audio_files = generate_multiple_tracks(config, count=tracks_per_video)
+
+    if not audio_files:
+        logger.error("No tracks generated. Pipeline failed.")
         if db:
-            try:
-                channel_name = config["youtube"].get("channel_name", "AI Music Empire")
-                title = config["content"]["title_template"].format(
-                    genre=config["kie"].get("default_genre", "unknown"),
-                    mood=config["kie"].get("default_mood", "unknown"),
-                    date=datetime.now().strftime("%Y-%m-%d")
-                )
-                log_upload(db, title, channel_name, video_id)
-                log_activity(db, "📤", f"Uploaded video: {title[:50]}")
-            except Exception as e:
-                logger.warning(f"Failed to log upload to Firestore: {e}")
+            log_pipeline_run(db, "failed", channel_name, 0, 0)
+            log_activity(db, "â", "Pipeline failed: no tracks generated")
+        sys.exit(1)
 
-    logger.info("Step 4: Checking analytics...")
+    logger.info(f"Generated {len(audio_files)} tracks successfully")
+
+    # Step 2: Concatenate all tracks into one long audio file
+    logger.info(f"Step 2: Concatenating {len(audio_files)} tracks...")
+    concatenated_path = concatenate_audio(audio_files, config=config)
+
+    if not concatenated_path:
+        logger.error("Concatenation failed. Falling back to first track only.")
+        concatenated_path = audio_files[0]
+
+    total_duration = get_duration(concatenated_path) or 0
+    logger.info(f"Concatenated audio: {total_duration:.0f}s ({total_duration/60:.1f} min)")
+
+    # Step 3: Process (normalize loudness, add fades, convert to video)
+    logger.info("Step 3: Processing audio and creating video...")
+    video_path = process_track(concatenated_path, config)
+
+    if not video_path:
+        logger.error("Processing failed.")
+        if db:
+            log_pipeline_run(db, "failed", channel_name, len(audio_files), int(total_duration))
+            log_activity(db, "â", f"Pipeline failed at processing step ({len(audio_files)} tracks)")
+        sys.exit(1)
+
+    logger.info(f"Video ready: {video_path}")
+
+    # Step 4: Upload to YouTube
+    logger.info("Step 4: Uploading to YouTube...")
+    video_id = upload_to_youtube(video_path, config)
+
+    if not video_id:
+        logger.error("Upload failed.")
+        if db:
+            log_pipeline_run(db, "failed", channel_name, len(audio_files), int(total_duration))
+            log_activity(db, "â", f"Pipeline failed at upload step ({len(audio_files)} tracks)")
+        sys.exit(1)
+
+    video_url = f"https://www.youtube.com/watch?v={video_id}"
+    logger.info(f"Upload success: {video_url}")
+
+    # Step 5: Log to Firestore
+    if db:
+        try:
+            title = config["content"]["title_template"].format(
+                genre=genre.title(),
+                mood=mood.title(),
+                date=datetime.now().strftime("%Y-%m-%d")
+            )
+            log_upload(db, title, channel_name, video_id)
+            log_pipeline_run(db, "success", channel_name, len(audio_files), int(total_duration))
+            log_activity(db, "ð¤", f"Uploaded: {title[:50]} ({len(audio_files)} tracks, {total_duration/60:.0f} min)")
+            log_activity(db, "â", f"Pipeline completed successfully!")
+            logger.info("Firestore logging complete")
+        except Exception as e:
+            logger.warning(f"Firestore logging failed: {e}")
+
+    # Step 6: Check analytics
+    logger.info("Step 5: Checking analytics...")
     try:
         analytics = get_channel_analytics(config, days=7)
     except Exception as e:
-        logger.warning(f"Analytics check failed: {e}")
+        logger.warning(f"Analytics check failed (non-critical): {e}")
 
+    # Summary
     logger.info("=" * 60)
-    success = sum(1 for r in results if r["status"] == "success")
-    failed = sum(1 for r in results if r["status"] == "failed")
-    logger.info(f"SUMMARY: {success} success, {failed} failed out of {len(results)}")
-    for r in results:
-        if r["status"] == "success":
-            logger.info(f"  Track {r['track']}: {r['video_url']}")
-        else:
-            logger.info(f"  Track {r['track']}: FAILED at {r['step']}")
-
-    # Log pipeline run to Firestore
-    if db:
-        try:
-            channel_name = config["youtube"].get("channel_name", "AI Music Empire")
-            run_status = "success" if failed == 0 else "failed"
-            log_pipeline_run(db, run_status, channel_name, success, 0)
-            log_activity(db, "✅" if run_status == "success" else "❌",
-                        f"Pipeline run completed: {success} success, {failed} failed")
-        except Exception as e:
-            logger.warning(f"Failed to log pipeline run to Firestore: {e}")
-
-    if failed > 0:
-        sys.exit(1)
+    logger.info("PIPELINE COMPLETE")
+    logger.info(f"  Tracks generated: {len(audio_files)}")
+    logger.info(f"  Total duration:   {total_duration:.0f}s ({total_duration/60:.1f} min)")
+    logger.info(f"  Video:            {video_url}")
+    logger.info("=" * 60)
 
 
 if __name__ == "__main__":
