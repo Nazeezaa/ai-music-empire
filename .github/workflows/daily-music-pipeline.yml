@@ -2,7 +2,7 @@ name: AI Music Empire - Daily Pipeline
 
 on:
   schedule:
-    - cron: '0 15 * * *'→ Runs at 15:00
+    - cron: '0 15 * * *'  # Runs at 15:00 UTC daily
   workflow_dispatch:
     inputs:
       genre:
@@ -13,10 +13,15 @@ on:
         description: 'Music mood (e.g., chill, energetic, focus)'
         required: false
         default: 'chill'
+      tracks:
+        description: 'Number of tracks to generate (default from config)'
+        required: false
+        default: ''
 
 jobs:
   generate-and-upload:
     runs-on: ubuntu-latest
+    timeout-minutes: 120
     env:
       KIE_API_KEY: ${{ secrets.KIE_API_KEY }}
       YOUTUBE_CLIENT_ID: ${{ secrets.YOUTUBE_CLIENT_ID }}
@@ -35,3 +40,31 @@ jobs:
           cache: 'pip'
 
       - name: Install FFmpeg
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y ffmpeg
+
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      - name: Verify FFmpeg installation
+        run: ffmpeg -version
+
+      - name: Run full pipeline
+        run: python run_pipeline.py
+
+      - name: Upload pipeline log
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: pipeline-log-${{ github.run_number }}
+          path: pipeline.log
+          retention-days: 30
+
+      - name: Upload output files
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: output-${{ github.run_number }}
+          path: output/
+          retention-days: 7
