@@ -564,7 +564,7 @@
             <div>
               <div class="channel-name">Lofi Barista</div>
               <div class="channel-niche">Lofi Hip-Hop &middot; Study &middot; Chill</div>
-              <a class="channel-link" href="https://youtube.com/@LofiBarista" target="_blank">@LofiBarista</a>
+              <a class="channel-link" href="https://youtube.com/@LofiBarista-v9x" target="_blank">@LofiBarista-v9x</a>
             </div>
           </div>
           <span class="badge badge-live" id="badge-ch1">&#9679; Live</span>
@@ -600,7 +600,7 @@
             <div>
               <div class="channel-name">Rain Walker</div>
               <div class="channel-niche">Rain Sounds &middot; Ambient &middot; Sleep</div>
-              <a class="channel-link" href="https://youtube.com/@RainWalkerSounds" target="_blank">@RainWalkerSounds</a>
+              <a class="channel-link" href="https://youtube.com/@RainWalker" target="_blank">@RainWalker</a>
             </div>
           </div>
           <span class="badge badge-setup" id="badge-ch2">&#9881; Setting Up</span>
@@ -636,7 +636,7 @@
             <div>
               <div class="channel-name">Velvet Groove</div>
               <div class="channel-niche">Jazz &middot; Neo Soul &middot; Background</div>
-              <a class="channel-link" href="https://youtube.com/@VelvetGrooveJazz" target="_blank">@VelvetGrooveJazz</a>
+              <a class="channel-link" href="https://youtube.com/@VelvetGroove-m5g" target="_blank">@VelvetGroove-m5g</a>
             </div>
           </div>
           <span class="badge badge-setup" id="badge-ch3">&#9881; Setting Up</span>
@@ -672,7 +672,7 @@
             <div>
               <div class="channel-name">Piano Ghost</div>
               <div class="channel-niche">Piano &middot; Classical &middot; Focus</div>
-              <a class="channel-link" href="https://youtube.com/@PianoGhostMusic" target="_blank">@PianoGhostMusic</a>
+              <a class="channel-link" href="https://youtube.com/@PianoGhost-g2x" target="_blank">@PianoGhost-g2x</a>
             </div>
           </div>
           <span class="badge badge-setup" id="badge-ch4">&#9881; Setting Up</span>
@@ -806,7 +806,6 @@
 // ============================================================
 // CONFIG
 // ============================================================
-const API_KEY = 'AIzaSyCMMRD0xBkQ4IEGvS5GXED0E8DhtWWpSOc';
 const REPO = 'Nazeezaa/ai-music-empire';
 
 const CHANNELS = [
@@ -818,37 +817,37 @@ const CHANNELS = [
     sparkId: 'spark1',
     deltaId: 'ch1-delta',
     badgeId: 'badge-ch1',
-    handle: '@LofiBarista'
+    handle: '@LofiBarista-v9x'
   },
   {
-    id: '', // Add Rain Walker channel ID when created
+    id: '',
     name: 'Rain Walker',
     shortId: 'ch2',
     color: '#06b6d4',
     sparkId: 'spark2',
     deltaId: 'ch2-delta',
     badgeId: 'badge-ch2',
-    handle: '@RainWalkerSounds'
+    handle: '@RainWalker'
   },
   {
-    id: '', // Add Velvet Groove channel ID when created
+    id: '',
     name: 'Velvet Groove',
     shortId: 'ch3',
     color: '#f59e0b',
     sparkId: 'spark3',
     deltaId: 'ch3-delta',
     badgeId: 'badge-ch3',
-    handle: '@VelvetGrooveJazz'
+    handle: '@VelvetGroove-m5g'
   },
   {
-    id: '', // Add Piano Ghost channel ID when created
+    id: '',
     name: 'Piano Ghost',
     shortId: 'ch4',
     color: '#10b981',
     sparkId: 'spark4',
     deltaId: 'ch4-delta',
     badgeId: 'badge-ch4',
-    handle: '@PianoGhostMusic'
+    handle: '@PianoGhost-g2x'
   }
 ];
 
@@ -863,9 +862,9 @@ const TASKS = [
   { text: 'Generate first batch of Lofi tracks (Suno)', status: 'done', tag: 'Content', tagColor: '#f59e0b' },
   { text: 'Build ffmpeg video pipeline (audio + visual)', status: 'done', tag: 'Pipeline', tagColor: '#06b6d4' },
   { text: 'Upload first videos to Lofi Barista', status: 'progress', tag: 'Content', tagColor: '#f59e0b' },
-  { text: 'Create Rain Walker channel & branding', status: 'progress', tag: 'Channel', tagColor: '#06b6d4' },
-  { text: 'Create Velvet Groove channel & branding', status: 'pending', tag: 'Channel', tagColor: '#f59e0b' },
-  { text: 'Create Piano Ghost channel & branding', status: 'pending', tag: 'Channel', tagColor: '#10b981' },
+  { text: 'Create Rain Walker channel & branding', status: 'done', tag: 'Channel', tagColor: '#06b6d4' },
+  { text: 'Create Velvet Groove channel & branding', status: 'done', tag: 'Channel', tagColor: '#f59e0b' },
+  { text: 'Create Piano Ghost channel & branding', status: 'done', tag: 'Channel', tagColor: '#10b981' },
   { text: 'Set up auto-thumbnail generation', status: 'pending', tag: 'Pipeline', tagColor: '#06b6d4' },
   { text: 'Enable daily cron pipeline (GitHub Actions)', status: 'pending', tag: 'Infra', tagColor: '#06b6d4' },
   { text: 'Add YouTube upload automation', status: 'pending', tag: 'Pipeline', tagColor: '#06b6d4' },
@@ -961,149 +960,29 @@ function addLog(icon, text) {
 }
 
 // ============================================================
-// FETCH CHANNEL STATS
+// INITIALIZE CHANNEL DISPLAY
+// Channel stats are loaded in realtime via firebase-init.js
+// This function sets initial badge states and sparklines
 // ============================================================
-async function fetchChannelStats(channelId) {
-  if (!channelId) return null;
-  try {
-    const res = await fetch('https://www.googleapis.com/youtube/v3/channels?part=statistics,snippet&id=' + channelId + '&key=' + API_KEY);
-    const data = await res.json();
-    if (data.error) return { error: data.error.message };
-    if (!data.items || data.items.length === 0) return null;
-    const ch = data.items[0];
-    return {
-      name: ch.snippet.title,
-      subs: ch.statistics.subscriberCount,
-      views: ch.statistics.viewCount,
-      videos: ch.statistics.videoCount
-    };
-  } catch (e) {
-    return { error: e.message };
-  }
-}
-
-// ============================================================
-// MOCK SPARKLINE DATA (replaced when real history available)
-// ============================================================
-function mockSparkData(seed, length) {
-  length = length || 14;
-  const data = [];
-  var v = 100 + (seed * 37 % 200);
-  for (var i = 0; i < length; i++) {
-    v += (Math.random() - 0.4) * 20 + 2;
-    v = Math.max(50, v);
-    data.push(Math.round(v));
-  }
-  return data;
-}
-
-// ============================================================
-// LOAD CHANNEL STATS
-// ============================================================
-async function loadAllStats() {
-  addLog('\u23F3', 'Fetching YouTube stats...');
+function initChannelDisplay() {
+  // Hide error banner — Firestore provides all data, no API errors
   var errBanner = document.getElementById('error-banner');
   errBanner.style.display = 'none';
 
-  var totalSubs = 0, totalViews = 0, totalVideos = 0;
-  var anyError = false;
-  var configuredCount = 0;
+  CHANNELS.forEach(function(ch) {
+    // Draw empty sparklines (will update when history data is available)
+    drawSparkline(ch.sparkId, null, ch.color);
 
-  for (var i = 0; i < CHANNELS.length; i++) {
-    var ch = CHANNELS[i];
-    var sid = ch.shortId;
-    var badgeEl = document.getElementById(ch.badgeId);
-
-    if (!ch.id) {
-      document.getElementById(sid + '-subs').textContent = '\u2014';
-      document.getElementById(sid + '-views').textContent = '\u2014';
-      document.getElementById(sid + '-videos').textContent = '\u2014';
-      drawSparkline(ch.sparkId, null, ch.color);
-      if (badgeEl) {
-        badgeEl.className = 'badge badge-setup';
-        badgeEl.innerHTML = '\u2699 Setting Up';
-      }
-      addLog('\u23F3', '<span class="log-ch">' + ch.name + '</span>: Channel not yet configured');
-      continue;
-    }
-
-    configuredCount++;
-    var stats = await fetchChannelStats(ch.id);
-
-    if (!stats) {
-      document.getElementById(sid + '-subs').textContent = 'N/A';
-      if (badgeEl) { badgeEl.className = 'badge badge-pending'; badgeEl.innerHTML = '? Unknown'; }
-      continue;
-    }
-
-    if (stats.error) {
-      anyError = true;
-      document.getElementById(sid + '-subs').textContent = 'ERR';
-      if (badgeEl) { badgeEl.className = 'badge badge-error'; badgeEl.innerHTML = '\u26A0 Error'; }
-      addLog('\u274C', '<span class="log-ch">' + ch.name + '</span>: ' + stats.error);
-      continue;
-    }
-
-    var subs = parseInt(stats.subs || 0);
-    var views = parseInt(stats.views || 0);
-    var videos = parseInt(stats.videos || 0);
-
-    document.getElementById(sid + '-subs').textContent = fmt(subs);
-    document.getElementById(sid + '-views').textContent = fmt(views);
-    document.getElementById(sid + '-videos').textContent = videos;
-
-    totalSubs += subs;
-    totalViews += views;
-    totalVideos += videos;
-
-    // Badge
-    if (badgeEl) {
-      if (videos > 0) {
-        badgeEl.className = 'badge badge-live';
-        badgeEl.innerHTML = '\u25CF Live';
-      } else {
-        badgeEl.className = 'badge badge-setup';
-        badgeEl.innerHTML = '\u2699 Ready';
-      }
-    }
-
-    // Sparkline
-    var sparkData = mockSparkData(i + 1);
-    drawSparkline(ch.sparkId, sparkData, ch.color);
-
-    var delta = ((sparkData[sparkData.length - 1] - sparkData[0]) / sparkData[0] * 100).toFixed(1);
+    // Set delta to 0% initially
     var deltaEl = document.getElementById(ch.deltaId);
-    if (delta > 0) {
-      deltaEl.textContent = '+' + delta + '%';
-      deltaEl.className = 'sparkline-delta delta-up';
-    } else {
-      deltaEl.textContent = delta + '%';
-      deltaEl.className = 'sparkline-delta delta-down';
+    if (deltaEl) {
+      deltaEl.textContent = 'Pending';
+      deltaEl.className = 'sparkline-delta';
     }
-
-    addLog('\u2705', '<span class="log-ch">' + ch.name + '</span> \u00B7 ' + fmt(subs) + ' subs \u00B7 ' + fmt(views) + ' views \u00B7 ' + videos + ' videos');
-  }
-
-  // Totals
-  document.getElementById('total-subs').textContent = totalSubs > 0 ? fmt(totalSubs) : '\u2014';
-  document.getElementById('total-views').textContent = totalViews > 0 ? fmt(totalViews) : '\u2014';
-  document.getElementById('total-videos').textContent = totalVideos > 0 ? totalVideos : '\u2014';
-
-  // Revenue estimate
-  var estMonthlyViews = totalViews * 0.1;
-  var estRevenue = Math.round(estMonthlyViews * 0.001 * 35);
-  document.getElementById('est-revenue').textContent = estRevenue.toLocaleString();
-  var pct = Math.min(100, Math.round((estRevenue / 50000) * 100));
-  document.getElementById('progress-pct').textContent = pct + '%';
-  document.getElementById('progress-fill').style.width = pct + '%';
-
-  if (anyError) {
-    errBanner.style.display = 'block';
-    errBanner.textContent = '\u26A0\uFE0F Some channels returned API errors. Check the log for details.';
-  }
+  });
 
   document.getElementById('update-time').textContent = 'Live \u00B7 ' + new Date().toLocaleTimeString('th-TH', { hour: '2-digit', minute: '2-digit' });
-  addLog('\u2705', 'Dashboard updated \u00B7 ' + configuredCount + '/4 channels configured');
+  addLog('\u2705', 'Dashboard connected to Firestore \u00B7 4 channels tracked');
 }
 
 // ============================================================
@@ -1215,47 +1094,9 @@ function updatePipelineSteps(latestRun) {
 }
 
 // ============================================================
-// FETCH LATEST VIDEOS
+// LATEST VIDEOS — handled by Firestore listener in firebase-init.js
+// The uploads collection listener populates #latest-video automatically
 // ============================================================
-async function fetchLatestVideos() {
-  var allChannelsWithId = CHANNELS.filter(function(ch) { return ch.id; });
-  if (allChannelsWithId.length === 0) {
-    document.getElementById('latest-video').innerHTML = '<span style="color:var(--muted)">No channels configured yet. Videos will appear here once channels are set up and content is uploaded.</span>';
-    return;
-  }
-
-  try {
-    var vidDiv = document.getElementById('latest-video');
-    vidDiv.innerHTML = '';
-    var foundAny = false;
-
-    for (var c = 0; c < allChannelsWithId.length; c++) {
-      var ch = allChannelsWithId[c];
-      var res = await fetch('https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=' + ch.id + '&order=date&maxResults=2&type=video&key=' + API_KEY);
-      var data = await res.json();
-      if (!data.items || data.items.length === 0) continue;
-
-      data.items.forEach(function(item) {
-        foundAny = true;
-        var vid = item.id.videoId;
-        var title = item.snippet.title;
-        var date = new Date(item.snippet.publishedAt).toLocaleDateString('th-TH');
-        var el = document.createElement('a');
-        el.href = 'https://www.youtube.com/watch?v=' + vid;
-        el.target = '_blank';
-        el.style.cssText = 'display:flex;gap:10px;align-items:center;padding:8px;background:var(--surface2);border-radius:8px;margin-bottom:8px;text-decoration:none;transition:opacity .15s';
-        el.innerHTML = '<img src="https://img.youtube.com/vi/' + vid + '/default.jpg" style="width:60px;height:45px;border-radius:4px;object-fit:cover" alt=""><div><div style="font-size:12px;color:var(--text);font-weight:500">' + title.substring(0, 55) + '</div><div style="font-size:11px;color:var(--muted)">' + ch.name + ' \u00B7 ' + date + '</div></div>';
-        vidDiv.appendChild(el);
-      });
-    }
-
-    if (!foundAny) {
-      vidDiv.innerHTML = '<span style="color:var(--muted)">No videos uploaded yet</span>';
-    }
-  } catch (e) {
-    document.getElementById('latest-video').innerHTML = '<span style="color:var(--muted)">Could not fetch videos</span>';
-  }
-}
 
 // ============================================================
 // RENDER TASKS
@@ -1283,85 +1124,18 @@ function renderTasks() {
 }
 
 // ============================================================
-// FETCH STATUS JSON (for pipeline to write real data)
+// STATUS DATA — all data comes from Firestore in realtime
+// Pipeline steps and activity are handled by firebase-init.js
 // ============================================================
-async function fetchStatusData() {
-  try {
-    var res = await fetch('https://raw.githubusercontent.com/' + REPO + '/main/data/status.json?t=' + Date.now());
-    if (!res.ok) return null;
-    var data = await res.json();
-    return data;
-  } catch (e) {
-    return null;
-  }
-}
-
-async function applyStatusData() {
-  var data = await fetchStatusData();
-  if (!data) {
-    addLog('\u2139\uFE0F', 'No status.json found. Dashboard using live API data only.');
-    return;
-  }
-
-  addLog('\u2705', 'Loaded pipeline status from status.json');
-
-  // Apply channel IDs if provided
-  if (data.channels) {
-    data.channels.forEach(function(chData) {
-      var match = CHANNELS.find(function(c) { return c.shortId === chData.shortId || c.name === chData.name; });
-      if (match && chData.id) {
-        match.id = chData.id;
-      }
-    });
-  }
-
-  // Apply pipeline steps
-  if (data.pipeline_steps) {
-    var stepMap = {
-      'generate': 'step-generate',
-      'video': 'step-video',
-      'thumbnail': 'step-thumb',
-      'upload': 'step-upload',
-      'metadata': 'step-meta'
-    };
-    Object.keys(data.pipeline_steps).forEach(function(key) {
-      var elId = stepMap[key];
-      var status = data.pipeline_steps[key];
-      if (elId) {
-        var el = document.getElementById(elId);
-        var cls = status === 'done' ? 'ps-done' : status === 'running' ? 'ps-running' : status === 'failed' ? 'ps-failed' : 'ps-pending';
-        var label = status === 'done' ? 'Done' : status === 'running' ? 'Running' : status === 'failed' ? 'Failed' : 'Pending';
-        el.className = 'pipe-step-status ' + cls;
-        el.textContent = label;
-      }
-    });
-  }
-
-  // Apply task overrides
-  if (data.tasks) {
-    data.tasks.forEach(function(t) {
-      var match = TASKS.find(function(task) { return task.text.includes(t.match); });
-      if (match) match.status = t.status;
-    });
-    renderTasks();
-  }
-
-  // Activity entries
-  if (data.activity) {
-    data.activity.slice().reverse().forEach(function(entry) {
-      addLog(entry.icon || '\u2139\uFE0F', entry.text);
-    });
-  }
-}
 
 // ============================================================
 // REFRESH ALL
 // ============================================================
 async function refreshAll() {
   addLog('\u267B\uFE0F', 'Manual refresh triggered');
-  await loadAllStats();
+  // Firestore listeners auto-update channel stats
+  // Only pipeline status needs a fresh fetch from GitHub Actions
   await fetchPipelineStatus();
-  await fetchLatestVideos();
 }
 
 // ============================================================
@@ -1371,23 +1145,16 @@ window.addEventListener('load', function() {
   // Render tasks
   renderTasks();
 
-  // Draw empty sparklines
-  CHANNELS.forEach(function(ch) {
-    drawSparkline(ch.sparkId, null, ch.color);
-  });
+  // Initialize channel display (Firestore handles realtime updates)
+  initChannelDisplay();
 
-  // Load status.json first (may update channel IDs), then load everything
-  applyStatusData().then(function() {
-    loadAllStats();
-    fetchPipelineStatus();
-    fetchLatestVideos();
-  });
+  // Fetch pipeline status from GitHub Actions
+  fetchPipelineStatus();
 
-  // Auto-refresh every 5 minutes
+  // Auto-refresh pipeline status every 5 minutes
+  // (channel stats update in realtime via Firestore listeners)
   setInterval(function() {
-    loadAllStats();
     fetchPipelineStatus();
-    fetchLatestVideos();
   }, 5 * 60 * 1000);
 
   // Deploy timestamp
