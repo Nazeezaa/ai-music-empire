@@ -154,8 +154,8 @@ def log_pipeline_run(
         run_name = f"Pipeline #{run_number}" if run_number else f"Run {datetime.now().strftime('%Y%m%d-%H%M')}"
         run_data = {
             "status": status,
-            "channel": channel,
-            "tracksGenerated": tracks_generated,
+            "channel": _slugify(channel),
+            "tracksGenerated": tracks_generated,            "tracks": tracks_generated,
             "videoDuration": video_duration,
             "run_number": run_number or int(datetime.now().strftime('%Y%m%d%H%M')),
             "run_name": run_name,
@@ -193,7 +193,7 @@ def log_upload(
     try:
         upload_data = {
             "title": title,
-            "channel": channel,
+            "channel": _slugify(channel),
             "videoId": video_id,
             "videoUrl": f"https://www.youtube.com/watch?v={video_id}",
             "thumbnailUrl": thumbnail_url,

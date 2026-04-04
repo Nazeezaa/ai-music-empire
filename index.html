@@ -1654,11 +1654,11 @@ function fmtDuration(seconds) {
 }
 
 function channelName(id) {
-  return CH_MAP[id]?.name || id || 'Unknown';
+  if (CH_MAP[id]) return CH_MAP[id].name; const slug = id ? id.toLowerCase().replace(/[\s-]+/g, '_') : ''; if (CH_MAP[slug]) return CH_MAP[slug].name; return id || 'Unknown';
 }
 
 function channelIcon(id) {
-  return CH_MAP[id]?.icon || '📺';
+  if (CH_MAP[id]) return CH_MAP[id].icon; const slug = id ? id.toLowerCase().replace(/[\s-]+/g, '_') : ''; if (CH_MAP[slug]) return CH_MAP[slug].icon; return '📺';
 }
 
 /* ═══════════════════════════════════════════════════════════════════
@@ -1939,11 +1939,12 @@ function extractChannelFromRun(run) {
    CHANNEL STATUS CHECK (YouTube API connectivity)
    ═══════════════════════════════════════════════════════════════════ */
 async function checkAllChannelStatus() {
-  CHANNELS.forEach(c => { c.status = 'checking'; });
+  CHANNELS.forEach(c => { if (c.status !== 'online') c.status = 'checking'; });
   renderDashChannels();
   renderChannelsPage();
 
   for (const ch of CHANNELS) {
+      if (ch.status === 'online') continue; // Already confirmed by Firestore
     if (ch.ytId) {
       try {
         // Try to fetch the channel page to see if it's accessible
@@ -2121,7 +2122,7 @@ function renderPipelineItem(run) {
     <li class="pipeline-item" onclick="openPipelineDetail('${run.id}')">
       <div class="pipeline-status-icon ${statusClass}">${statusIcon}</div>
       <div class="pipeline-info">
-        <div class="pipe-title">${channelName(run.channel)} ${run.tracks ? '· ' + run.tracks + ' tracks' : ''}</div>
+        <div class="pipe-title">${run.run_name || channelName(run.channel)} ${(run.tracks || run.tracksGenerated) ? '· ' + (run.tracks || run.tracksGenerated) + ' tracks' : ''}</div>
         <div class="pipe-meta">${started}</div>
       </div>
       <div class="pipe-duration">${run.duration ? fmtDuration(run.duration) : '—'}</div>
@@ -2162,7 +2163,7 @@ function applyPipelineFilters() {
       <tr onclick="openPipelineDetail('${r.id}')">
         <td><span class="badge ${statusClass}">${r.status}</span></td>
         <td>${channelIcon(r.channel)} ${channelName(r.channel)}</td>
-        <td>${r.tracks || '—'}</td>
+        <td>${r.tracks || r.tracksGenerated || '—'}</td>
         <td>${started}</td>
         <td>${r.duration ? fmtDuration(r.duration) : '—'}</td>
         <td>${r.gh_url ? '<a href="' + r.gh_url + '" target="_blank" onclick="event.stopPropagation()">View →</a>' : '—'}</td>
@@ -2492,7 +2493,7 @@ function renderAllRuns() {
       <tr onclick="openPipelineDetail('${r.id}')">
         <td><span class="badge ${sc}">${r.status}</span></td>
         <td>${channelIcon(r.channel)} ${channelName(r.channel)}</td>
-        <td>${r.tracks || '—'}</td>
+        <td>${r.tracks || r.tracksGenerated || '—'}</td>
         <td>${fmtDateTime(r.started_at)}</td>
         <td>${fmtDateTime(r.ended_at)}</td>
         <td>${r.duration ? fmtDuration(r.duration) : '—'}</td>
