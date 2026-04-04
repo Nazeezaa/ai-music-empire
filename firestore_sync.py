@@ -71,10 +71,11 @@ def update_channel_stats(
     subs: int,
     views: int,
     videos: int,
-    status: str = 'Active'
+    status: str = 'online'
 ) -> bool:
     """
     Update or create a channel document in the 'channels' collection.
+    Status must be 'online' to show green badge on dashboard.
     """
     if db is None:
         return False
@@ -101,7 +102,7 @@ def update_channel_stats(
 def sync_channel_after_upload(db, channel_name: str, video_id: str = None) -> bool:
     """
     Update channel doc after a successful YouTube upload.
-    Increments video count by 1, sets status to 'Active', and records last_upload timestamp.
+    Increments video count by 1, sets status to 'online', and records last_upload timestamp.
     """
     if db is None:
         return False
@@ -117,7 +118,7 @@ def sync_channel_after_upload(db, channel_name: str, video_id: str = None) -> bo
 
         update_data = {
             "videos": current_videos + 1,
-            "status": "Active",
+            "status": "online",
             "last_upload": firestore.SERVER_TIMESTAMP,
             "updatedAt": firestore.SERVER_TIMESTAMP,
         }
@@ -126,7 +127,7 @@ def sync_channel_after_upload(db, channel_name: str, video_id: str = None) -> bo
             update_data["last_video_url"] = f"https://www.youtube.com/watch?v={video_id}"
 
         channel_ref.set(update_data, merge=True)
-        logger.info(f"Synced channel '{channel_name}' after upload: videos={current_videos + 1}, status=Active")
+        logger.info(f"Synced channel '{channel_name}' after upload: videos={current_videos + 1}, status=online")
         return True
     except Exception as e:
         logger.error(f"Failed to sync channel after upload: {e}")
@@ -284,10 +285,10 @@ def seed_initial_channels(db) -> None:
         return
 
     channels = [
-        {"doc_id": "lofi_barista", "name": "Lofi Barista", "status": "Active"},
-        {"doc_id": "rain_walker", "name": "Rain Walker", "status": "Setting Up"},
-        {"doc_id": "velvet_groove", "name": "Velvet Groove", "status": "Setting Up"},
-        {"doc_id": "piano_ghost", "name": "Piano Ghost", "status": "Setting Up"},
+        {"doc_id": "lofi_barista", "name": "Lofi Barista", "status": "online"},
+        {"doc_id": "rain_walker", "name": "Rain Walker", "status": "offline"},
+        {"doc_id": "velvet_groove", "name": "Velvet Groove", "status": "offline"},
+        {"doc_id": "piano_ghost", "name": "Piano Ghost", "status": "offline"},
     ]
     for ch in channels:
         db.collection("channels").document(ch["doc_id"]).set({
