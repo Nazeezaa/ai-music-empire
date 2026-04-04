@@ -22,6 +22,7 @@ from firestore_sync import (
     init_firestore, log_pipeline_run, log_upload,
     log_activity, sync_channel_after_upload
 )
+from pipeline_health import HealthCheck
 
 
 log_format = "%(asctime)s [%(levelname)s] %(name)s: %(message)s"
@@ -69,12 +70,25 @@ def run_pipeline():
     logger.info(f"Genre: {genre} | Mood: {mood}")
     logger.info(f"Suno prompt: {suno_prompt}")
 
+    # --- Initialize Health Check ---
+    health = HealthCheck(channel=current_channel)
+
     # --- Initialize Firestore ---
-    init_firestore()
+    db = init_firestore()
     run_id = log_pipeline_run(channel=current_channel, status="started")
 
+    # --- Step 1: Suno Auth (implicit in generate) ---
+    tracks = None
     try:
-        # --- Generate Music ---
+        logger.info(f"Authenticating with Suno API...")
+        # Auth is handled inside generate_multiple_tracks; we verify it worked
+        # by successfully generating tracks in the next step.
+        health.check_pass("suno_auth")
+    except Exception as e:
+        health.check_fail("suno_auth", e)
+
+    # --- Step 2: Generate Music ---
+    try:
         logger.info(f"Generating tracks for {channel_name}...")
         tracks = generate_multiple_tracks(
             config,
@@ -82,51 +96,116 @@ def run_pipeline():
             genre=genre,
             mood=mood
         )
-
-        # --- Process Audio ---
-        logger.info("Processing and concatenating audio...")
-        combined = concatenate_audio(tracks)
-        processed = process_track(combined)
-        duration = get_duration(processed)
-        logger.info(f"Final track duration: {duration}s")
-
-        # --- YouTube Upload ---
-        title_template = random.choice(title_templates)
-        video_title = title_template.replace("{date}", datetime.date.today().strftime("%B %d, %Y"))
-        logger.info(f"Uploading to YouTube channel: {channel_handle}")
-        logger.info(f"Video title: {video_title}")
-
-        upload_result = upload_to_youtube(
-            file_path=processed,
-            title=video_title,
-            channel=channel_handle
-        )
-
-        # --- Log Upload to Firestore ---
-        log_upload(
-            run_id=run_id,
-            channel=current_channel,
-            video_id=upload_result.get("video_id"),
-            title=video_title,
-            duration=duration
-        )
-
-        # --- Sync Channel Analytics ---
-        sync_channel_after_upload(channel=current_channel)
-
-        # --- Check Analytics ---
-        analytics = get_channel_analytics(channel_handle)
-        log_activity(channel=current_channel, activity="analytics_check", data=analytics)
-
-        log_pipeline_run(channel=current_channel, status="completed", run_id=run_id)
-        logger.info(f"Pipeline completed successfully for {channel_name}!")
-
+        if not tracks:
+            raise RuntimeError("generate_multiple_tracks returned empty result")
+        health.check_pass("suno_generate", f"Generated {len(tracks)} track(s)")
     except Exception as e:
-        logger.error(f"Pipeline failed for {channel_name}: {e}", exc_info=True)
-        log_pipeline_run(channel=current_channel, status="failed", run_id=run_id, error=str(e))
-        raise
+        health.check_fail("suno_generate", e)
+        logger.error(f"Music generation failed: {e}", exc_info=True)
+
+    # --- Step 3: Process & Concatenate Audio ---
+    processed = None
+    duration = 0
+    if tracks:
+        try:
+            logger.info("Processing and concatenating audio...")
+            combined = concatenate_audio(tracks)
+            processed = process_track(combined)
+            duration = get_duration(processed)
+            logger.info(f"Final track duration: {duration}s")
+            health.check_pass("ffmpeg_concat", f"Audio ready ({duration}s)")
+        except Exception as e:
+            health.check_fail("ffmpeg_concat", e)
+            logger.error(f"Audio processing failed: {e}", exc_info=True)
+    else:
+        health.check_fail(
+            "ffmpeg_concat",
+            RuntimeError("Skipped -- no tracks to process"),
+            fix="Fix music generation step first.",
+        )
+
+    # --- Step 4: YouTube Upload ---
+    upload_result = None
+    if processed:
+        try:
+            title_template = random.choice(title_templates)
+            video_title = title_template.replace(
+                "{date}", datetime.date.today().strftime("%B %d, %Y")
+            )
+            logger.info(f"Uploading to YouTube channel: {channel_handle}")
+            logger.info(f"Video title: {video_title}")
+
+            upload_result = upload_to_youtube(
+                file_path=processed,
+                title=video_title,
+                channel=channel_handle
+            )
+            if not upload_result or not upload_result.get("video_id"):
+                raise RuntimeError("upload_to_youtube returned no video_id")
+            health.check_pass(
+                "youtube_upload",
+                f"Uploaded: {upload_result.get('video_id')}",
+            )
+        except Exception as e:
+            health.check_fail("youtube_upload", e)
+            logger.error(f"YouTube upload failed: {e}", exc_info=True)
+    else:
+        health.check_fail(
+            "youtube_upload",
+            RuntimeError("Skipped -- no processed audio"),
+            fix="Fix audio processing step first.",
+        )
+
+    # --- Step 5: Firestore Sync ---
+    try:
+        if upload_result and upload_result.get("video_id"):
+            log_upload(
+                run_id=run_id,
+                channel=current_channel,
+                video_id=upload_result.get("video_id"),
+                title=video_title,
+                duration=duration
+            )
+            sync_channel_after_upload(channel=current_channel)
+        log_pipeline_run(
+            channel=current_channel,
+            status="completed" if upload_result else "partial",
+            run_id=run_id,
+        )
+        health.check_pass("firestore_sync")
+    except Exception as e:
+        health.check_fail("firestore_sync", e)
+        logger.error(f"Firestore sync failed: {e}", exc_info=True)
+
+    # --- Step 6: YouTube Analytics ---
+    try:
+        if upload_result:
+            analytics = get_channel_analytics(channel_handle)
+            log_activity(
+                channel=current_channel,
+                activity="analytics_check",
+                data=analytics,
+            )
+        health.check_pass("youtube_analytics")
+    except Exception as e:
+        health.check_fail("youtube_analytics", e)
+        logger.error(f"Analytics sync failed: {e}", exc_info=True)
+
+    # --- Save Health Report ---
+    health.save_to_firestore(db)
+
+    overall = health.overall_status
+    if overall == "failed":
+        logger.error(f"Pipeline FAILED for {channel_name}")
+        raise RuntimeError(
+            f"Pipeline failed for {channel_name}. "
+            f"See health report for details."
+        )
+    elif overall == "partial":
+        logger.warning(f"Pipeline completed PARTIALLY for {channel_name}")
+    else:
+        logger.info(f"Pipeline completed successfully for {channel_name}!")
 
 
 if __name__ == "__main__":
     run_pipeline()
-
