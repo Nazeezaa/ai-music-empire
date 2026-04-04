@@ -1,8 +1,8 @@
 name: AI Music Empire - Daily Pipeline
 
 on:
-  schedule:h
-        - cron: '0 23 * * *'  # runs at 06:00 Bangkok time (UTC+7), every day
+  schedule:
+      - cron: '0 23 * * *'  # runs at 06:00 Bangkok time (UTC+7), every day
   workflow_dispatch:
     inputs:
       genre:
