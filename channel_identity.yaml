@@ -1,0 +1,249 @@
+# AI Music Empire - Channel Identity Guide
+# Used by pipeline to generate varied, unique tracks per channel
+
+channels:
+  lofi_barista:
+    name: "Lofi Barista"
+    handle: "@LofiBarista-v9x"
+    genre: "Lofi Hip-Hop"
+    bpm_range: [70, 90]
+    sub_genres:
+      - "café jazz lofi"
+      - "vinyl crackle beats"
+      - "rainy day lofi"
+      - "study chill hop"
+      - "bedroom producer beats"
+      - "jazzhop instrumental"
+      - "warm chillhop"
+    moods:
+      - "cozy morning café"
+      - "late night study session"
+      - "afternoon chill"
+      - "sunday lazy vibes"
+      - "focused deep work"
+      - "nostalgic memories"
+      - "warm evening wind-down"
+    instruments:
+      - "Rhodes piano"
+      - "acoustic guitar"
+      - "muted trumpet"
+      - "vinyl scratches"
+      - "soft brushed drums"
+      - "bass guitar"
+      - "kalimba"
+      - "music box"
+    suno_prompts:
+      - "cozy café lofi hip hop, vinyl crackle, Rhodes piano, soft drums, warm and nostalgic, instrumental"
+      - "rainy day lofi beats, acoustic guitar, gentle bass, lo-fi tape hiss, mellow and relaxing, instrumental"
+      - "late night study lofi, jazz piano chords, brushed snare, deep bass, focused and calm, instrumental"
+      - "sunday morning chillhop, kalimba melody, soft kick, warm pads, peaceful and lazy, instrumental"
+      - "jazzhop instrumental, muted trumpet solo, vinyl crackle, swing drums, sophisticated café vibe"
+      - "bedroom producer lofi, detuned piano, chopped vocal samples, boom bap drums, dreamy and hazy, instrumental"
+      - "warm evening lofi, music box melody, soft strings, gentle bass, nostalgic sunset feeling, instrumental"
+      - "coffee shop ambient lofi, espresso machine sounds, soft guitar, brushed cymbals, cozy indoor vibes, instrumental"
+    youtube_title_templates:
+      - "Coffee Shop Lofi ☕ {duration} Chill Hip Hop Mix | Study & Relax"
+      - "Cozy Café Beats ☕ Lofi Hip Hop for Deep Focus | Vol.{vol}"
+      - "Late Night Study Lofi 🌙 Chill Beats to Concentrate"
+      - "Rainy Day Café ☔ Lofi Jazz Hip Hop Mix | {duration}"
+      - "Sunday Morning Lofi ☀️ Relaxing Chillhop Beats"
+    tags:
+      - "lofi"
+      - "lofi hip hop"
+      - "study beats"
+      - "café music"
+      - "chill hop"
+      - "lo-fi"
+      - "beats to study to"
+      - "lofi jazz"
+      - "coffee shop music"
+      - "relaxing beats"
+    artwork_style:
+      colors: ["#E8740C", "#8B4513", "#F4A460", "#FFF8DC"]
+      elements: ["coffee cup", "café interior", "hipster character", "headphones", "vinyl record"]
+      font_style: "bold playful hand-drawn"
+
+  rain_walker:
+    name: "Rain Walker"
+    handle: "@RainWalker"
+    genre: "Ambient / Nature Sounds"
+    bpm_range: [0, 60]
+    sub_genres:
+      - "thunderstorm ambient"
+      - "gentle rain ASMR"
+      - "forest rain"
+      - "ocean storm"
+      - "city rain at night"
+      - "rain with piano"
+      - "rain with strings"
+    moods:
+      - "peaceful deep sleep"
+      - "meditation and mindfulness"
+      - "cozy rainy evening"
+      - "dramatic thunderstorm"
+      - "mysterious forest night"
+      - "urban night rain walk"
+      - "gentle morning drizzle"
+    instruments:
+      - "rain (light drizzle)"
+      - "rain (heavy downpour)"
+      - "thunder (distant rumble)"
+      - "thunder (close crack)"
+      - "wind through trees"
+      - "bird calls"
+      - "piano underlay"
+      - "string pads"
+      - "water stream"
+    suno_prompts:
+      - "gentle rain falling on window, soft ambient pads, peaceful sleep music, no drums, deeply relaxing, instrumental"
+      - "thunderstorm with distant thunder, heavy rain, dark ambient drone, dramatic and immersive, instrumental"
+      - "rain forest at night, crickets, gentle rain, mysterious ambient, deep meditation music, instrumental"
+      - "city rain at night, cars passing through puddles, neon reflections, lo-fi ambient, urban and moody, instrumental"
+      - "soft rain with solo piano, melancholic and beautiful, minimal ambient, sleep and relaxation, instrumental"
+      - "ocean storm, crashing waves, wind howling, deep bass drone, powerful and dramatic nature sounds, instrumental"
+      - "morning drizzle, birds singing, gentle wind, bright ambient pads, hopeful and fresh, instrumental"
+      - "rain on tin roof, cozy cabin vibes, crackling fireplace, warm ambient, deeply comforting, instrumental"
+    youtube_title_templates:
+      - "Rain Sounds for Sleep 🌧️ {duration} Deep Relaxation"
+      - "Thunderstorm Ambience ⛈️ Heavy Rain & Thunder | Vol.{vol}"
+      - "Gentle Rain on Window 🌧️ Sleep & Study Ambient"
+      - "Night Rain in the City 🌃 Urban Ambient for Focus"
+      - "Forest Rain 🌲 Nature Sounds for Deep Sleep | {duration}"
+    tags:
+      - "rain sounds"
+      - "sleep music"
+      - "ambient"
+      - "thunderstorm"
+      - "ASMR rain"
+      - "relaxation"
+      - "deep sleep"
+      - "nature sounds"
+      - "rain for studying"
+      - "white noise"
+    artwork_style:
+      colors: ["#1a1a2e", "#16213e", "#0f3460", "#533483"]
+      elements: ["rain drops", "umbrella", "city skyline", "puddle reflections", "street lights"]
+      font_style: "bold modern sans-serif"
+
+  velvet_groove:
+    name: "Velvet Groove"
+    handle: "@VelvetGroove-m5g"
+    genre: "Jazz / Neo Soul / Groove"
+    bpm_range: [80, 120]
+    sub_genres:
+      - "smooth jazz"
+      - "funk groove"
+      - "neo soul"
+      - "bossa nova"
+      - "acid jazz"
+      - "jazz fusion"
+      - "soul R&B instrumental"
+    moods:
+      - "late night lounge"
+      - "funky dance party"
+      - "romantic candlelight dinner"
+      - "sunset coastal drive"
+      - "sophisticated cocktail bar"
+      - "groovy morning workout"
+      - "lazy sunday soul brunch"
+    instruments:
+      - "saxophone (tenor/alto)"
+      - "electric guitar (clean/wah)"
+      - "Hammond organ"
+      - "Rhodes electric piano"
+      - "upright bass"
+      - "trumpet (muted/open)"
+      - "drums (various patterns)"
+      - "congas/bongos"
+      - "vibraphone"
+    suno_prompts:
+      - "smooth jazz saxophone, Rhodes piano, walking bass, brushed drums, late night lounge vibe, sophisticated, instrumental"
+      - "funk groove, wah guitar, slap bass, tight drums, Hammond organ, energetic and danceable, instrumental"
+      - "neo soul, warm Rhodes chords, gentle guitar, deep bass groove, romantic and mellow, instrumental"
+      - "bossa nova jazz, nylon guitar, soft percussion, upright bass, tropical and elegant, instrumental"
+      - "acid jazz fusion, electric piano, funky drums, brass stabs, groovy and complex, instrumental"
+      - "soul R&B instrumental, vintage keys, warm guitar licks, deep pocket drums, smooth and soulful"
+      - "jazz trio, upright bass solo, piano comping, brush drums, intimate club performance, instrumental"
+      - "retro funk, disco strings, wah guitar, four on the floor drums, groovy and uplifting, instrumental"
+    youtube_title_templates:
+      - "Smooth Jazz & Groove 🎷 {duration} Chill Vibes | Vol.{vol}"
+      - "Late Night Jazz Lounge 🌙 Neo Soul & Groove Mix"
+      - "Funky Groove Mix 🎶 Jazz Soul Vibes for Your Day"
+      - "Velvet Groove Sessions 🎷 Smooth Jazz & Neo Soul | Vol.{vol}"
+      - "Sunday Soul Brunch ☀️ Groovy Jazz Mix | {duration}"
+    tags:
+      - "groove"
+      - "jazz"
+      - "neo soul"
+      - "smooth jazz"
+      - "funky"
+      - "chill groove"
+      - "jazz hop"
+      - "soul music"
+      - "saxophone"
+      - "lounge music"
+    artwork_style:
+      colors: ["#FF8C00", "#FFD700", "#800080", "#FF4500"]
+      elements: ["cartoon hipster characters", "vinyl record", "saxophone", "retro 70s elements", "sunburst pattern"]
+      font_style: "large bold playful display"
+
+  piano_ghost:
+    name: "Piano Ghost"
+    handle: "@PianoGhost-g3x"
+    genre: "Piano / Classical / Cinematic"
+    bpm_range: [60, 100]
+    sub_genres:
+      - "minimalist piano"
+      - "romantic classical"
+      - "cinematic emotional"
+      - "dark atmospheric piano"
+      - "bright uplifting piano"
+      - "contemporary classical"
+      - "ambient piano"
+    moods:
+      - "deep laser focus"
+      - "emotional reflection"
+      - "cinematic epic moment"
+      - "gentle lullaby"
+      - "mysterious dark atmosphere"
+      - "hopeful sunrise"
+      - "melancholic beauty"
+    instruments:
+      - "solo grand piano"
+      - "piano + string quartet"
+      - "piano + cello duet"
+      - "piano + ambient pads"
+      - "prepared piano"
+      - "music box + piano"
+      - "piano + choir"
+      - "piano + harp"
+    suno_prompts:
+      - "minimalist solo piano, gentle and meditative, simple repeating motifs, focus and concentration music, instrumental"
+      - "romantic classical piano, expressive dynamics, sweeping arpeggios, emotional and beautiful, instrumental"
+      - "cinematic piano and strings, epic build-up, emotional climax, film score quality, powerful and moving, instrumental"
+      - "dark atmospheric piano, minor key, sparse notes, reverb, mysterious and haunting, instrumental"
+      - "bright uplifting piano, major key, flowing melody, hopeful and inspiring, morning energy, instrumental"
+      - "piano and cello duet, intimate and emotional, classical crossover, beautiful harmonies, instrumental"
+      - "ambient piano, long sustain, ethereal pads, space between notes, deeply calming, instrumental"
+      - "contemporary classical piano, complex rhythms, modern harmonies, Philip Glass inspired, hypnotic patterns, instrumental"
+    youtube_title_templates:
+      - "Piano Focus Music 🎹 {duration} Deep Concentration"
+      - "Emotional Piano 🎹 Beautiful Classical Mix | Vol.{vol}"
+      - "Cinematic Piano & Strings 🎬 Epic Instrumental Music"
+      - "Peaceful Piano 🎹 Relaxing Music for Sleep & Study"
+      - "Piano Ghost Sessions 👻 Minimalist Piano | Vol.{vol}"
+    tags:
+      - "piano music"
+      - "focus music"
+      - "classical piano"
+      - "study piano"
+      - "relaxing piano"
+      - "cinematic piano"
+      - "concentration music"
+      - "piano instrumental"
+      - "beautiful piano"
+      - "ambient piano"
+    artwork_style:
+      colors: ["#DC143C", "#1C1C1C", "#FFFFFF", "#FFD700"]
+      elements: ["cute ghost character", "grand piano silhouette", "floating musical notes", "ethereal glow", "sparkles"]
+      font_style: "clean bold modern sans-serif"
