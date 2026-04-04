@@ -2,10 +2,11 @@
 # API keys are read from environment variables (GitHub Secrets)
 # DO NOT hardcode any secrets here!
 
-kie:
-  # KIE Music Generation API
-  api_key_env: "KIE_API_KEY"
-  base_url: "https://api.kie.ai/api/v1"
+suno:
+  # Suno Music Generation API
+  api_key_env: "SUNO_COOKIE"
+  clerk_url: "https://clerk.suno.com/v1/client"
+  base_url: "https://studio-api.suno.ai/api"
   default_duration: 180        # seconds
   default_genre: "lofi"
   default_mood: "chill"
