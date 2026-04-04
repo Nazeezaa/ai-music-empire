@@ -1,7 +1,9 @@
 """
 firestore_sync.py - Firebase Firestore integration for AI Music Empire
+
 Handles all Firestore database operations for logging pipeline runs, uploads, and analytics
 """
+
 import os
 import json
 import logging
@@ -24,6 +26,7 @@ PROJECT_ID = "ai-music-empire-d9ab3"
 def init_firestore():
     """
     Initialize Firebase Admin SDK and return Firestore client.
+
     Uses FIREBASE_SERVICE_ACCOUNT environment variable containing JSON credentials.
 
     Returns:
@@ -54,11 +57,11 @@ def init_firestore():
 
 
 def _slugify(text: str) -> str:
-    """Convert text to URL-friendly slug format."""
+    """Convert text to underscore-separated slug format matching dashboard doc IDs."""
     text = text.lower().strip()
     text = re.sub(r'[^\w\s-]', '', text)
-    text = re.sub(r'[-\s]+', '-', text)
-    return text.strip('-')
+    text = re.sub(r'[-\s]+', '_', text)
+    return text.strip('_')
 
 
 def update_channel_stats(
@@ -68,22 +71,10 @@ def update_channel_stats(
     subs: int,
     views: int,
     videos: int,
-    status: str = 'active'
+    status: str = 'Active'
 ) -> bool:
     """
     Update or create a channel document in the 'channels' collection.
-
-    Args:
-        db: Firestore client
-        channel_id: YouTube channel ID
-        name: Channel display name
-        subs: Subscriber count
-        views: Total views count
-        videos: Total videos count
-        status: Channel status (default: 'active')
-
-    Returns:
-        bool: True if successful, False otherwise
     """
     if db is None:
         return False
@@ -107,42 +98,77 @@ def update_channel_stats(
         return False
 
 
+def sync_channel_after_upload(db, channel_name: str, video_id: str = None) -> bool:
+    """
+    Update channel doc after a successful YouTube upload.
+    Increments video count by 1, sets status to 'Active', and records last_upload timestamp.
+    """
+    if db is None:
+        return False
+
+    try:
+        doc_id = _slugify(channel_name)
+        channel_ref = db.collection("channels").document(doc_id)
+        channel_doc = channel_ref.get()
+
+        current_videos = 0
+        if channel_doc.exists:
+            current_videos = channel_doc.get("videos") or 0
+
+        update_data = {
+            "videos": current_videos + 1,
+            "status": "Active",
+            "last_upload": firestore.SERVER_TIMESTAMP,
+            "updatedAt": firestore.SERVER_TIMESTAMP,
+        }
+        if video_id:
+            update_data["last_video_id"] = video_id
+            update_data["last_video_url"] = f"https://www.youtube.com/watch?v={video_id}"
+
+        channel_ref.set(update_data, merge=True)
+        logger.info(f"Synced channel '{channel_name}' after upload: videos={current_videos + 1}, status=Active")
+        return True
+    except Exception as e:
+        logger.error(f"Failed to sync channel after upload: {e}")
+        return False
+
+
 def log_pipeline_run(
     db,
     status: str,
     channel: str,
     tracks_generated: int,
     video_duration: int,
-    run_number: Optional[int] = None
+    run_number: Optional[int] = None,
+    steps: Optional[Dict[str, str]] = None
 ) -> bool:
     """
     Add a new document to the 'pipeline_runs' collection.
-
-    Args:
-        db: Firestore client
-        status: Run status ('success' or 'failed')
-        channel: Channel name
-        tracks_generated: Number of tracks generated
-        video_duration: Total video duration in seconds
-        run_number: Optional run number/ID
-
-    Returns:
-        bool: True if successful, False otherwise
+    Uses 'started_at' field name to match dashboard listener.
     """
     if db is None:
         return False
 
     try:
+        run_name = f"Pipeline #{run_number}" if run_number else f"Run {datetime.now().strftime('%Y%m%d-%H%M')}"
         run_data = {
             "status": status,
             "channel": channel,
             "tracksGenerated": tracks_generated,
             "videoDuration": video_duration,
-            "runNumber": run_number,
-            "timestamp": firestore.SERVER_TIMESTAMP,
+            "run_number": run_number or int(datetime.now().strftime('%Y%m%d%H%M')),
+            "run_name": run_name,
+            "started_at": firestore.SERVER_TIMESTAMP,
+            "steps": steps or {
+                "generate": "Done" if tracks_generated > 0 else "Failed",
+                "video": "Done" if status == "success" else "Failed",
+                "thumbnail": "Done" if status == "success" else "Pending",
+                "upload": "Done" if status == "success" else "Failed",
+                "metadata": "Done" if status == "success" else "Pending",
+            },
         }
         db.collection("pipeline_runs").add(run_data)
-        logger.info(f"Logged pipeline run: status={status}, tracks={tracks_generated}")
+        logger.info(f"Logged pipeline run: {run_name}, status={status}, tracks={tracks_generated}")
         return True
     except Exception as e:
         logger.error(f"Failed to log pipeline run: {e}")
@@ -158,16 +184,7 @@ def log_upload(
 ) -> bool:
     """
     Add a new document to the 'uploads' collection.
-
-    Args:
-        db: Firestore client
-        title: Video title
-        channel: Channel name
-        video_id: YouTube video ID
-        thumbnail_url: Optional thumbnail URL
-
-    Returns:
-        bool: True if successful, False otherwise
+    Uses 'uploaded_at' field name to match dashboard listener.
     """
     if db is None:
         return False
@@ -179,7 +196,7 @@ def log_upload(
             "videoId": video_id,
             "videoUrl": f"https://www.youtube.com/watch?v={video_id}",
             "thumbnailUrl": thumbnail_url,
-            "timestamp": firestore.SERVER_TIMESTAMP,
+            "uploaded_at": firestore.SERVER_TIMESTAMP,
         }
         db.collection("uploads").add(upload_data)
         logger.info(f"Logged upload: {title} (video_id={video_id})")
@@ -189,25 +206,19 @@ def log_upload(
         return False
 
 
-def log_activity(db, icon: str, text: str) -> bool:
+def log_activity(db, icon: str, text: str, activity_type: str = "info") -> bool:
     """
     Add a new document to the 'activity_log' collection.
-
-    Args:
-        db: Firestore client
-        icon: Icon/emoji to display
-        text: Activity description text
-
-    Returns:
-        bool: True if successful, False otherwise
+    Uses 'type' and 'message' field names to match dashboard listener.
     """
     if db is None:
         return False
 
     try:
         activity_data = {
+            "type": activity_type,
+            "message": text,
             "icon": icon,
-            "text": text,
             "timestamp": firestore.SERVER_TIMESTAMP,
         }
         db.collection("activity_log").add(activity_data)
@@ -219,28 +230,19 @@ def log_activity(db, icon: str, text: str) -> bool:
 
 
 def update_revenue(db, estimated: float, target: float = 50000) -> bool:
-    """
-    Update the 'revenue/current' document.
-
-    Args:
-        db: Firestore client
-        estimated: Estimated revenue
-        target: Revenue target (default: 50000)
-
-    Returns:
-        bool: True if successful, False otherwise
-    """
+    """Update the 'revenue/current' document."""
     if db is None:
         return False
 
     try:
         revenue_data = {
             "estimated": estimated,
+            "total_thb": estimated,
             "target": target,
             "updatedAt": firestore.SERVER_TIMESTAMP,
         }
         db.collection("revenue").document("current").set(revenue_data, merge=True)
-        logger.info(f"Updated revenue: ${estimated} / ${target}")
+        logger.info(f"Updated revenue: {estimated} / {target}")
         return True
     except Exception as e:
         logger.error(f"Failed to update revenue: {e}")
@@ -248,17 +250,7 @@ def update_revenue(db, estimated: float, target: float = 50000) -> bool:
 
 
 def update_channel_view_history(db, channel_doc_id: str, views: int) -> bool:
-    """
-    Append a view count to the channel's viewHistory array, keeping last 30 entries.
-
-    Args:
-        db: Firestore client
-        channel_doc_id: Channel document ID (slugified name)
-        views: Current view count
-
-    Returns:
-        bool: True if successful, False otherwise
-    """
+    """Append a view count to the channel's viewHistory array, keeping last 30 entries."""
     if db is None:
         return False
 
@@ -268,14 +260,13 @@ def update_channel_view_history(db, channel_doc_id: str, views: int) -> bool:
 
         view_history = []
         if channel_doc.exists:
-            view_history = channel_doc.get("viewHistory", [])
+            view_history = channel_doc.get("viewHistory") or []
 
         view_entry = {
             "views": views,
             "timestamp": datetime.now().isoformat()
         }
         view_history.append(view_entry)
-
         if len(view_history) > 30:
             view_history = view_history[-30:]
 
@@ -287,68 +278,27 @@ def update_channel_view_history(db, channel_doc_id: str, views: int) -> bool:
         return False
 
 
-def seed_test_data(db) -> None:
-    """
-    Seed Firestore with initial test data for development/testing.
-
-    Args:
-        db: Firestore client
-    """
+def seed_initial_channels(db) -> None:
+    """Seed Firestore with the four AI Music Empire channels."""
     if db is None:
-        logger.warning("Cannot seed test data: Firestore not initialized")
         return
 
-    try:
-        logger.info("Seeding test data...")
-
-        channels = [
-            {"name": "Lofi Hip Hop Beats", "channelId": "UCxxx1", "subs": 45000, "views": 3200000, "videos": 287},
-            {"name": "Ambient Music Studio", "channelId": "UCxxx2", "subs": 28000, "views": 1850000, "videos": 156},
-            {"name": "Jazz Piano Vibes", "channelId": "UCxxx3", "subs": 62000, "views": 5100000, "videos": 412},
-            {"name": "Synthwave Dreams", "channelId": "UCxxx4", "subs": 38000, "views": 2400000, "videos": 203},
-        ]
-
-        for ch in channels:
-            update_channel_stats(db, ch["channelId"], ch["name"], ch["subs"], ch["views"], ch["videos"])
-
-        pipeline_runs = [
-            {"status": "success", "channel": "Lofi Hip Hop Beats", "tracks": 2, "duration": 1200},
-            {"status": "success", "channel": "Ambient Music Studio", "tracks": 1, "duration": 600},
-            {"status": "failed", "channel": "Jazz Piano Vibes", "tracks": 0, "duration": 0},
-            {"status": "success", "channel": "Synthwave Dreams", "tracks": 1, "duration": 900},
-        ]
-
-        for run in pipeline_runs:
-            log_pipeline_run(db, run["status"], run["channel"], run["tracks"], run["duration"])
-
-        uploads = [
-            {"title": "Lofi Hip Hop - Late Night Study Mix", "channel": "Lofi Hip Hop Beats", "video_id": "abc123def456"},
-            {"title": "Ambient Relaxation - Forest Sounds", "channel": "Ambient Music Studio", "video_id": "ghi789jkl012"},
-            {"title": "Jazz Piano - Smooth Evening", "channel": "Jazz Piano Vibes", "video_id": "mno345pqr678"},
-        ]
-
-        for up in uploads:
-            log_upload(db, up["title"], up["channel"], up["video_id"])
-
-        activities = [
-            {"icon": "🎵", "text": "Generated 2 tracks for Lofi Hip Hop channel"},
-            {"icon": "📤", "text": "Uploaded video to Lofi Hip Hop Beats"},
-            {"icon": "📊", "text": "Channel reached 45,000 subscribers"},
-            {"icon": "⚠️", "text": "Jazz Piano pipeline run failed"},
-            {"icon": "🎉", "text": "Total views exceeded 12 million"},
-        ]
-
-        for act in activities:
-            log_activity(db, act["icon"], act["text"])
-
-        update_revenue(db, estimated=12500.75, target=50000)
-
-        update_channel_view_history(db, "lofi-hip-hop-beats", 3200000)
-        update_channel_view_history(db, "ambient-music-studio", 1850000)
-
-        logger.info("Test data seeding completed successfully")
-    except Exception as e:
-        logger.error(f"Failed to seed test data: {e}")
+    channels = [
+        {"doc_id": "lofi_barista", "name": "Lofi Barista", "status": "Active"},
+        {"doc_id": "rain_walker", "name": "Rain Walker", "status": "Setting Up"},
+        {"doc_id": "velvet_groove", "name": "Velvet Groove", "status": "Setting Up"},
+        {"doc_id": "piano_ghost", "name": "Piano Ghost", "status": "Setting Up"},
+    ]
+    for ch in channels:
+        db.collection("channels").document(ch["doc_id"]).set({
+            "name": ch["name"],
+            "subscribers": 0,
+            "views": 0,
+            "videos": 0,
+            "status": ch["status"],
+            "updatedAt": firestore.SERVER_TIMESTAMP,
+        }, merge=True)
+    logger.info("Seeded initial channel documents")
 
 
 if __name__ == "__main__":
@@ -356,10 +306,9 @@ if __name__ == "__main__":
         level=logging.INFO,
         format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
     )
-
     db = init_firestore()
     if db:
-        seed_test_data(db)
-        print("Firestore sync initialized and test data seeded!")
+        seed_initial_channels(db)
+        print("Firestore sync initialized and channels seeded!")
     else:
         print("Failed to initialize Firestore. Check FIREBASE_SERVICE_ACCOUNT environment variable.")
