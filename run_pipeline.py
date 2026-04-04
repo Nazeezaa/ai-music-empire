@@ -143,6 +143,13 @@ def run_pipeline():
     except Exception as e:
         logger.warning(f"Analytics check failed (non-critical): {e}")
 
+    # Sync YouTube Analytics to Firestore
+    try:
+        from youtube_analytics import sync_all_channels
+        sync_all_channels()
+    except Exception as e:
+        print(f"YouTube Analytics sync failed (non-fatal): {e}")
+
     # Summary
     logger.info("=" * 60)
     logger.info("PIPELINE COMPLETE")
