@@ -7,6 +7,68 @@ suno:
   api_key_env: "SUNO_COOKIE"
   clerk_url: "https://clerk.suno.com/v1/client"
   base_url: "https://studio-api.suno.ai/api"
+  default_duration: 180  # seconds
+  default_genre: "lofi"
+  default_mood: "chill"
+  output_format: "mp3"
+
+youtube:
+  # YouTube Data API v3 / OAuth2
+  client_id_env: "YOUTUBE_CLIENT_ID"
+  client_secret_env: "YOUTUBE_CLIENT_SECRET"
+  refresh_token_env: "YOUTUBE_REFRESH_TOKEN"
+  token_uri: "https://oauth2.googleapis.com/token"
+  upload_scope: "https://www.googleapis.com/auth/youtube.upload"
+  analytics_scope: "https://www.googleapis.com/auth/yt-analytics.readonly"
+  category_id: "10"  # Music category
+  privacy_status: "public"
+  default_language: "en"
+  channel_name: "Lofi Barista"
+
+audio_processing:
+  normalize_loudness: -14.0  # LUFS (Spotify/YouTube standard)
+  fade_in_seconds: 2.0
+  fade_out_seconds: 3.0
+  sample_rate: 44100
+  bitrate: "320k"
+
+pipeline:
+  output_dir: "output"
+  max_retries: 3
+  retry_delay: 10  # seconds
+  tracks_per_run: 1
+  target_video_duration: 3600  # 1 hour
+  tracks_per_video: 30  # ~30 tracks x 2min = 1 hour
+  log_file: "pipeline.log"
+
+content:
+  # Templates for YouTube metadata
+  title_template: '🎵 {genre} {mood} Music - AI Generated | {date}'
+  description_template: |
+    🎧 AI-generated {genre} music for {mood} vibes.
+    Created with AI Music Empire pipeline.
+
+    Genre: {genre} | Mood: {mood}
+
+    🔔 Subscribe for daily AI music!
+    #AIMusic #LoFi #ChillBeats #StudyMusic #AIGenerated
+  tags:
+    - "AI music"
+    - "lofi"
+    - "chill beats"
+    - "study music"
+    - "AI generated"
+    - "background music"
+    - "relaxing music"
+# AI Music Empire - Configuration
+# API keys are read from environment variables (GitHub Secrets)
+# DO NOT hardcode any secrets here!
+
+suno:
+  # Suno Music Generation API
+  api_key_env: "SUNO_COOKIE"
+  clerk_url: "https://clerk.suno.com/v1/client"
+  base_url: "https://studio-api.suno.ai/api"
   default_duration: 180        # seconds
   default_genre: "lofi"
   default_mood: "chill"
