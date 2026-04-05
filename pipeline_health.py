@@ -1,8 +1,9 @@
 """
 pipeline_health.py - Health check and error tracking for AI Music Empire pipeline
 
-Tracks pass/fail status of each pipeline step, maps common errors to human-readable
-fix suggestions, and writes run summaries to Firestore "pipeline_runs" collection.
+Tracks pass/fail status of each pipeline step, maps common errors to
+human-readable fix suggestions, and writes run summaries to Firestore
+"pipeline_runs" collection.
 """
 
 import time
@@ -12,7 +13,6 @@ from datetime import datetime
 from typing import Optional, Dict, Any
 
 logger = logging.getLogger(__name__)
-
 
 # ---------------------------------------------------------------------------
 # Common error -> fix mappings
@@ -44,6 +44,13 @@ ERROR_FIX_MAP = [
         "pattern": r"(?i)ffmpeg|subprocess|concat|audio",
         "fix": "FFmpeg binary issue -- check GitHub Actions runner",
     },
+    {
+        "pattern": r"(?i)analytics.agent|recommendation|pattern.analy",
+        "fix": (
+            "AI Analytics Agent error. Check YouTube API credentials "
+            "and channel_identity.yaml configuration."
+        ),
+    },
 ]
 
 
@@ -64,6 +71,9 @@ def _match_fix(error_message: str, step: str) -> str:
         "ffmpeg_concat": (
             "Audio concatenation failed. Verify FFmpeg is installed on the runner."
         ),
+        "thumbnail_gen": (
+            "Thumbnail generation failed. Check Pillow installation and channel identity config."
+        ),
         "youtube_upload": (
             "YouTube upload failed. Verify YouTube OAuth secrets in GitHub Secrets."
         ),
@@ -73,23 +83,29 @@ def _match_fix(error_message: str, step: str) -> str:
         "youtube_analytics": (
             "YouTube Analytics sync failed. Check YouTube API credentials."
         ),
+        "analytics_agent": (
+            "AI Analytics Agent failed. Check YouTube API credentials "
+            "and channel_identity.yaml. This is non-fatal."
+        ),
     }
     return step_fallbacks.get(step, f"Step '{step}' failed. Check logs for details.")
 
 
 class HealthCheck:
     """
-    Tracks the pass/fail status of every pipeline step and writes a
-    summary document to the Firestore ``pipeline_runs`` collection.
+    Tracks the pass/fail status of every pipeline step and writes
+    a summary document to the Firestore ``pipeline_runs`` collection.
     """
 
     STEPS = {
         "suno_auth": "Suno API authentication",
         "suno_generate": "Music generation",
         "ffmpeg_concat": "Audio concatenation",
+        "thumbnail_gen": "Thumbnail generation",
         "youtube_upload": "YouTube upload",
         "firestore_sync": "Firestore sync",
         "youtube_analytics": "YouTube Analytics sync",
+        "analytics_agent": "AI Analytics Agent",
     }
 
     def __init__(self, channel: str):
@@ -117,7 +133,7 @@ class HealthCheck:
             "message": message or f"{desc} succeeded",
             "fix": "",
         }
-        logger.info(f"[HealthCheck] PASS  {step}: {self._checklist[step]['message']}")
+        logger.info(f"[HealthCheck] PASS {step}: {self._checklist[step]['message']}")
 
     def check_fail(
         self,
@@ -135,7 +151,7 @@ class HealthCheck:
             "fix": suggested_fix,
         }
         logger.error(
-            f"[HealthCheck] FAIL  {step}: {error_msg} | Fix: {suggested_fix}"
+            f"[HealthCheck] FAIL {step}: {error_msg} | Fix: {suggested_fix}"
         )
 
     @property
@@ -144,9 +160,9 @@ class HealthCheck:
         Derive an overall status from individual step results.
 
         Returns:
-            "success"  - all steps passed
-            "partial"  - some steps passed, some failed or were skipped
-            "failed"   - no steps passed (or critical early step failed)
+            "success" - all steps passed
+            "partial" - some steps passed, some failed or were skipped
+            "failed"  - no steps passed (or critical early step failed)
         """
         statuses = [v["status"] for v in self._checklist.values()]
         passed = statuses.count("pass")
@@ -176,7 +192,7 @@ class HealthCheck:
     # Firestore persistence
     # ------------------------------------------------------------------
 
-    def save_to_firestore(self, db) -> bool:
+    def save_to_firestore(self, db=None) -> bool:
         """
         Write the health-check summary to the ``pipeline_runs`` collection.
 
@@ -200,7 +216,6 @@ class HealthCheck:
             doc = self.summary_dict()
             # Use server timestamp when writing to Firestore
             doc["timestamp"] = fs.SERVER_TIMESTAMP
-
             db.collection("pipeline_runs").add(doc)
             logger.info(
                 f"[HealthCheck] Saved health report to Firestore "
@@ -220,7 +235,9 @@ class HealthCheck:
         """Pretty-print the health report to the logger as a fallback."""
         logger.info("=" * 60)
         logger.info(f"  Pipeline Health Report  |  Channel: {self.channel}")
-        logger.info(f"  Overall: {self.overall_status}  |  Duration: {self.duration_seconds}s")
+        logger.info(
+            f"  Overall: {self.overall_status}  |  Duration: {self.duration_seconds}s"
+        )
         logger.info("-" * 60)
         for step, info in self._checklist.items():
             icon = "PASS" if info["status"] == "pass" else "FAIL"
