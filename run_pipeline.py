@@ -1,10 +1,11 @@
 """
 run_pipeline.py - Main orchestrator for AI Music Empire pipeline
 
-Flow: generate_multiple_tracks() -> concatenate_audio() -> process_track()
-      -> upload_to_youtube() -> analytics_agent
+Flow: ai_producer.produce_session() -> generate_multiple_tracks() -> concatenate_audio()
+  -> process_track() -> upload_to_youtube() -> analytics_agent
 
 Rotates through all 4 channels daily using channel_identity.yaml
+Uses AI Producer for data-driven prompt selection and metadata generation
 """
 
 import os
@@ -27,6 +28,13 @@ from firestore_sync import (
 )
 from pipeline_health import HealthCheck
 from generate_thumbnail import generate_thumbnail
+
+# AI Producer for smart, analytics-driven production decisions
+try:
+    from ai_producer import produce_session as ai_produce_session
+    AI_PRODUCER_AVAILABLE = True
+except ImportError:
+    AI_PRODUCER_AVAILABLE = False
 
 log_format = "%(asctime)s [%(levelname)s] %(name)s: %(message)s"
 
@@ -58,15 +66,23 @@ def load_recommendations():
         return {}
 
 
-def get_todays_channel():
+def get_todays_channel_slug():
     """Rotate channel based on day of year (cycle through 4 channels)."""
-    with open("channel_identity.yaml", "r") as f:
-        identity = yaml.safe_load(f)
-
     channels_order = ["lofi_barista", "rain_walker", "velvet_groove", "piano_ghost"]
     today = datetime.date.today()
     channel_index = today.timetuple().tm_yday % len(channels_order)
-    current_channel = channels_order[channel_index]
+    return channels_order[channel_index]
+
+
+def get_todays_channel():
+    """
+    Legacy fallback: get channel config with random prompt selection.
+    Used when AI Producer is not available.
+    """
+    with open("channel_identity.yaml", "r") as f:
+        identity = yaml.safe_load(f)
+
+    current_channel = get_todays_channel_slug()
     channel_config = identity["channels"][current_channel]
 
     # Load AI recommendations for prompt biasing
@@ -80,7 +96,6 @@ def get_todays_channel():
     avoid_genre = suno_tuning.get("avoid_genre", None)
 
     # Select channel-specific Suno prompts from identity guide
-    # Bias toward prompts matching the preferred genre if available
     suno_prompts = channel_config["suno_prompts"]
     if preferred_genre:
         biased = [p for p in suno_prompts if preferred_genre.lower() in p.lower()]
@@ -109,15 +124,56 @@ def run_pipeline():
     setup_logging(config)
     logger = logging.getLogger("pipeline")
 
-    # --- Channel Rotation ---
-    current_channel, channel_config, suno_prompt, genre, mood = get_todays_channel()
-    channel_name = channel_config["name"]
-    channel_handle = channel_config["handle"]
-    title_templates = channel_config["youtube_title_templates"]
+    # --- Channel Selection ---
+    current_channel = get_todays_channel_slug()
+    channel_slug = current_channel.replace("_", "-")
+
+    # --- AI Producer: Smart Session Planning ---
+    session = None
+    if AI_PRODUCER_AVAILABLE:
+        try:
+            logger.info(f"[AI Producer] Generating smart session for {channel_slug}...")
+            session = ai_produce_session(channel_slug)
+            logger.info(f"[AI Producer] Session ready: {session['title']}")
+        except Exception as e:
+            logger.warning(f"[AI Producer] Failed, falling back to legacy: {e}")
+            session = None
+
+    # Fallback to legacy channel selection if AI Producer unavailable
+    if session:
+        suno_prompt = session["suno_prompt"]
+        genre = session["genres"][0] if session.get("genres") else "chill"
+        mood = session["mood"]
+        video_title = session["title"]
+        video_description = session["description"]
+        video_tags = session["tags"]
+        thumbnail_style = session.get("thumbnail_style", {})
+        volume_number = session.get("volume_number", 1)
+
+        # Load channel_config for compatibility with existing steps
+        with open("channel_identity.yaml", "r") as f:
+            identity = yaml.safe_load(f)
+        channel_config = identity["channels"][current_channel]
+        channel_name = channel_config["name"]
+        channel_handle = channel_config["handle"]
+    else:
+        # Legacy path
+        current_channel, channel_config, suno_prompt, genre, mood = get_todays_channel()
+        channel_name = channel_config["name"]
+        channel_handle = channel_config["handle"]
+        title_templates = channel_config["youtube_title_templates"]
+        video_title = random.choice(title_templates).replace(
+            "{date}", datetime.date.today().strftime("%B %d, %Y")
+        )
+        video_description = None
+        video_tags = channel_config.get("tags", [])
+        thumbnail_style = {}
+        volume_number = datetime.date.today().timetuple().tm_yday
 
     logger.info(f"=== Daily Channel: {channel_name} ({current_channel}) ===")
     logger.info(f"Genre: {genre} | Mood: {mood}")
     logger.info(f"Suno prompt: {suno_prompt}")
+    logger.info(f"Title: {video_title}")
 
     # --- Initialize Health Check ---
     health = HealthCheck(channel=current_channel)
@@ -176,7 +232,6 @@ def run_pipeline():
     if processed:
         try:
             logger.info(f"Generating thumbnail for {channel_name}...")
-            volume_number = datetime.date.today().timetuple().tm_yday
             thumbnail_path = generate_thumbnail(
                 channel_key=current_channel,
                 volume_number=volume_number,
@@ -192,10 +247,6 @@ def run_pipeline():
     upload_result = None
     if processed:
         try:
-            title_template = random.choice(title_templates)
-            video_title = title_template.replace(
-                "{date}", datetime.date.today().strftime("%B %d, %Y")
-            )
             logger.info(f"Uploading to YouTube channel: {channel_handle}")
             logger.info(f"Video title: {video_title}")
             upload_result = upload_to_youtube(
@@ -233,7 +284,7 @@ def run_pipeline():
                 status="completed" if upload_result else "partial",
                 run_id=run_id
             )
-        health.check_pass("firestore_sync")
+            health.check_pass("firestore_sync")
     except Exception as e:
         health.check_fail("firestore_sync", e)
         logger.error(f"Firestore sync failed: {e}", exc_info=True)
@@ -247,7 +298,7 @@ def run_pipeline():
                 activity="analytics_check",
                 data=analytics
             )
-        health.check_pass("youtube_analytics")
+            health.check_pass("youtube_analytics")
     except Exception as e:
         health.check_fail("youtube_analytics", e)
         logger.error(f"Analytics sync failed: {e}", exc_info=True)
