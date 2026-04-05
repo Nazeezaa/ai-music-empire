@@ -2,7 +2,7 @@
 run_pipeline.py - Main orchestrator for AI Music Empire pipeline
 
 Flow: ai_producer.produce_session() -> generate_multiple_tracks() -> concatenate_audio()
-  -> process_track() -> upload_to_youtube() -> analytics_agent
+      -> process_track() -> upload_to_youtube() -> analytics_agent
 
 Rotates through all 4 channels daily using channel_identity.yaml
 Uses AI Producer for data-driven prompt selection and metadata generation
@@ -37,8 +37,6 @@ except ImportError:
     AI_PRODUCER_AVAILABLE = False
 
 log_format = "%(asctime)s [%(levelname)s] %(name)s: %(message)s"
-
-
 def setup_logging(config):
     log_file = config["pipeline"].get("log_file", "pipeline.log")
     logging.basicConfig(level=logging.INFO, format=log_format, handlers=[
@@ -49,8 +47,9 @@ def setup_logging(config):
 
 def load_recommendations():
     """
-    Load AI-generated recommendations from recommendations.yaml
-    to bias Suno prompt selection toward better-performing genres.
+    Load AI-generated recommendations from recommendations.yaml to bias
+    Suno prompt selection toward better-performing genres.
+
     Returns a dict of channel recommendations or empty dict on failure.
     """
     try:
@@ -72,8 +71,6 @@ def get_todays_channel_slug():
     today = datetime.date.today()
     channel_index = today.timetuple().tm_yday % len(channels_order)
     return channels_order[channel_index]
-
-
 def get_todays_channel():
     """
     Legacy fallback: get channel config with random prompt selection.
@@ -115,10 +112,7 @@ def get_todays_channel():
         genre = random.choice(sub_genres)
 
     mood = random.choice(channel_config["moods"])
-
     return current_channel, channel_config, suno_prompt, genre, mood
-
-
 def run_pipeline():
     config = load_config()
     setup_logging(config)
@@ -177,10 +171,20 @@ def run_pipeline():
 
     # --- Initialize Health Check ---
     health = HealthCheck(channel=current_channel)
-
     # --- Initialize Firestore ---
-    init_firestore()
-    run_id = log_pipeline_run(channel=current_channel, status="started")
+    db = None
+    try:
+        db = init_firestore()
+        logger.info("Firestore initialized successfully.")
+    except Exception as e:
+        logger.warning(f"Firestore initialization failed (non-fatal): {e}")
+        db = None
+
+    if db is not None:
+        try:
+            log_pipeline_run(db, "started", current_channel)
+        except Exception as e:
+            logger.warning(f"Failed to log pipeline start to Firestore: {e}")
 
     # --- Step 1: Suno Auth (implicit in generate) ---
     tracks = None
@@ -194,10 +198,7 @@ def run_pipeline():
     try:
         logger.info(f"Generating tracks for {channel_name}...")
         tracks = generate_multiple_tracks(
-            config,
-            prompt=suno_prompt,
-            genre=genre,
-            mood=mood
+            config, prompt=suno_prompt, genre=genre, mood=mood
         )
         if not tracks:
             raise RuntimeError("generate_multiple_tracks returned empty result")
@@ -205,7 +206,6 @@ def run_pipeline():
     except Exception as e:
         health.check_fail("suno_generate", e)
         logger.error(f"Music generation failed: {e}", exc_info=True)
-
     # --- Step 3: Process & Concatenate Audio ---
     processed = None
     duration = None
@@ -242,7 +242,6 @@ def run_pipeline():
         except Exception as e:
             logger.warning(f"Thumbnail generation failed (non-fatal): {e}", exc_info=True)
             health.check_fail("thumbnail_gen", e)
-
     # --- Step 4: YouTube Upload ---
     upload_result = None
     if processed:
@@ -267,37 +266,44 @@ def run_pipeline():
             RuntimeError("Skipped -- no processed audio"),
             fix="Fix audio processing step first."
         )
-
     # --- Step 5: Firestore Sync ---
     try:
-        if upload_result and upload_result.get("video_id"):
+        if db is not None and upload_result and upload_result.get("video_id"):
             log_upload(
-                run_id=run_id,
-                channel=current_channel,
-                video_id=upload_result.get("video_id"),
-                title=video_title,
-                duration=duration
+                db,
+                current_channel,
+                upload_result.get("video_id"),
+                video_title,
+                duration=duration or 0
             )
-            sync_channel_after_upload(channel=current_channel)
+            sync_channel_after_upload(db, current_channel)
             log_pipeline_run(
-                channel=current_channel,
-                status="completed" if upload_result else "partial",
-                run_id=run_id
+                db,
+                "completed" if upload_result else "partial",
+                current_channel,
+                tracks_generated=len(tracks) if tracks else 0,
+                video_duration=duration or 0
             )
             health.check_pass("firestore_sync")
+        elif db is None:
+            logger.warning("Skipping Firestore sync: Firestore not initialized.")
+        else:
+            if db is not None:
+                log_pipeline_run(db, "partial", current_channel)
     except Exception as e:
         health.check_fail("firestore_sync", e)
         logger.error(f"Firestore sync failed: {e}", exc_info=True)
-
     # --- Step 6: YouTube Analytics ---
     try:
         if upload_result:
             analytics = get_channel_analytics(channel_handle)
-            log_activity(
-                channel=current_channel,
-                activity="analytics_check",
-                data=analytics
-            )
+            if db is not None:
+                log_activity(
+                    db,
+                    "analytics_check",
+                    channel=current_channel,
+                    details=str(analytics)
+                )
             health.check_pass("youtube_analytics")
     except Exception as e:
         health.check_fail("youtube_analytics", e)
@@ -320,7 +326,6 @@ def run_pipeline():
         # Analytics failure should NOT block the main pipeline
         logger.warning(f"AI Analytics Agent failed (non-fatal): {e}", exc_info=True)
         health.check_fail("analytics_agent", e)
-
     # --- Save Health Report ---
     health.save_to_firestore()
 
