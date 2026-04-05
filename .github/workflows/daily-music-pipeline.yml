@@ -2,7 +2,7 @@ name: AI Music Empire - Daily Pipeline
 
 on:
   schedule:
-      - cron: '0 23 * * *'  # runs at 06:00 Bangkok time (UTC+7), every day
+    - cron: '0 23 * * *'  # runs at 06:00 Bangkok time (UTC+7), every day
   workflow_dispatch:
     inputs:
       genre:
@@ -52,6 +52,11 @@ jobs:
 
       - name: Run full pipeline
         run: python run_pipeline.py
+
+      - name: Run AI Analytics Agent
+        if: always()
+        run: python analytics_agent.py
+        continue-on-error: true
 
       - name: Upload pipeline log
         if: always()
