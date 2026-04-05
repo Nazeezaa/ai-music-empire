@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AI Music Empire — Dashboard</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎵</text></svg>">
+<title>AI Music Empire â Dashboard</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>ðµ</text></svg>">
 <style>
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    CSS RESET & VARIABLES
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
@@ -62,9 +62,9 @@ a:hover { text-decoration: underline; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--border-light); }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    LAYOUT - SIDEBAR + MAIN
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 .app-layout {
   display: flex;
   min-height: 100vh;
@@ -293,9 +293,9 @@ a:hover { text-decoration: underline; }
 .page-section { display: none; }
 .page-section.active { display: block; }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    DASHBOARD - OVERVIEW
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 
 /* Stats row */
 .stats-grid {
@@ -431,9 +431,9 @@ a:hover { text-decoration: underline; }
 .card-body { padding: 20px; }
 .card-body.no-pad { padding: 0; }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    CHANNEL CARDS
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 .channels-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
@@ -516,9 +516,9 @@ a:hover { text-decoration: underline; }
   color: var(--text-muted);
 }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    PIPELINE RUNS
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 .pipeline-list { list-style: none; }
 
 .pipeline-item {
@@ -638,9 +638,9 @@ a:hover { text-decoration: underline; }
   margin-top: 16px;
 }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    ACTIVITY LOG
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 .filter-bar {
   display: flex;
   align-items: center;
@@ -728,9 +728,9 @@ a:hover { text-decoration: underline; }
 
 .load-more-btn:hover { background: rgba(124,58,237,0.05); }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    HISTORY PAGE - CHARTS
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 .chart-container {
   width: 100%;
   height: 240px;
@@ -810,9 +810,9 @@ a:hover { text-decoration: underline; }
 .badge.failed { background: rgba(239,68,68,0.15); color: var(--accent-red); }
 .badge.running { background: rgba(59,130,246,0.15); color: var(--accent-blue); }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    CHANNEL DETAIL VIEW
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 .channel-detail-header {
   display: flex;
   align-items: center;
@@ -855,9 +855,9 @@ a:hover { text-decoration: underline; }
 
 .back-btn:hover { background: var(--bg-card-hover); color: var(--text-primary); }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    SETTINGS PAGE
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 .settings-section {
   background: var(--bg-card);
   border: 1px solid var(--border);
@@ -911,9 +911,9 @@ a:hover { text-decoration: underline; }
 
 .toggle.on::after { left: 23px; }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    EMPTY STATE
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 .empty-state {
   text-align: center;
   padding: 48px 24px;
@@ -923,9 +923,9 @@ a:hover { text-decoration: underline; }
 .empty-state .empty-icon { font-size: 48px; margin-bottom: 12px; }
 .empty-state p { font-size: 14px; }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    PAGINATION
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 .pagination {
   display: flex;
   align-items: center;
@@ -951,17 +951,17 @@ a:hover { text-decoration: underline; }
 .page-btn.active { background: var(--accent-purple); border-color: var(--accent-purple); color: #fff; }
 .page-btn:disabled { opacity: 0.4; cursor: default; }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    SPARKLINE (mini inline charts)
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 .sparkline {
   display: inline-block;
   vertical-align: middle;
 }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    RESPONSIVE
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 @media (max-width: 768px) {
   .sidebar { transform: translateX(-100%); }
   .sidebar.open { transform: translateX(0); }
@@ -1035,11 +1035,11 @@ a:hover { text-decoration: underline; }
 </head>
 <body>
 
-<!-- ═══════════════════════════════════════════════════════════════════
+<!-- âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
      MOBILE HEADER
-     ═══════════════════════════════════════════════════════════════════ -->
+     âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
 <div class="mobile-header">
-  <button class="hamburger" onclick="toggleSidebar()">☰</button>
+  <button class="hamburger" onclick="toggleSidebar()">â°</button>
   <span class="brand-text">AI Music Empire</span>
   <div style="margin-left:auto">
     <span class="status-pill">
@@ -1050,13 +1050,13 @@ a:hover { text-decoration: underline; }
 </div>
 <div class="sidebar-overlay" id="sidebarOverlay" onclick="toggleSidebar()"></div>
 
-<!-- ═══════════════════════════════════════════════════════════════════
+<!-- âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
      SIDEBAR
-     ═══════════════════════════════════════════════════════════════════ -->
+     âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
 <div class="app-layout">
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-brand">
-      <div class="logo">🎵</div>
+      <div class="logo">ðµ</div>
       <div>
         <h1>AI Music Empire</h1>
         <small>Automation Dashboard</small>
@@ -1065,23 +1065,26 @@ a:hover { text-decoration: underline; }
 
     <nav class="sidebar-nav">
       <button class="nav-item active" onclick="navigate('dashboard')" data-nav="dashboard">
-        <span class="nav-icon">📊</span> Dashboard
+        <span class="nav-icon">ð</span> Dashboard
       </button>
       <button class="nav-item" onclick="navigate('channels')" data-nav="channels">
-        <span class="nav-icon">📺</span> Channels
+        <span class="nav-icon">ðº</span> Channels
       </button>
       <button class="nav-item" onclick="navigate('pipeline')" data-nav="pipeline">
-        <span class="nav-icon">⚡</span> Pipeline Runs
+        <span class="nav-icon">â¡</span> Pipeline Runs
         <span class="nav-badge" id="pipelineRunBadge" style="display:none">0</span>
       </button>
       <button class="nav-item" onclick="navigate('history')" data-nav="history">
-        <span class="nav-icon">📈</span> History
+        <span class="nav-icon">ð</span> History
       </button>
       <button class="nav-item" onclick="navigate('activity')" data-nav="activity">
-        <span class="nav-icon">📋</span> Activity Log
+        <span class="nav-icon">ð</span> Activity Log
+      </button>
+      <button class="nav-item" onclick="navigate('insights')" data-nav="insights">
+        <span class="nav-icon">🧠</span> AI Insights
       </button>
       <button class="nav-item" onclick="navigate('settings')" data-nav="settings">
-        <span class="nav-icon">⚙️</span> Settings
+        <span class="nav-icon">âï¸</span> Settings
       </button>
     </nav>
 
@@ -1097,9 +1100,9 @@ a:hover { text-decoration: underline; }
     </div>
   </aside>
 
-  <!-- ═══════════════════════════════════════════════════════════════════
+  <!-- âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
        MAIN CONTENT
-       ═══════════════════════════════════════════════════════════════════ -->
+       âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ -->
   <main class="main-content">
 
     <!-- ===================== DASHBOARD ===================== -->
@@ -1107,10 +1110,10 @@ a:hover { text-decoration: underline; }
       <div class="page-header">
         <div>
           <h2>Dashboard</h2>
-          <div class="subtitle">AI Music Empire — Overview</div>
+          <div class="subtitle">AI Music Empire â Overview</div>
         </div>
         <div class="header-actions">
-          <button class="btn" onclick="refreshAll()">🔄 Refresh</button>
+          <button class="btn" onclick="refreshAll()">ð Refresh</button>
         </div>
       </div>
       <div class="page-body">
@@ -1118,13 +1121,13 @@ a:hover { text-decoration: underline; }
         <div class="revenue-banner">
           <div>
             <div class="target-label">Monthly Revenue Target</div>
-            <div class="target-value">฿<span id="revenueTarget">50,000</span></div>
+            <div class="target-value">à¸¿<span id="revenueTarget">50,000</span></div>
           </div>
           <div class="progress-bar-container">
             <div class="progress-track">
               <div class="progress-fill" id="revenueProgress" style="width:0%"></div>
             </div>
-            <div class="progress-label">฿<span id="revenueCurrent">0</span> / ฿50,000 (<span id="revenuePercent">0</span>%)</div>
+            <div class="progress-label">à¸¿<span id="revenueCurrent">0</span> / à¸¿50,000 (<span id="revenuePercent">0</span>%)</div>
           </div>
         </div>
 
@@ -1132,25 +1135,25 @@ a:hover { text-decoration: underline; }
         <div class="stats-grid">
           <div class="stat-card">
             <div class="stat-label">Total Subscribers</div>
-            <div class="stat-value" id="totalSubs">—</div>
+            <div class="stat-value" id="totalSubs">â</div>
             <div class="stat-change up" id="subsChange"></div>
           </div>
           <div class="stat-card">
             <div class="stat-label">Total Views</div>
-            <div class="stat-value" id="totalViews">—</div>
+            <div class="stat-value" id="totalViews">â</div>
             <div class="stat-change up" id="viewsChange"></div>
           </div>
           <div class="stat-card">
             <div class="stat-label">Videos Published</div>
-            <div class="stat-value" id="totalVideos">—</div>
+            <div class="stat-value" id="totalVideos">â</div>
           </div>
           <div class="stat-card">
             <div class="stat-label">Pipeline Runs (7d)</div>
-            <div class="stat-value" id="pipelineCount7d">—</div>
+            <div class="stat-value" id="pipelineCount7d">â</div>
           </div>
           <div class="stat-card">
             <div class="stat-label">Success Rate</div>
-            <div class="stat-value" id="successRate">—</div>
+            <div class="stat-value" id="successRate">â</div>
           </div>
         </div>
 
@@ -1159,8 +1162,8 @@ a:hover { text-decoration: underline; }
           <div>
             <div class="card">
               <div class="card-header">
-                <h3>📺 Channels</h3>
-                <button class="btn btn-sm" onclick="navigate('channels')">View All →</button>
+                <h3>ðº Channels</h3>
+                <button class="btn btn-sm" onclick="navigate('channels')">View All â</button>
               </div>
               <div class="card-body">
                 <div class="channels-grid" id="dashChannels"></div>
@@ -1170,29 +1173,80 @@ a:hover { text-decoration: underline; }
           <div>
             <div class="card">
               <div class="card-header">
-                <h3>⚡ Recent Pipeline Runs</h3>
-                <button class="btn btn-sm" onclick="navigate('pipeline')">View All →</button>
+                <h3>â¡ Recent Pipeline Runs</h3>
+                <button class="btn btn-sm" onclick="navigate('pipeline')">View All â</button>
               </div>
               <div class="card-body no-pad">
                 <ul class="pipeline-list" id="dashPipelineList">
-                  <li class="empty-state"><div class="empty-icon">⏳</div><p>Loading pipeline runs...</p></li>
+                  <li class="empty-state"><div class="empty-icon">â³</div><p>Loading pipeline runs...</p></li>
                 </ul>
               </div>
             </div>
 
             <div class="card" style="margin-top:16px">
               <div class="card-header">
-                <h3>📋 Recent Activity</h3>
-                <button class="btn btn-sm" onclick="navigate('activity')">View All →</button>
+                <h3>ð Recent Activity</h3>
+                <button class="btn btn-sm" onclick="navigate('activity')">View All â</button>
               </div>
               <div class="card-body no-pad">
                 <ul class="activity-list" id="dashActivityList">
-                  <li class="empty-state"><div class="empty-icon">⏳</div><p>Loading activity...</p></li>
+                  <li class="empty-state"><div class="empty-icon">â³</div><p>Loading activity...</p></li>
                 </ul>
               </div>
             </div>
           </div>
         </div>
+      </div>
+    </section>
+
+    <!-- ===================== AI INSIGHTS ===================== -->
+    <section class="page-section" id="page-insights">
+      <div class="page-header">
+        <div>
+          <h2>AI Insights</h2>
+          <p class="page-subtitle">AI-powered analytics and recommendations from the Analytics Agent</p>
+        </div>
+      </div>
+
+      <div id="insights-loading" style="text-align:center;padding:40px;color:var(--text-muted);">Loading AI insights...</div>
+      <div id="insights-content" style="display:none;">
+        <div class="stats-grid" style="grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));">
+          
+          <div class="stat-card" style="border-left:4px solid #1db954;">
+            <div class="stat-label">Channel Focus</div>
+            <div id="focus-content" class="stat-value" style="font-size:14px;line-height:1.6;"></div>
+          </div>
+
+          <div class="stat-card" style="border-left:4px solid #bb86fc;">
+            <div class="stat-label">Suno Prompt Tuning</div>
+            <div id="prompt-content" style="font-size:14px;line-height:1.6;"></div>
+          </div>
+
+          <div class="stat-card" style="border-left:4px solid #03dac6;">
+            <div class="stat-label">Performance Comparison</div>
+            <div id="performance-grid" style="font-size:13px;line-height:1.6;"></div>
+          </div>
+
+          <div class="stat-card" style="border-left:4px solid #ff6b6b;">
+            <div class="stat-label">Thumbnail Style</div>
+            <div id="thumbnail-content" style="font-size:14px;line-height:1.6;"></div>
+          </div>
+
+          <div class="stat-card" style="border-left:4px solid #ffd93d;">
+            <div class="stat-label">Upload Timing</div>
+            <div id="timing-content" style="font-size:14px;line-height:1.6;"></div>
+          </div>
+
+          <div class="stat-card" style="border-left:4px solid #8ac926;">
+            <div class="stat-label">Weekly Summary</div>
+            <div id="summary-content" style="font-size:14px;line-height:1.6;"></div>
+          </div>
+
+        </div>
+        <p id="insights-updated" style="text-align:right;color:var(--text-muted);font-size:12px;margin-top:12px;"></p>
+      </div>
+      <div id="insights-empty" style="display:none;text-align:center;padding:40px;color:var(--text-muted);">
+        No AI insights available yet. The Analytics Agent runs after each pipeline execution.
       </div>
     </section>
 
@@ -1204,7 +1258,7 @@ a:hover { text-decoration: underline; }
           <div class="subtitle">Manage your YouTube channels</div>
         </div>
         <div class="header-actions">
-          <button class="btn" onclick="checkAllChannelStatus()">🔍 Check Status</button>
+          <button class="btn" onclick="checkAllChannelStatus()">ð Check Status</button>
         </div>
       </div>
       <div class="page-body">
@@ -1214,7 +1268,7 @@ a:hover { text-decoration: underline; }
         </div>
         <!-- Channel detail view -->
         <div id="channelDetailView" style="display:none">
-          <button class="back-btn" onclick="closeChannelDetail()">← Back to Channels</button>
+          <button class="back-btn" onclick="closeChannelDetail()">â Back to Channels</button>
           <div id="channelDetailContent"></div>
         </div>
       </div>
@@ -1228,7 +1282,7 @@ a:hover { text-decoration: underline; }
           <div class="subtitle">Track automation pipeline execution</div>
         </div>
         <div class="header-actions">
-          <button class="btn" onclick="fetchPipelineRuns()">🔄 Refresh</button>
+          <button class="btn" onclick="fetchPipelineRuns()">ð Refresh</button>
         </div>
       </div>
       <div class="page-body">
@@ -1261,7 +1315,7 @@ a:hover { text-decoration: underline; }
                 </tr>
               </thead>
               <tbody id="pipelineTableBody">
-                <tr><td colspan="6" class="empty-state"><div class="empty-icon">⏳</div><p>Loading...</p></td></tr>
+                <tr><td colspan="6" class="empty-state"><div class="empty-icon">â³</div><p>Loading...</p></td></tr>
               </tbody>
             </table>
           </div>
@@ -1279,9 +1333,9 @@ a:hover { text-decoration: underline; }
       </div>
       <div class="page-body">
         <div class="tabs">
-          <button class="tab-btn active" onclick="switchHistoryTab('stats')">📈 Stats & Growth</button>
-          <button class="tab-btn" onclick="switchHistoryTab('uploads')">📤 Upload History</button>
-          <button class="tab-btn" onclick="switchHistoryTab('allruns')">⚡ All Runs</button>
+          <button class="tab-btn active" onclick="switchHistoryTab('stats')">ð Stats & Growth</button>
+          <button class="tab-btn" onclick="switchHistoryTab('uploads')">ð¤ Upload History</button>
+          <button class="tab-btn" onclick="switchHistoryTab('allruns')">â¡ All Runs</button>
         </div>
 
         <!-- Stats tab -->
@@ -1398,10 +1452,10 @@ a:hover { text-decoration: underline; }
           <div class="filter-bar">
             <input type="text" class="search-input" placeholder="Search activities..." id="activitySearch" oninput="filterActivities()">
             <button class="filter-chip active" data-filter="all" onclick="setActivityFilter('all', this)">All</button>
-            <button class="filter-chip" data-filter="upload" onclick="setActivityFilter('upload', this)">📤 Uploads</button>
-            <button class="filter-chip" data-filter="generate" onclick="setActivityFilter('generate', this)">🎵 Generate</button>
-            <button class="filter-chip" data-filter="error" onclick="setActivityFilter('error', this)">❌ Errors</button>
-            <button class="filter-chip" data-filter="stats" onclick="setActivityFilter('stats', this)">📊 Stats</button>
+            <button class="filter-chip" data-filter="upload" onclick="setActivityFilter('upload', this)">ð¤ Uploads</button>
+            <button class="filter-chip" data-filter="generate" onclick="setActivityFilter('generate', this)">ðµ Generate</button>
+            <button class="filter-chip" data-filter="error" onclick="setActivityFilter('error', this)">â Errors</button>
+            <button class="filter-chip" data-filter="stats" onclick="setActivityFilter('stats', this)">ð Stats</button>
           </div>
           <div class="card-body no-pad">
             <ul class="activity-list" id="fullActivityList"></ul>
@@ -1421,7 +1475,7 @@ a:hover { text-decoration: underline; }
       </div>
       <div class="page-body">
         <div class="settings-section">
-          <h4>🔔 Notifications</h4>
+          <h4>ð Notifications</h4>
           <div class="setting-row">
             <div>
               <div class="setting-label">Pipeline failure alerts</div>
@@ -1446,7 +1500,7 @@ a:hover { text-decoration: underline; }
         </div>
 
         <div class="settings-section">
-          <h4>🔄 Auto-Refresh</h4>
+          <h4>ð Auto-Refresh</h4>
           <div class="setting-row">
             <div>
               <div class="setting-label">Live data updates</div>
@@ -1464,7 +1518,7 @@ a:hover { text-decoration: underline; }
         </div>
 
         <div class="settings-section">
-          <h4>🔗 Connections</h4>
+          <h4>ð Connections</h4>
           <div class="setting-row">
             <div>
               <div class="setting-label">Firebase Project</div>
@@ -1477,7 +1531,7 @@ a:hover { text-decoration: underline; }
               <div class="setting-label">GitHub Repository</div>
               <div class="setting-desc">Nazeezaa/ai-music-empire</div>
             </div>
-            <a href="https://github.com/Nazeezaa/ai-music-empire" target="_blank" class="btn btn-sm">Open →</a>
+            <a href="https://github.com/Nazeezaa/ai-music-empire" target="_blank" class="btn btn-sm">Open â</a>
           </div>
         </div>
       </div>
@@ -1491,7 +1545,7 @@ a:hover { text-decoration: underline; }
   <div class="modal">
     <div class="modal-header">
       <h3>Pipeline Run Details</h3>
-      <button class="modal-close" onclick="closePipelineModal()">×</button>
+      <button class="modal-close" onclick="closePipelineModal()">Ã</button>
     </div>
     <div class="modal-body" id="pipelineModalBody">
       <p>Loading...</p>
@@ -1504,7 +1558,7 @@ a:hover { text-decoration: underline; }
   <div class="modal">
     <div class="modal-header">
       <h3>Activity Details</h3>
-      <button class="modal-close" onclick="closeActivityModal()">×</button>
+      <button class="modal-close" onclick="closeActivityModal()">Ã</button>
     </div>
     <div class="modal-body" id="activityModalBody">
       <p>Loading...</p>
@@ -1520,9 +1574,9 @@ a:hover { text-decoration: underline; }
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
 <script>
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    APP STATE
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 const STATE = {
   currentPage: 'dashboard',
   channels: {},
@@ -1540,17 +1594,17 @@ const STATE = {
   unsubscribers: [],
 };
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    CHANNEL CONFIG
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 const CHANNELS = [
   {
     id: 'lofi_barista',
     ytId: 'UCLeWC_XL0ptnYZNpn7YEhfA',
     name: 'Lofi Barista',
     handle: '@LofiBarista-v9x',
-    genre: 'Lofi Hip-Hop · Study · Chill',
-    icon: '☕',
+    genre: 'Lofi Hip-Hop Â· Study Â· Chill',
+    icon: 'â',
     gradient: 'var(--gradient-purple)',
     color: '#7c3aed',
     subs: 0, views: 0, videos: 0, status: 'checking'
@@ -1560,8 +1614,8 @@ const CHANNELS = [
     ytId: '',
     name: 'Rain Walker',
     handle: '@RainWalker',
-    genre: 'Rain Sounds · Ambient · Sleep',
-    icon: '🌧️',
+    genre: 'Rain Sounds Â· Ambient Â· Sleep',
+    icon: 'ð§ï¸',
     gradient: 'var(--gradient-cyan)',
     color: '#06b6d4',
     subs: 0, views: 0, videos: 0, status: 'checking'
@@ -1571,8 +1625,8 @@ const CHANNELS = [
     ytId: '',
     name: 'Velvet Groove',
     handle: '@VelvetGroove-m5g',
-    genre: 'Jazz · Neo Soul · Background',
-    icon: '🎷',
+    genre: 'Jazz Â· Neo Soul Â· Background',
+    icon: 'ð·',
     gradient: 'var(--gradient-amber)',
     color: '#f59e0b',
     subs: 0, views: 0, videos: 0, status: 'checking'
@@ -1582,8 +1636,8 @@ const CHANNELS = [
     ytId: '',
     name: 'Piano Ghost',
     handle: '@PianoGhost-g2x',
-    genre: 'Piano · Classical · Focus',
-    icon: '🎹',
+    genre: 'Piano Â· Classical Â· Focus',
+    icon: 'ð¹',
     gradient: 'var(--gradient-green)',
     color: '#10b981',
     subs: 0, views: 0, videos: 0, status: 'checking'
@@ -1593,9 +1647,9 @@ const CHANNELS = [
 const CH_MAP = {};
 CHANNELS.forEach(c => CH_MAP[c.id] = c);
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    FIREBASE CONFIG
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 const FIREBASE_CONFIG = {
   apiKey: 'AIzaSyD0s3b77TswtXEdXCR8wBaya75WJMQQ71E',
   authDomain: 'ai-music-empire-d9ab3.firebaseapp.com',
@@ -1606,30 +1660,30 @@ const FIREBASE_CONFIG = {
 const GITHUB_REPO = 'Nazeezaa/ai-music-empire';
 let db = null;
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    UTILITIES
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 function fmt(n) {
-  if (n == null || isNaN(n)) return '—';
+  if (n == null || isNaN(n)) return 'â';
   if (n >= 1e6) return (n / 1e6).toFixed(1) + 'M';
   if (n >= 1e3) return (n / 1e3).toFixed(1) + 'K';
   return n.toLocaleString();
 }
 
 function fmtDate(ts) {
-  if (!ts) return '—';
+  if (!ts) return 'â';
   const d = ts.toDate ? ts.toDate() : new Date(ts);
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
 }
 
 function fmtDateTime(ts) {
-  if (!ts) return '—';
+  if (!ts) return 'â';
   const d = ts.toDate ? ts.toDate() : new Date(ts);
   return d.toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
 }
 
 function fmtTime(ts) {
-  if (!ts) return '—';
+  if (!ts) return 'â';
   const d = ts.toDate ? ts.toDate() : new Date(ts);
   return d.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
 }
@@ -1646,7 +1700,7 @@ function timeAgo(ts) {
 }
 
 function fmtDuration(seconds) {
-  if (!seconds || isNaN(seconds)) return '—';
+  if (!seconds || isNaN(seconds)) return 'â';
   const m = Math.floor(seconds / 60);
   const s = Math.round(seconds % 60);
   if (m === 0) return s + 's';
@@ -1658,12 +1712,12 @@ function channelName(id) {
 }
 
 function channelIcon(id) {
-  if (CH_MAP[id]) return CH_MAP[id].icon; const slug = id ? id.toLowerCase().replace(/[\s-]+/g, '_') : ''; if (CH_MAP[slug]) return CH_MAP[slug].icon; return '📺';
+  if (CH_MAP[id]) return CH_MAP[id].icon; const slug = id ? id.toLowerCase().replace(/[\s-]+/g, '_') : ''; if (CH_MAP[slug]) return CH_MAP[slug].icon; return 'ðº';
 }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    NAVIGATION
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 function navigate(page) {
   STATE.currentPage = page;
   // Update nav items
@@ -1682,6 +1736,13 @@ function navigate(page) {
   // Lazy load charts
   if (page === 'history') initCharts();
 }
+    // Trigger AI insights load when navigating to insights page
+    var _origNavigate = navigate;
+    navigate = function(page) {
+      _origNavigate(page);
+      if (page === 'insights') { loadAIInsights(); }
+    };
+
 
 function toggleSidebar() {
   const sb = document.getElementById('sidebar');
@@ -1690,9 +1751,9 @@ function toggleSidebar() {
   ov.classList.toggle('show');
 }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    FIRESTORE CONNECTION
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 function setFirestoreStatus(connected) {
   STATE.firestoreConnected = connected;
   const cls = connected ? 'live' : 'error';
@@ -1851,9 +1912,9 @@ function toggleFirestoreListeners(el) {
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    FALLBACK DATA (when Firestore has no data yet)
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 function loadFallbackData() {
   // Set channels to offline
   CHANNELS.forEach(c => { c.status = 'offline'; });
@@ -1862,9 +1923,9 @@ function loadFallbackData() {
   renderChannelsPage();
 }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    GITHUB ACTIONS POLLING
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 let ghInterval = null;
 
 function startGHPolling() {
@@ -1935,9 +1996,9 @@ function extractChannelFromRun(run) {
   return null;
 }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    CHANNEL STATUS CHECK (YouTube API connectivity)
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 async function checkAllChannelStatus() {
   CHANNELS.forEach(c => { if (c.status !== 'online') c.status = 'checking'; });
   renderDashChannels();
@@ -1963,9 +2024,9 @@ async function checkAllChannelStatus() {
   renderChannelsPage();
 }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    RENDER: DASHBOARD OVERVIEW
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 function renderDashStats() {
   let totalSubs = 0, totalViews = 0, totalVids = 0;
   CHANNELS.forEach(c => {
@@ -1996,12 +2057,12 @@ function updatePipelineStats() {
   document.getElementById('pipelineCount7d').textContent = recent.length;
   const successes = recent.filter(r => r.status === 'success').length;
   const rate = recent.length > 0 ? Math.round(successes / recent.length * 100) : 0;
-  document.getElementById('successRate').textContent = recent.length > 0 ? rate + '%' : '—';
+  document.getElementById('successRate').textContent = recent.length > 0 ? rate + '%' : 'â';
 }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    RENDER: CHANNEL CARDS
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 function renderChannelCard(ch, compact) {
   const statusClass = ch.status === 'online' ? 'online' : ch.status === 'checking' ? 'checking' : 'offline';
   const statusLabel = ch.status === 'checking' ? 'Checking...' : ch.status;
@@ -2037,9 +2098,9 @@ function renderChannelsPage() {
   document.getElementById('channelsGrid').innerHTML = CHANNELS.map(c => renderChannelCard(c)).join('');
 }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    RENDER: CHANNEL DETAIL
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 function openChannelDetail(chId) {
   navigate('channels');
   const ch = CH_MAP[chId];
@@ -2057,7 +2118,7 @@ function openChannelDetail(chId) {
       <div class="ch-detail-icon" style="background:${ch.gradient}">${ch.icon}</div>
       <div class="ch-detail-info">
         <h3>${ch.name}</h3>
-        <p>${ch.handle} · ${ch.genre}</p>
+        <p>${ch.handle} Â· ${ch.genre}</p>
         <p>Status: <span class="badge ${ch.status === 'online' ? 'success' : 'failed'}">${ch.status}</span></p>
       </div>
     </div>
@@ -2077,7 +2138,7 @@ function openChannelDetail(chId) {
     </div>
 
     <div class="card" style="margin-top:20px">
-      <div class="card-header"><h3>⚡ Recent Pipeline Runs</h3></div>
+      <div class="card-header"><h3>â¡ Recent Pipeline Runs</h3></div>
       <div class="card-body no-pad">
         ${chRuns.length ? '<ul class="pipeline-list">' + chRuns.map(r => renderPipelineItem(r)).join('') + '</ul>' :
           '<div class="empty-state"><p>No pipeline runs for this channel yet</p></div>'}
@@ -2085,17 +2146,17 @@ function openChannelDetail(chId) {
     </div>
 
     <div class="card" style="margin-top:16px">
-      <div class="card-header"><h3>📤 Recent Uploads</h3></div>
+      <div class="card-header"><h3>ð¤ Recent Uploads</h3></div>
       <div class="card-body no-pad">
         ${chUploads.length ? '<table class="data-table"><thead><tr><th>Video</th><th>Uploaded</th><th>Views</th></tr></thead><tbody>' +
-          chUploads.map(u => `<tr><td>${u.title || u.video_id || '—'}</td><td>${fmtDateTime(u.uploaded_at)}</td><td>${fmt(u.views || 0)}</td></tr>`).join('') +
+          chUploads.map(u => `<tr><td>${u.title || u.video_id || 'â'}</td><td>${fmtDateTime(u.uploaded_at)}</td><td>${fmt(u.views || 0)}</td></tr>`).join('') +
           '</tbody></table>' :
           '<div class="empty-state"><p>No uploads for this channel yet</p></div>'}
       </div>
     </div>
 
     <div class="card" style="margin-top:16px">
-      <div class="card-header"><h3>📋 Recent Activity</h3></div>
+      <div class="card-header"><h3>ð Recent Activity</h3></div>
       <div class="card-body no-pad">
         ${chActivities.length ? '<ul class="activity-list">' + chActivities.map(a => renderActivityItem(a)).join('') + '</ul>' :
           '<div class="empty-state"><p>No activity for this channel yet</p></div>'}
@@ -2110,22 +2171,22 @@ function closeChannelDetail() {
   document.getElementById('channelDetailView').style.display = 'none';
 }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    RENDER: PIPELINE RUNS
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 function renderPipelineItem(run) {
-  const statusIcon = run.status === 'success' ? '✅' : run.status === 'failed' ? '❌' : run.status === 'running' ? '🔄' : '⏳';
+  const statusIcon = run.status === 'success' ? 'â' : run.status === 'failed' ? 'â' : run.status === 'running' ? 'ð' : 'â³';
   const statusClass = run.status === 'success' ? 'success' : run.status === 'failed' ? 'failed' : 'running';
-  const started = run.started_at ? fmtDateTime(run.started_at) : '—';
+  const started = run.started_at ? fmtDateTime(run.started_at) : 'â';
 
   return `
     <li class="pipeline-item" onclick="openPipelineDetail('${run.id}')">
       <div class="pipeline-status-icon ${statusClass}">${statusIcon}</div>
       <div class="pipeline-info">
-        <div class="pipe-title">${run.run_name || channelName(run.channel)} ${(run.tracks || run.tracksGenerated) ? '· ' + (run.tracks || run.tracksGenerated) + ' tracks' : ''}</div>
+        <div class="pipe-title">${run.run_name || channelName(run.channel)} ${(run.tracks || run.tracksGenerated) ? 'Â· ' + (run.tracks || run.tracksGenerated) + ' tracks' : ''}</div>
         <div class="pipe-meta">${started}</div>
       </div>
-      <div class="pipe-duration">${run.duration ? fmtDuration(run.duration) : '—'}</div>
+      <div class="pipe-duration">${run.duration ? fmtDuration(run.duration) : 'â'}</div>
     </li>`;
 }
 
@@ -2133,7 +2194,7 @@ function renderDashPipeline() {
   const recent = STATE.pipelineRuns.slice(0, 5);
   const el = document.getElementById('dashPipelineList');
   if (recent.length === 0) {
-    el.innerHTML = '<li class="empty-state"><div class="empty-icon">📭</div><p>No pipeline runs yet</p></li>';
+    el.innerHTML = '<li class="empty-state"><div class="empty-icon">ð­</div><p>No pipeline runs yet</p></li>';
     return;
   }
   el.innerHTML = recent.map(r => renderPipelineItem(r)).join('');
@@ -2158,15 +2219,15 @@ function applyPipelineFilters() {
 
   tbody.innerHTML = runs.map(r => {
     const statusClass = r.status === 'success' ? 'success' : r.status === 'failed' ? 'failed' : 'running';
-    const started = r.started_at ? fmtDateTime(r.started_at) : '—';
+    const started = r.started_at ? fmtDateTime(r.started_at) : 'â';
     return `
       <tr onclick="openPipelineDetail('${r.id}')">
         <td><span class="badge ${statusClass}">${r.status}</span></td>
         <td>${channelIcon(r.channel)} ${channelName(r.channel)}</td>
-        <td>${r.tracks || r.tracksGenerated || '—'}</td>
+        <td>${r.tracks || r.tracksGenerated || 'â'}</td>
         <td>${started}</td>
-        <td>${r.duration ? fmtDuration(r.duration) : '—'}</td>
-        <td>${r.gh_url ? '<a href="' + r.gh_url + '" target="_blank" onclick="event.stopPropagation()">View →</a>' : '—'}</td>
+        <td>${r.duration ? fmtDuration(r.duration) : 'â'}</td>
+        <td>${r.gh_url ? '<a href="' + r.gh_url + '" target="_blank" onclick="event.stopPropagation()">View â</a>' : 'â'}</td>
       </tr>`;
   }).join('');
 }
@@ -2177,8 +2238,8 @@ function openPipelineDetail(runId) {
   if (!run) return;
 
   const body = document.getElementById('pipelineModalBody');
-  const started = run.started_at ? fmtDateTime(run.started_at) : '—';
-  const ended = run.ended_at ? fmtDateTime(run.ended_at) : '—';
+  const started = run.started_at ? fmtDateTime(run.started_at) : 'â';
+  const ended = run.ended_at ? fmtDateTime(run.ended_at) : 'â';
   const statusClass = run.status === 'success' ? 'success' : run.status === 'failed' ? 'failed' : 'running';
 
   let html = `
@@ -2201,11 +2262,11 @@ function openPipelineDetail(runId) {
       </div>
       <div class="detail-item">
         <div class="detail-label">Duration</div>
-        <div class="detail-value">${run.duration ? fmtDuration(run.duration) : '—'}</div>
+        <div class="detail-value">${run.duration ? fmtDuration(run.duration) : 'â'}</div>
       </div>
       <div class="detail-item">
         <div class="detail-label">Tracks Generated</div>
-        <div class="detail-value">${run.tracks || '—'}</div>
+        <div class="detail-value">${run.tracks || 'â'}</div>
       </div>
     </div>`;
 
@@ -2214,9 +2275,9 @@ function openPipelineDetail(runId) {
   }
 
   if (run.gh_url) {
-    html += `<div style="margin-top:16px"><a href="${run.gh_url}" target="_blank" class="btn btn-primary">View on GitHub Actions →</a></div>`;
+    html += `<div style="margin-top:16px"><a href="${run.gh_url}" target="_blank" class="btn btn-primary">View on GitHub Actions â</a></div>`;
   } else if (run.gh_run_id) {
-    html += `<div style="margin-top:16px"><a href="https://github.com/${GITHUB_REPO}/actions/runs/${run.gh_run_id}" target="_blank" class="btn btn-primary">View on GitHub Actions →</a></div>`;
+    html += `<div style="margin-top:16px"><a href="https://github.com/${GITHUB_REPO}/actions/runs/${run.gh_run_id}" target="_blank" class="btn btn-primary">View on GitHub Actions â</a></div>`;
   }
 
   // If failed, try to fetch error from GitHub Actions
@@ -2258,16 +2319,16 @@ function escapeHtml(str) {
   return div.innerHTML;
 }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    RENDER: ACTIVITY LOG
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 function getActivityType(act) {
   const icon = act.icon || '';
   const msg = (act.message || act.action || '').toLowerCase();
-  if (icon === '📤' || msg.includes('upload')) return 'upload';
-  if (icon === '🎵' || msg.includes('generat')) return 'generate';
-  if (icon === '❌' || msg.includes('error') || msg.includes('fail')) return 'error';
-  if (icon === '📊' || msg.includes('stats') || msg.includes('analytic')) return 'stats';
+  if (icon === 'ð¤' || msg.includes('upload')) return 'upload';
+  if (icon === 'ðµ' || msg.includes('generat')) return 'generate';
+  if (icon === 'â' || msg.includes('error') || msg.includes('fail')) return 'error';
+  if (icon === 'ð' || msg.includes('stats') || msg.includes('analytic')) return 'stats';
   return 'generate';
 }
 
@@ -2283,11 +2344,11 @@ function getActivityIconClass(type) {
 
 function getActivityEmoji(type) {
   switch (type) {
-    case 'upload': return '📤';
-    case 'generate': return '🎵';
-    case 'error': return '❌';
-    case 'stats': return '📊';
-    default: return '⚡';
+    case 'upload': return 'ð¤';
+    case 'generate': return 'ðµ';
+    case 'error': return 'â';
+    case 'stats': return 'ð';
+    default: return 'â¡';
   }
 }
 
@@ -2314,7 +2375,7 @@ function renderDashActivity() {
   const recent = STATE.activities.slice(0, 8);
   const el = document.getElementById('dashActivityList');
   if (recent.length === 0) {
-    el.innerHTML = '<li class="empty-state"><div class="empty-icon">📭</div><p>No activity yet</p></li>';
+    el.innerHTML = '<li class="empty-state"><div class="empty-icon">ð­</div><p>No activity yet</p></li>';
     return;
   }
   el.innerHTML = recent.map(a => renderActivityItem(a)).join('');
@@ -2361,7 +2422,7 @@ function filterActivities() {
 
   const listEl = document.getElementById('fullActivityList');
   if (page.length === 0) {
-    listEl.innerHTML = '<li class="empty-state"><div class="empty-icon">🔍</div><p>No matching activities</p></li>';
+    listEl.innerHTML = '<li class="empty-state"><div class="empty-icon">ð</div><p>No matching activities</p></li>';
   } else {
     listEl.innerHTML = page.map(a => renderActivityItem(a)).join('');
   }
@@ -2373,7 +2434,7 @@ function filterActivities() {
     return;
   }
 
-  let pagHtml = `<button class="page-btn" onclick="goActivityPage(${STATE.activityPage - 1})" ${STATE.activityPage <= 1 ? 'disabled' : ''}>‹</button>`;
+  let pagHtml = `<button class="page-btn" onclick="goActivityPage(${STATE.activityPage - 1})" ${STATE.activityPage <= 1 ? 'disabled' : ''}>â¹</button>`;
   for (let i = 1; i <= totalPages; i++) {
     if (totalPages > 7 && i > 3 && i < totalPages - 2 && Math.abs(i - STATE.activityPage) > 1) {
       if (i === 4) pagHtml += '<span style="color:var(--text-muted);padding:0 4px">...</span>';
@@ -2381,7 +2442,7 @@ function filterActivities() {
     }
     pagHtml += `<button class="page-btn ${i === STATE.activityPage ? 'active' : ''}" onclick="goActivityPage(${i})">${i}</button>`;
   }
-  pagHtml += `<button class="page-btn" onclick="goActivityPage(${STATE.activityPage + 1})" ${STATE.activityPage >= totalPages ? 'disabled' : ''}>›</button>`;
+  pagHtml += `<button class="page-btn" onclick="goActivityPage(${STATE.activityPage + 1})" ${STATE.activityPage >= totalPages ? 'disabled' : ''}>âº</button>`;
   pagEl.innerHTML = pagHtml;
 }
 
@@ -2406,13 +2467,13 @@ function openActivityDetail(actId) {
       </div>
       <div class="detail-item">
         <div class="detail-label">Time</div>
-        <div class="detail-value">${act.timestamp ? fmtDateTime(act.timestamp) : '—'}</div>
+        <div class="detail-value">${act.timestamp ? fmtDateTime(act.timestamp) : 'â'}</div>
       </div>
       ${act.channel ? `<div class="detail-item"><div class="detail-label">Channel</div><div class="detail-value">${channelName(act.channel)}</div></div>` : ''}
     </div>
     <div class="detail-item" style="margin-top:8px">
       <div class="detail-label">Message</div>
-      <div class="detail-value">${escapeHtml(act.message || act.action || '—')}</div>
+      <div class="detail-value">${escapeHtml(act.message || act.action || 'â')}</div>
     </div>`;
 
   if (act.detail) {
@@ -2433,9 +2494,9 @@ function closeActivityModal() {
   document.getElementById('activityModal').classList.remove('show');
 }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    RENDER: HISTORY - UPLOADS
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 function renderUploadHistory() {
   const tbody = document.getElementById('uploadHistoryBody');
   if (STATE.uploads.length === 0) {
@@ -2445,7 +2506,7 @@ function renderUploadHistory() {
 
   tbody.innerHTML = STATE.uploads.map(u => `
     <tr>
-      <td>${escapeHtml(u.title || u.video_id || '—')}</td>
+      <td>${escapeHtml(u.title || u.video_id || 'â')}</td>
       <td>${channelIcon(u.channel)} ${channelName(u.channel)}</td>
       <td>${fmtDateTime(u.uploaded_at)}</td>
       <td>${fmt(u.views || 0)}</td>
@@ -2454,9 +2515,9 @@ function renderUploadHistory() {
   `).join('');
 }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    RENDER: HISTORY - ALL RUNS
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 function renderAllRuns() {
   const chFilter = document.getElementById('allRunsChannelFilter')?.value || 'all';
   const stFilter = document.getElementById('allRunsStatusFilter')?.value || 'all';
@@ -2493,17 +2554,17 @@ function renderAllRuns() {
       <tr onclick="openPipelineDetail('${r.id}')">
         <td><span class="badge ${sc}">${r.status}</span></td>
         <td>${channelIcon(r.channel)} ${channelName(r.channel)}</td>
-        <td>${r.tracks || r.tracksGenerated || '—'}</td>
+        <td>${r.tracks || r.tracksGenerated || 'â'}</td>
         <td>${fmtDateTime(r.started_at)}</td>
         <td>${fmtDateTime(r.ended_at)}</td>
-        <td>${r.duration ? fmtDuration(r.duration) : '—'}</td>
+        <td>${r.duration ? fmtDuration(r.duration) : 'â'}</td>
       </tr>`;
   }).join('');
 }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    CHARTS
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 let subsChartInstance = null;
 let viewsChartInstance = null;
 let pipelineChartInstance = null;
@@ -2661,9 +2722,9 @@ function updateStatsCharts() {
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    HISTORY TABS
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 function switchHistoryTab(tab) {
   document.querySelectorAll('#page-history .tab-btn').forEach(el => {
     el.classList.toggle('active', el.textContent.toLowerCase().includes(tab === 'stats' ? 'stats' : tab === 'uploads' ? 'upload' : 'runs'));
@@ -2673,9 +2734,9 @@ function switchHistoryTab(tab) {
   });
 }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    REFRESH ALL
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 function refreshAll() {
   fetchGHActions();
   checkAllChannelStatus();
@@ -2685,9 +2746,9 @@ function refreshAll() {
   }
 }
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    KEYBOARD SHORTCUTS
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     closePipelineModal();
@@ -2701,9 +2762,9 @@ document.addEventListener('keydown', e => {
   }
 });
 
-/* ═══════════════════════════════════════════════════════════════════
+/* âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ
    INIT
-   ═══════════════════════════════════════════════════════════════════ */
+   âââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââââ */
 document.addEventListener('DOMContentLoaded', () => {
   // Initial render with placeholder data
   renderDashStats();
@@ -2719,6 +2780,77 @@ document.addEventListener('DOMContentLoaded', () => {
   // Check channel status
   setTimeout(checkAllChannelStatus, 2000);
 });
-</script>
+
+
+    // ---- AI Insights Loader ----
+    function loadAIInsights() {
+      if (typeof db === 'undefined' || !db) {
+        document.getElementById('insights-loading').style.display = 'none';
+        document.getElementById('insights-empty').style.display = 'block';
+        return;
+      }
+      db.collection('analytics_reports').doc('latest').get().then(function(doc) {
+        if (!doc.exists) {
+          document.getElementById('insights-loading').style.display = 'none';
+          document.getElementById('insights-empty').style.display = 'block';
+          return;
+        }
+        var data = doc.data();
+        document.getElementById('insights-loading').style.display = 'none';
+        document.getElementById('insights-content').style.display = 'block';
+
+        // Channel Focus
+        var focus = data.focus_channel || 'N/A';
+        var focusScore = data.focus_score || '';
+        document.getElementById('focus-content').innerHTML =
+          '<strong>' + focus + '</strong>' + (focusScore ? ' (score: ' + focusScore + ')' : '') +
+          '<br><span style="color:var(--text-muted)">' + (data.focus_reason || '') + '</span>';
+
+        // Suno Prompt Tuning
+        var preferred = (data.suno_tuning && data.suno_tuning.preferred_genre) || 'N/A';
+        var avoid = (data.suno_tuning && data.suno_tuning.avoid_genre) || 'None';
+        document.getElementById('prompt-content').innerHTML =
+          'Preferred: <strong style="color:#1db954">' + preferred + '</strong><br>' +
+          'Avoid: <strong style="color:#ff6b6b">' + avoid + '</strong>';
+
+        // Performance Comparison
+        var channels = data.channel_performance || {};
+        var perfHTML = '<table style="width:100%;font-size:12px;border-collapse:collapse;">';
+        perfHTML += '<tr style="border-bottom:1px solid var(--border);"><th style="text-align:left;padding:4px;">Channel</th><th>Views</th><th>Subs</th><th>Growth</th></tr>';
+        Object.keys(channels).forEach(function(ch) {
+          var d = channels[ch];
+          perfHTML += '<tr style="border-bottom:1px solid var(--border);">';
+          perfHTML += '<td style="padding:4px;">' + ch + '</td>';
+          perfHTML += '<td style="text-align:center;">' + (d.views || 0) + '</td>';
+          perfHTML += '<td style="text-align:center;">' + (d.subscribers || 0) + '</td>';
+          perfHTML += '<td style="text-align:center;color:' + ((d.growth || 0) >= 0 ? '#1db954' : '#ff6b6b') + ';">' + (d.growth || 0) + '%</td>';
+          perfHTML += '</tr>';
+        });
+        perfHTML += '</table>';
+        document.getElementById('performance-grid').innerHTML = perfHTML;
+
+        // Thumbnail Style
+        document.getElementById('thumbnail-content').innerHTML = data.thumbnail_recommendation || 'No recommendation yet';
+
+        // Upload Timing
+        document.getElementById('timing-content').innerHTML = data.timing_recommendation || 'No recommendation yet';
+
+        // Weekly Summary
+        document.getElementById('summary-content').innerHTML = data.weekly_summary || 'No summary available yet';
+
+        // Updated timestamp
+        if (data.updated_at) {
+          var ts = data.updated_at.toDate ? data.updated_at.toDate() : new Date(data.updated_at);
+          document.getElementById('insights-updated').textContent = 'Last updated: ' + ts.toLocaleString();
+        }
+      }).catch(function(err) {
+        console.error('Failed to load AI insights:', err);
+        document.getElementById('insights-loading').style.display = 'none';
+        document.getElementById('insights-empty').style.display = 'block';
+      });
+    }
+    // Load insights when navigating to that section
+    var origNavigate = typeof navigate === 'function' ? navigate : null;
+    </script>
 </body>
 </html>
