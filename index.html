@@ -4,7 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>AI Music Empire - Dashboard</title>
-<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>[MUSIC]</text></svg>">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>M</text></svg>">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <style>
 /* 
    CSS RESET & VARIABLES
@@ -1039,7 +1040,7 @@ a:hover { text-decoration: underline; }
      MOBILE HEADER
       -->
 <div class="mobile-header">
-  <button class="hamburger" onclick="toggleSidebar()">[MENU]</button>
+  <button class="hamburger" onclick="toggleSidebar()"><i class="fas fa-bars"></i></button>
   <span class="brand-text">AI Music Empire</span>
   <div style="margin-left:auto">
     <span class="status-pill">
@@ -1056,7 +1057,7 @@ a:hover { text-decoration: underline; }
 <div class="app-layout">
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-brand">
-      <div class="logo">[MUSIC]</div>
+      <div class="logo"><i class="fas fa-headphones"></i></div>
       <div>
         <h1>AI Music Empire</h1>
         <small>Automation Dashboard</small>
@@ -1065,23 +1066,23 @@ a:hover { text-decoration: underline; }
 
     <nav class="sidebar-nav">
       <button class="nav-item active" onclick="navigate('dashboard')" data-nav="dashboard">
-        <span class="nav-icon">[STATS]</span> Dashboard
+        <span class="nav-icon"><i class="fas fa-chart-bar"></i></span> Dashboard
       </button>
       <button class="nav-item" onclick="navigate('channels')" data-nav="channels">
-        <span class="nav-icon">[CHANNELS]</span> Channels
+        <span class="nav-icon"><i class="fas fa-tv"></i></span> Channels
       </button>
       <button class="nav-item" onclick="navigate('pipeline')" data-nav="pipeline">
-        <span class="nav-icon">[PIPELINE]</span> Pipeline Runs
+        <span class="nav-icon"><i class="fas fa-bolt"></i></span> Pipeline Runs
         <span class="nav-badge" id="pipelineRunBadge" style="display:none">0</span>
       </button>
       <button class="nav-item" onclick="navigate('history')" data-nav="history">
-        <span class="nav-icon">[HISTORY]</span> History
+        <span class="nav-icon"><i class="fas fa-clock-rotate-left"></i></span> History
       </button>
       <button class="nav-item" onclick="navigate('activity')" data-nav="activity">
-        <span class="nav-icon">[ACTIVITY]</span> Activity Log
+        <span class="nav-icon"><i class="fas fa-bell"></i></span> Activity Log
       </button>
       <button class="nav-item" onclick="navigate('settings')" data-nav="settings">
-        <span class="nav-icon">[SETTINGS]</span> Settings
+        <span class="nav-icon"><i class="fas fa-gear"></i></span> Settings
       </button>
     </nav>
 
@@ -1110,7 +1111,7 @@ a:hover { text-decoration: underline; }
           <div class="subtitle">AI Music Empire - Overview</div>
         </div>
         <div class="header-actions">
-          <button class="btn" onclick="refreshAll()">[REFRESH] Refresh</button>
+          <button class="btn" onclick="refreshAll()"><i class="fas fa-sync-alt"></i> Refresh</button>
         </div>
       </div>
       <div class="page-body">
@@ -1159,7 +1160,7 @@ a:hover { text-decoration: underline; }
           <div>
             <div class="card">
               <div class="card-header">
-                <h3>[CHANNELS] Channels</h3>
+                <h3><i class="fas fa-tv"></i> Channels</h3>
                 <button class="btn btn-sm" onclick="navigate('channels')">View All &rarr;</button>
               </div>
               <div class="card-body">
@@ -1170,24 +1171,24 @@ a:hover { text-decoration: underline; }
           <div>
             <div class="card">
               <div class="card-header">
-                <h3>[PIPELINE] Recent Pipeline Runs</h3>
+                <h3><i class="fas fa-bolt"></i> Recent Pipeline Runs</h3>
                 <button class="btn btn-sm" onclick="navigate('pipeline')">View All &rarr;</button>
               </div>
               <div class="card-body no-pad">
                 <ul class="pipeline-list" id="dashPipelineList">
-                  <li class="empty-state"><div class="empty-icon">[LOADING]</div><p>Loading pipeline runs...</p></li>
+                  <li class="empty-state"><div class="empty-icon"><i class="fas fa-spinner fa-spin"></i></div><p>Loading pipeline runs...</p></li>
                 </ul>
               </div>
             </div>
 
             <div class="card" style="margin-top:16px">
               <div class="card-header">
-                <h3>[ACTIVITY] Recent Activity</h3>
+                <h3><i class="fas fa-bell"></i> Recent Activity</h3>
                 <button class="btn btn-sm" onclick="navigate('activity')">View All &rarr;</button>
               </div>
               <div class="card-body no-pad">
                 <ul class="activity-list" id="dashActivityList">
-                  <li class="empty-state"><div class="empty-icon">[LOADING]</div><p>Loading activity...</p></li>
+                  <li class="empty-state"><div class="empty-icon"><i class="fas fa-spinner fa-spin"></i></div><p>Loading activity...</p></li>
                 </ul>
               </div>
             </div>
@@ -1204,7 +1205,7 @@ a:hover { text-decoration: underline; }
           <div class="subtitle">Manage your YouTube channels</div>
         </div>
         <div class="header-actions">
-          <button class="btn" onclick="checkAllChannelStatus()">[SEARCH] Check Status</button>
+          <button class="btn" onclick="checkAllChannelStatus()"><i class="fas fa-search"></i> Check Status</button>
         </div>
       </div>
       <div class="page-body">
@@ -1214,7 +1215,7 @@ a:hover { text-decoration: underline; }
         </div>
         <!-- Channel detail view -->
         <div id="channelDetailView" style="display:none">
-          <button class="back-btn" onclick="closeChannelDetail()">[BACK] Back to Channels</button>
+          <button class="back-btn" onclick="closeChannelDetail()"><i class="fas fa-arrow-left"></i> Back to Channels</button>
           <div id="channelDetailContent"></div>
         </div>
       </div>
@@ -1228,7 +1229,7 @@ a:hover { text-decoration: underline; }
           <div class="subtitle">Track automation pipeline execution</div>
         </div>
         <div class="header-actions">
-          <button class="btn" onclick="fetchPipelineRuns()">[REFRESH] Refresh</button>
+          <button class="btn" onclick="fetchPipelineRuns()"><i class="fas fa-sync-alt"></i> Refresh</button>
         </div>
       </div>
       <div class="page-body">
@@ -1261,7 +1262,7 @@ a:hover { text-decoration: underline; }
                 </tr>
               </thead>
               <tbody id="pipelineTableBody">
-                <tr><td colspan="6" class="empty-state"><div class="empty-icon">[LOADING]</div><p>Loading...</p></td></tr>
+                <tr><td colspan="6" class="empty-state"><div class="empty-icon"><i class="fas fa-spinner fa-spin"></i></div><p>Loading...</p></td></tr>
               </tbody>
             </table>
           </div>
@@ -1279,9 +1280,9 @@ a:hover { text-decoration: underline; }
       </div>
       <div class="page-body">
         <div class="tabs">
-          <button class="tab-btn active" onclick="switchHistoryTab('stats')">[HISTORY] Stats & Growth</button>
-          <button class="tab-btn" onclick="switchHistoryTab('uploads')">[UPLOAD] Upload History</button>
-          <button class="tab-btn" onclick="switchHistoryTab('allruns')">[PIPELINE] All Runs</button>
+          <button class="tab-btn active" onclick="switchHistoryTab('stats')"><i class="fas fa-clock-rotate-left"></i> Stats & Growth</button>
+          <button class="tab-btn" onclick="switchHistoryTab('uploads')"><i class="fas fa-upload"></i> Upload History</button>
+          <button class="tab-btn" onclick="switchHistoryTab('allruns')"><i class="fas fa-bolt"></i> All Runs</button>
         </div>
 
         <!-- Stats tab -->
@@ -1398,10 +1399,10 @@ a:hover { text-decoration: underline; }
           <div class="filter-bar">
             <input type="text" class="search-input" placeholder="Search activities..." id="activitySearch" oninput="filterActivities()">
             <button class="filter-chip active" data-filter="all" onclick="setActivityFilter('all', this)">All</button>
-            <button class="filter-chip" data-filter="upload" onclick="setActivityFilter('upload', this)">[UPLOAD] Uploads</button>
-            <button class="filter-chip" data-filter="generate" onclick="setActivityFilter('generate', this)">[MUSIC] Generate</button>
-            <button class="filter-chip" data-filter="error" onclick="setActivityFilter('error', this)">[ERROR] Errors</button>
-            <button class="filter-chip" data-filter="stats" onclick="setActivityFilter('stats', this)">[STATS] Stats</button>
+            <button class="filter-chip" data-filter="upload" onclick="setActivityFilter('upload', this)"><i class="fas fa-upload"></i> Uploads</button>
+            <button class="filter-chip" data-filter="generate" onclick="setActivityFilter('generate', this)"><i class="fas fa-music"></i> Generate</button>
+            <button class="filter-chip" data-filter="error" onclick="setActivityFilter('error', this)"><i class="fas fa-times-circle" style="color: #ef4444;"></i> Errors</button>
+            <button class="filter-chip" data-filter="stats" onclick="setActivityFilter('stats', this)"><i class="fas fa-chart-bar"></i> Stats</button>
           </div>
           <div class="card-body no-pad">
             <ul class="activity-list" id="fullActivityList"></ul>
@@ -1421,7 +1422,7 @@ a:hover { text-decoration: underline; }
       </div>
       <div class="page-body">
         <div class="settings-section">
-          <h4>[NOTIFICATIONS] Notifications</h4>
+          <h4><i class="fas fa-bell"></i> Notifications</h4>
           <div class="setting-row">
             <div>
               <div class="setting-label">Pipeline failure alerts</div>
@@ -1446,7 +1447,7 @@ a:hover { text-decoration: underline; }
         </div>
 
         <div class="settings-section">
-          <h4>[REFRESH] Auto-Refresh</h4>
+          <h4><i class="fas fa-sync-alt"></i> Auto-Refresh</h4>
           <div class="setting-row">
             <div>
               <div class="setting-label">Live data updates</div>
@@ -1464,7 +1465,7 @@ a:hover { text-decoration: underline; }
         </div>
 
         <div class="settings-section">
-          <h4>[CONNECTIONS] Connections</h4>
+          <h4><i class="fas fa-plug"></i> Connections</h4>
           <div class="setting-row">
             <div>
               <div class="setting-label">Firebase Project</div>
@@ -1550,7 +1551,7 @@ const CHANNELS = [
     name: 'Lofi Barista',
     handle: '@LofiBarista-v9x',
     genre: 'Lofi Hip-Hop  -  Study  -  Chill',
-    icon: '[CHILL]',
+    icon: '<i class="fas fa-coffee"></i>',
     gradient: 'var(--gradient-purple)',
     color: '#7c3aed',
     subs: 0, views: 0, videos: 0, status: 'checking'
@@ -1561,7 +1562,7 @@ const CHANNELS = [
     name: 'Rain Walker',
     handle: '@RainWalker',
     genre: 'Rain Sounds  -  Ambient  -  Sleep',
-    icon: '[SLEEP]',
+    icon: '<i class="fas fa-cloud-rain"></i>',
     gradient: 'var(--gradient-cyan)',
     color: '#06b6d4',
     subs: 0, views: 0, videos: 0, status: 'checking'
@@ -1572,7 +1573,7 @@ const CHANNELS = [
     name: 'Velvet Groove',
     handle: '@VelvetGroove-m5g',
     genre: 'Jazz  -  Neo Soul  -  Background',
-    icon: '[JAZZ]',
+    icon: '<i class="fas fa-music"></i>',
     gradient: 'var(--gradient-amber)',
     color: '#f59e0b',
     subs: 0, views: 0, videos: 0, status: 'checking'
@@ -1583,7 +1584,7 @@ const CHANNELS = [
     name: 'Piano Ghost',
     handle: '@PianoGhost-g2x',
     genre: 'Piano  -  Classical  -  Focus',
-    icon: '[PIANO]',
+    icon: '<i class="fas fa-ghost"></i>',
     gradient: 'var(--gradient-green)',
     color: '#10b981',
     subs: 0, views: 0, videos: 0, status: 'checking'
@@ -1658,7 +1659,7 @@ function channelName(id) {
 }
 
 function channelIcon(id) {
-  return CH_MAP[id]?.icon || '[CHANNELS]';
+  return CH_MAP[id]?.icon || '<i class="fas fa-tv"></i>';
 }
 
 /* 
@@ -2076,7 +2077,7 @@ function openChannelDetail(chId) {
     </div>
 
     <div class="card" style="margin-top:20px">
-      <div class="card-header"><h3>[PIPELINE] Recent Pipeline Runs</h3></div>
+      <div class="card-header"><h3><i class="fas fa-bolt"></i> Recent Pipeline Runs</h3></div>
       <div class="card-body no-pad">
         ${chRuns.length ? '<ul class="pipeline-list">' + chRuns.map(r => renderPipelineItem(r)).join('') + '</ul>' :
           '<div class="empty-state"><p>No pipeline runs for this channel yet</p></div>'}
@@ -2084,7 +2085,7 @@ function openChannelDetail(chId) {
     </div>
 
     <div class="card" style="margin-top:16px">
-      <div class="card-header"><h3>[UPLOAD] Recent Uploads</h3></div>
+      <div class="card-header"><h3><i class="fas fa-upload"></i> Recent Uploads</h3></div>
       <div class="card-body no-pad">
         ${chUploads.length ? '<table class="data-table"><thead><tr><th>Video</th><th>Uploaded</th><th>Views</th></tr></thead><tbody>' +
           chUploads.map(u => `<tr><td>${u.title || u.video_id || '-'}</td><td>${fmtDateTime(u.uploaded_at)}</td><td>${fmt(u.views || 0)}</td></tr>`).join('') +
@@ -2094,7 +2095,7 @@ function openChannelDetail(chId) {
     </div>
 
     <div class="card" style="margin-top:16px">
-      <div class="card-header"><h3>[ACTIVITY] Recent Activity</h3></div>
+      <div class="card-header"><h3><i class="fas fa-bell"></i> Recent Activity</h3></div>
       <div class="card-body no-pad">
         ${chActivities.length ? '<ul class="activity-list">' + chActivities.map(a => renderActivityItem(a)).join('') + '</ul>' :
           '<div class="empty-state"><p>No activity for this channel yet</p></div>'}
@@ -2113,7 +2114,7 @@ function closeChannelDetail() {
    RENDER: PIPELINE RUNS
     */
 function renderPipelineItem(run) {
-  const statusIcon = run.status === 'success' ? '[OK]' : run.status === 'failed' ? '[ERROR]' : run.status === 'running' ? '[REFRESH]' : '[LOADING]';
+  const statusIcon = run.status === 'success' ? '<i class="fas fa-check-circle" style="color:#22c55e"></i>' : run.status === 'failed' ? '<i class="fas fa-times-circle" style="color:#ef4444"></i>' : run.status === 'running' ? '<i class="fas fa-sync-alt fa-spin"></i>' : '<i class="fas fa-spinner fa-spin"></i>';
   const statusClass = run.status === 'success' ? 'success' : run.status === 'failed' ? 'failed' : 'running';
   const started = run.started_at ? fmtDateTime(run.started_at) : '-';
 
@@ -2132,7 +2133,7 @@ function renderDashPipeline() {
   const recent = STATE.pipelineRuns.slice(0, 5);
   const el = document.getElementById('dashPipelineList');
   if (recent.length === 0) {
-    el.innerHTML = '<li class="empty-state"><div class="empty-icon">[EMPTY]</div><p>No pipeline runs yet</p></li>';
+    el.innerHTML = '<li class="empty-state"><div class="empty-icon"><i class="fas fa-inbox"></i></div><p>No pipeline runs yet</p></li>';
     return;
   }
   el.innerHTML = recent.map(r => renderPipelineItem(r)).join('');
@@ -2263,10 +2264,10 @@ function escapeHtml(str) {
 function getActivityType(act) {
   const icon = act.icon || '';
   const msg = (act.message || act.action || '').toLowerCase();
-  if (icon === '[UPLOAD]' || msg.includes('upload')) return 'upload';
-  if (icon === '[MUSIC]' || msg.includes('generat')) return 'generate';
-  if (icon === '[ERROR]' || msg.includes('error') || msg.includes('fail')) return 'error';
-  if (icon === '[STATS]' || msg.includes('stats') || msg.includes('analytic')) return 'stats';
+  if (icon.includes('fa-upload') || msg.includes('upload')) return 'upload';
+  if (icon.includes('fa-music') || msg.includes('generat')) return 'generate';
+  if (icon.includes('fa-times-circle') || msg.includes('error') || msg.includes('fail')) return 'error';
+  if (icon.includes('fa-chart-bar') || msg.includes('stats') || msg.includes('analytic')) return 'stats';
   return 'generate';
 }
 
@@ -2282,11 +2283,11 @@ function getActivityIconClass(type) {
 
 function getActivityEmoji(type) {
   switch (type) {
-    case 'upload': return '[UPLOAD]';
-    case 'generate': return '[MUSIC]';
-    case 'error': return '[ERROR]';
-    case 'stats': return '[STATS]';
-    default: return '[PIPELINE]';
+    case 'upload': return '<i class="fas fa-upload"></i>';
+    case 'generate': return '<i class="fas fa-music"></i>';
+    case 'error': return '<i class="fas fa-times-circle" style="color:#ef4444"></i>';
+    case 'stats': return '<i class="fas fa-chart-bar"></i>';
+    default: return '<i class="fas fa-bolt"></i>';
   }
 }
 
@@ -2313,7 +2314,7 @@ function renderDashActivity() {
   const recent = STATE.activities.slice(0, 8);
   const el = document.getElementById('dashActivityList');
   if (recent.length === 0) {
-    el.innerHTML = '<li class="empty-state"><div class="empty-icon">[EMPTY]</div><p>No activity yet</p></li>';
+    el.innerHTML = '<li class="empty-state"><div class="empty-icon"><i class="fas fa-inbox"></i></div><p>No activity yet</p></li>';
     return;
   }
   el.innerHTML = recent.map(a => renderActivityItem(a)).join('');
@@ -2360,7 +2361,7 @@ function filterActivities() {
 
   const listEl = document.getElementById('fullActivityList');
   if (page.length === 0) {
-    listEl.innerHTML = '<li class="empty-state"><div class="empty-icon">[SEARCH]</div><p>No matching activities</p></li>';
+    listEl.innerHTML = '<li class="empty-state"><div class="empty-icon"><i class="fas fa-search"></i></div><p>No matching activities</p></li>';
   } else {
     listEl.innerHTML = page.map(a => renderActivityItem(a)).join('');
   }
