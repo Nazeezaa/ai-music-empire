@@ -62,6 +62,7 @@ def generate_track(config, genre=None, mood=None, duration=None):
         "customMode": False,
         "instrumental": True,
         "model": model,
+        "callBackUrl": "https://example.com/callback"
     }
 
     try:
