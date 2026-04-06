@@ -1,0 +1,92 @@
+# recommendations.yaml - Channel content recommendations
+# Used by AI Producer to guide music generation for each channel
+
+channels:
+  lofi_barista:
+    display_name: "Lofi Barista"
+    genre: "lo-fi hip hop"
+    mood:
+      - chill
+      - relaxed
+      - cozy
+    themes:
+      - coffee shop ambiance
+      - rainy day study sessions
+      - morning routine
+      - late night coding
+    tempo_range: "70-90 BPM"
+    instruments:
+      - vinyl crackle
+      - soft piano
+      - muted guitar
+      - jazzy chords
+    target_audience: "students, remote workers, coffee lovers"
+    upload_schedule: "daily"
+    video_style: "looping anime/illustration backgrounds"
+
+  rain_walker:
+    display_name: "Rain Walker"
+    genre: "ambient / nature soundscapes"
+    mood:
+      - peaceful
+      - meditative
+      - atmospheric
+    themes:
+      - rain and thunderstorms
+      - forest walks
+      - ocean waves
+      - mountain serenity
+    tempo_range: "60-80 BPM"
+    instruments:
+      - rain sounds
+      - soft synth pads
+      - gentle piano
+      - field recordings
+    target_audience: "meditation practitioners, sleep seekers, nature lovers"
+    upload_schedule: "daily"
+    video_style: "nature footage with rain overlays"
+
+  velvet_groove:
+    display_name: "Velvet Groove"
+    genre: "R&B / soul / funk"
+    mood:
+      - smooth
+      - groovy
+      - warm
+    themes:
+      - city nights
+      - sunset drives
+      - weekend vibes
+      - retro nostalgia
+    tempo_range: "85-110 BPM"
+    instruments:
+      - electric bass
+      - Rhodes piano
+      - smooth saxophone
+      - drum machine
+    target_audience: "music enthusiasts, playlist curators, night owls"
+    upload_schedule: "daily"
+    video_style: "retro city visuals, neon aesthetics"
+
+  piano_ghost:
+    display_name: "Piano Ghost"
+    genre: "classical / neo-classical piano"
+    mood:
+      - haunting
+      - emotional
+      - introspective
+    themes:
+      - solitude and reflection
+      - cinematic moments
+      - dark academia
+      - midnight thoughts
+    tempo_range: "50-80 BPM"
+    instruments:
+      - solo piano
+      - string ensemble
+      - subtle reverb
+      - music box
+    target_audience: "classical music fans, writers, students"
+    upload_schedule: "daily"
+    video_style: "dark aesthetic, candlelit scenes, old libraries"
+
