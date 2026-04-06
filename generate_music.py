@@ -47,7 +47,7 @@ def generate_track(config, genre=None, mood=None, duration=None):
     mood = mood or api_config["default_mood"]
     duration = duration or api_config["default_duration"]
     base_url = api_config["base_url"]
-    model = api_config.get("model", "V4_5ALL")
+    model = api_config.get("model", "V5_5")
 
     logger.info(f"Generating: genre={genre}, mood={mood}, duration={duration}s, model={model}")
 
@@ -142,13 +142,13 @@ def generate_multiple_tracks(config, count=None):
 
     Args:
         config: Pipeline configuration dict.
-        count: Number of tracks to generate. Defaults to config tracks_per_video or 30.
+        count: Number of tracks to generate. Defaults to config tracks_per_video or 4.
 
     Returns:
         List of audio file paths (skips failed generations).
     """
     if count is None:
-        count = config["pipeline"].get("tracks_per_video", 30)
+        count = config["pipeline"].get("tracks_per_video", 4)
 
     logger.info(f"Generating {count} tracks for long-form video...")
     audio_files = []
@@ -210,7 +210,7 @@ if __name__ == "__main__":
     )
     config = load_config()
 
-    tracks_per_video = config["pipeline"].get("tracks_per_video", 30)
+    tracks_per_video = config["pipeline"].get("tracks_per_video", 4)
 
     if tracks_per_video > 1:
         results = generate_multiple_tracks(config)
