@@ -17,7 +17,7 @@ import yaml
 
 from generate_music import generate_track, generate_multiple_tracks, load_config
 from process_audio import process_track, concatenate_audio, get_duration
-from upload_youtube import upload_to_hyoutubeh
+from upload_youtube import upload_to_youtube
 from check_analytics import get_channel_analytics
 from firestore_sync import (
     init_firestore,
