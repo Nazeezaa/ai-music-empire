@@ -182,7 +182,7 @@ def run_pipeline():
 
     if db is not None:
         try:
-            log_pipeline_run(db, "started", current_channel)
+            log_pipeline_run(db, "started", current_channel, 0, 0)
         except Exception as e:
             logger.warning(f"Failed to log pipeline start to Firestore: {e}")
 
@@ -287,7 +287,7 @@ def run_pipeline():
             logger.warning("Skipping Firestore sync: Firestore not initialized.")
         else:
             if db is not None:
-                log_pipeline_run(db, "partial", current_channel)
+                log_pipeline_run(db, "partial", current_channel, 0, 0)
     except Exception as e:
         health.check_fail("firestore_sync", e)
         logger.error(f"Firestore sync failed: {e}", exc_info=True)
