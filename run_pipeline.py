@@ -269,10 +269,9 @@ def run_pipeline():
         if db is not None and upload_result and upload_result.get("video_id"):
             log_upload(
                 db,
-                current_channel,
-                upload_result.get("video_id"),
                 video_title,
-                duration=duration or 0
+                current_channel,
+                upload_result.get("video_id")
             )
             sync_channel_after_upload(db, current_channel)
             log_pipeline_run(
@@ -298,9 +297,9 @@ def run_pipeline():
             if db is not None:
                 log_activity(
                     db,
-                    "analytics_check",
-                    channel=current_channel,
-                    details=str(analytics)
+                    "📊",
+                    f"Analytics check for {current_channel}: {analytics}",
+                    activity_type="analytics_check"
                 )
             health.check_pass("youtube_analytics")
     except Exception as e:
