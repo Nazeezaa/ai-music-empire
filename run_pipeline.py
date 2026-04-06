@@ -17,7 +17,7 @@ import yaml
 
 from generate_music import generate_track, generate_multiple_tracks, load_config
 from process_audio import process_track, concatenate_audio, get_duration
-from upload_youtube import upload_to_youtube
+from upload_youtube import upload_to_hyoutubeh
 from check_analytics import get_channel_analytics
 from firestore_sync import (
     init_firestore,
@@ -327,7 +327,7 @@ def run_pipeline():
     # --- Save Health Report ---
     health.save_to_firestore()
 
-    overall = health.overall_status()
+    overall = health.overall_status
     if overall == "failed":
         logger.error(f"Pipeline FAILED for {channel_name}")
         raise RuntimeError(
