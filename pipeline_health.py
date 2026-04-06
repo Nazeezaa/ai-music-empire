@@ -25,8 +25,8 @@ ERROR_FIX_MAP = [
     {
         "pattern": r"40[13]",
         "fix": (
-            "Suno cookie expired. Update SUNO_COOKIE in GitHub Secrets "
-            "with a fresh __client cookie from suno.com"
+            "SunoAPI.org auth failed (401/403). Check SUNO_API_KEY "
+            "in GitHub Secrets at https://sunoapi.org"
         ),
     },
     {
@@ -63,10 +63,10 @@ def _match_fix(error_message: str, step: str) -> str:
     # Fallback fix suggestions per step
     step_fallbacks = {
         "suno_auth": (
-            "Suno cookie may be expired. Update SUNO_COOKIE in GitHub Secrets."
+            "SunoAPI.org auth issue. Verify SUNO_API_KEY in GitHub Secrets."
         ),
         "suno_generate": (
-            "Music generation failed. Check Suno API status and SUNO_COOKIE."
+            "Music generation failed. Check SunoAPI.org status and SUNO_API_KEY secret."
         ),
         "ffmpeg_concat": (
             "Audio concatenation failed. Verify FFmpeg is installed on the runner."
