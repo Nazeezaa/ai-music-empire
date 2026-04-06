@@ -197,9 +197,7 @@ def run_pipeline():
     # --- Step 2: Generate Music ---
     try:
         logger.info(f"Generating tracks for {channel_name}...")
-        tracks = generate_multiple_tracks(
-            config, prompt=suno_prompt, genre=genre, mood=mood
-        )
+        tracks = generate_multiple_tracks(config)
         if not tracks:
             raise RuntimeError("generate_multiple_tracks returned empty result")
         health.check_pass("suno_generate", f"Generated {len(tracks)} track(s)")
