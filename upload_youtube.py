@@ -73,14 +73,47 @@ def build_metadata(config, genre, mood):
 
 def upload_thumbnail(access_token, video_id, thumbnail_path):
     """Upload a custom thumbnail for a YouTube video."""
-    if not thumbnail_path or not os.path.exists(thumbnail_path):
+    if not thumbnail_path:
+        logger.warning("No thumbnail path provided, skipping thumbnail upload")
+        return False
+
+    # Resolve to absolute path to avoid working-directory issues
+    thumbnail_path = os.path.abspath(thumbnail_path)
+
+    if not os.path.exists(thumbnail_path):
         logger.warning(f"Thumbnail not found: {thumbnail_path}, skipping thumbnail upload")
         return False
+
+    # Detect content type from file extension
+    ext = os.path.splitext(thumbnail_path)[1].lower()
+    content_type_map = {
+        ".png": "image/png",
+        ".jpg": "image/jpeg",
+        ".jpeg": "image/jpeg",
+        ".gif": "image/gif",
+        ".bmp": "image/bmp",
+        ".webp": "image/webp",
+    }
+    content_type = content_type_map.get(ext, "image/png")
+
+    # Verify file size (YouTube limit: 2MB)
+    file_size = os.path.getsize(thumbnail_path)
+    if file_size > 2 * 1024 * 1024:
+        logger.warning(
+            f"Thumbnail file too large ({file_size / 1024 / 1024:.1f} MB), "
+            f"YouTube limit is 2MB. Skipping thumbnail upload."
+        )
+        return False
+
+    logger.info(
+        f"Uploading thumbnail: {thumbnail_path} "
+        f"({file_size / 1024:.0f} KB, {content_type})"
+    )
 
     url = f"https://www.googleapis.com/upload/youtube/v3/thumbnails/set?videoId={video_id}"
     headers = {
         "Authorization": f"Bearer {access_token}",
-        "Content-Type": "image/png"
+        "Content-Type": content_type
     }
 
     try:
@@ -146,10 +179,28 @@ def upload_to_youtube(audio_path, config=None, genre=None, mood=None, thumbnail_
                 logger.info(f"Upload success! https://www.youtube.com/watch?v={video_id}")
 
                 # Upload custom thumbnail if provided
+                thumbnail_uploaded = False
                 if thumbnail_path:
-                    upload_thumbnail(access_token, video_id, thumbnail_path)
+                    thumbnail_uploaded = upload_thumbnail(
+                        access_token, video_id, thumbnail_path
+                    )
+                    if not thumbnail_uploaded:
+                        logger.warning(
+                            f"Thumbnail was NOT set for video {video_id}. "
+                            f"Check that the YouTube channel is verified "
+                            f"(phone verification required for custom thumbnails)."
+                        )
+                else:
+                    logger.warning(
+                        "No thumbnail_path provided to upload_to_youtube, "
+                        "video will use auto-generated YouTube thumbnail."
+                    )
 
-            return {"video_id": video_id}
+                return {
+                    "video_id": video_id,
+                    "thumbnail_uploaded": thumbnail_uploaded,
+                    "thumbnail_path": thumbnail_path,
+                }
     except requests.exceptions.RequestException as e:
         logger.error(f"Upload failed: {e}")
 
