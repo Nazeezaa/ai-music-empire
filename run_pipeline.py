@@ -294,7 +294,7 @@ def run_pipeline():
     # --- Step 6: YouTube Analytics ---
     try:
         if upload_result:
-            analytics = get_channel_analytics(channel_handle)
+            analytics = get_channel_analytics(config)
             if db is not None:
                 log_activity(
                     db,
