@@ -16,7 +16,7 @@ import datetime
 import yaml
 
 from generate_music import generate_track, generate_multiple_tracks, load_config
-from process_audio import process_track, concatenate_audio, get_duration
+from process_audio import process_track, concatenate_audio, loop_to_duration, get_duration
 from upload_youtube import upload_to_youtube
 from check_analytics import get_channel_analytics
 from firestore_sync import (
@@ -207,10 +207,27 @@ def run_pipeline():
     # --- Step 3: Process & Concatenate Audio ---
     processed = None
     duration = None
+    target_duration = config["pipeline"].get("target_video_duration", 3600)
     if tracks:
         try:
             logger.info("Processing and concatenating audio...")
             combined = concatenate_audio(tracks)
+
+            # Loop concatenated audio to fill target duration (e.g. 1 hour)
+            concat_duration = get_duration(combined)
+            logger.info(
+                f"Concatenated duration: {concat_duration}s, "
+                f"target: {target_duration}s"
+            )
+            if concat_duration and concat_duration < target_duration:
+                logger.info(
+                    f"Looping audio from {concat_duration:.0f}s "
+                    f"to {target_duration}s..."
+                )
+                combined = loop_to_duration(
+                    combined, target_duration, config=config
+                )
+
             processed = process_track(combined)
             duration = get_duration(processed)
             logger.info(f"Final track duration: {duration}s")
@@ -235,6 +252,9 @@ def run_pipeline():
                 volume_number=volume_number,
                 mood=mood
             )
+            # Ensure absolute path so it works regardless of cwd at upload time
+            if thumbnail_path:
+                thumbnail_path = os.path.abspath(thumbnail_path)
             logger.info(f"Thumbnail generated: {thumbnail_path}")
             health.check_pass("thumbnail_gen", f"Thumbnail ready: {thumbnail_path}")
         except Exception as e:
@@ -256,6 +276,24 @@ def run_pipeline():
             if not upload_result or not upload_result.get("video_id"):
                 raise RuntimeError("upload_to_youtube returned no video_id")
             health.check_pass("youtube_upload", f"Uploaded: {upload_result.get('video_id')}")
+
+            # Track thumbnail upload status separately
+            if upload_result.get("thumbnail_uploaded"):
+                health.check_pass(
+                    "thumbnail_upload",
+                    f"Thumbnail set for {upload_result['video_id']}"
+                )
+            else:
+                health.check_fail(
+                    "thumbnail_upload",
+                    RuntimeError(
+                        "Thumbnail was not uploaded. Verify the YouTube "
+                        "channel has phone verification enabled for "
+                        "custom thumbnails."
+                    ),
+                    fix="Verify channel in YouTube Studio > Settings > "
+                        "Channel > Feature eligibility, then re-run pipeline."
+                )
         except Exception as e:
             health.check_fail("youtube_upload", e)
             logger.error(f"YouTube upload failed: {e}", exc_info=True)
@@ -298,7 +336,7 @@ def run_pipeline():
             if db is not None:
                 log_activity(
                     db,
-                    "📊",
+                    "\ud83d\udcca",
                     f"Analytics check for {current_channel}: {analytics}",
                     activity_type="analytics_check"
                 )
