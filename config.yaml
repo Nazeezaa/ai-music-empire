@@ -4,60 +4,60 @@
 
 sunoapi:
   # SunoAPI.org - Third-party Suno API provider
-    # Get your API key at https://sunoapi.org
-      api_key_env: "SUNO_API_KEY"
-        base_url: "https://api.sunoapi.org/api/v1"
-          default_duration: 180       # seconds
-            default_genre: "lofi"
-              default_mood: "chill"
-                output_format: "mp3"
-                  model: "V5_5"
-                    poll_interval: 10         # seconds between status checks
-                      max_poll_attempts: 60     # max polling attempts
+  # Get your API key at https://sunoapi.org
+  api_key_env: "SUNO_API_KEY"
+  base_url: "https://api.sunoapi.org/api/v1"
+  default_duration: 180       # seconds
+  default_genre: "lofi"
+  default_mood: "chill"
+  output_format: "mp3"
+  model: "V5_5"
+  poll_interval: 10         # seconds between status checks
+  max_poll_attempts: 60     # max polling attempts
 
-                      youtube:
-                        # YouTube Data API v3 / OAuth2
-                          client_id_env: "YOUTUBE_CLIENT_ID"
-                            client_secret_env: "YOUTUBE_CLIENT_SECRET"
-                              refresh_token_env: "YOUTUBE_REFRESH_TOKEN"
-                                token_uri: "https://oauth2.googleapis.com/token"
-                                  upload_scope: "https://www.googleapis.com/auth/youtube.upload"
-                                    analytics_scope: "https://www.googleapis.com/auth/yt-analytics.readonly"
-                                      category_id: "10"         # Music category
-                                        privacy_status: "public"
-                                          default_language: "en"
-                                            channel_name: "Lofi Barista"
+youtube:
+  # YouTube Data API v3 / OAuth2
+  client_id_env: "YOUTUBE_CLIENT_ID"
+  client_secret_env: "YOUTUBE_CLIENT_SECRET"
+  refresh_token_env: "YOUTUBE_REFRESH_TOKEN"
+  token_uri: "https://oauth2.googleapis.com/token"
+  upload_scope: "https://www.googleapis.com/auth/youtube.upload"
+  analytics_scope: "https://www.googleapis.com/auth/yt-analytics.readonly"
+  category_id: "10"         # Music category
+  privacy_status: "public"
+  default_language: "en"
+  channel_name: "Lofi Barista"
 
-                                            audio_processing:
-                                              normalize_loudness: -14.0   # LUFS (Spotify/YouTube standard)
-                                                fade_in_seconds: 2.0
-                                                  fade_out_seconds: 3.0
-                                                    sample_rate: 44100
-                                                      bitrate: "320k"
+audio_processing:
+  normalize_loudness: -14.0   # LUFS (Spotify/YouTube standard)
+  fade_in_seconds: 2.0
+  fade_out_seconds: 3.0
+  sample_rate: 44100
+  bitrate: "320k"
 
-                                                      pipeline:
-                                                        output_dir: "output"
-                                                          max_retries: 3
-                                                            retry_delay: 10             # seconds
-                                                              tracks_per_run: 1
-                                                                target_video_duration: 3600   # 1 hour
-                                                                  tracks_per_video: 4         # ~4 tracks x 2min = ~8 min
-                                                                    log_file: "pipeline.log"
+pipeline:
+  output_dir: "output"
+  max_retries: 3
+  retry_delay: 10             # seconds
+  tracks_per_run: 1
+  target_video_duration: 3600   # 1 hour
+  tracks_per_video: 4         # ~4 tracks x 2min = ~8 min
+  log_file: "pipeline.log"
 
-                                                                    content:
-                                                                      # Templates for YouTube metadata
-                                                                        title_template: '🎵 {genre} {mood} Music - AI Generated | {date}'
-                                                                          description_template: |
-                                                                              🎧 AI-generated {genre} music for {mood} vibes.
-                                                                                  Created with AI Music Empire pipeline.
-                                                                                      Genre: {genre} | Mood: {mood}
-                                                                                          🔔 Subscribe for daily AI music!
-                                                                                              #AIMusic #LoFi #ChillBeats #StudyMusic #AIGenerated
-                                                                                                tags:
-                                                                                                    - "AI music"
-                                                                                                        - "lofi"
-                                                                                                            - "chill beats"
-                                                                                                                - "study music"
-                                                                                                                    - "AI generated"
-                                                                                                                        - "background music"
-                                                                                                                            - "relaxing music"
+content:
+  # Templates for YouTube metadata
+  title_template: '🎵 {genre} {mood} Music - AI Generated | {date}'
+  description_template: |
+    🎧 AI-generated {genre} music for {mood} vibes.
+    Created with AI Music Empire pipeline.
+    Genre: {genre} | Mood: {mood}
+    🔔 Subscribe for daily AI music!
+    #AIMusic #LoFi #ChillBeats #StudyMusic #AIGenerated
+  tags:
+    - "AI music"
+    - "lofi"
+    - "chill beats"
+    - "study music"
+    - "AI generated"
+    - "background music"
+    - "relaxing music"
