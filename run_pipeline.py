@@ -247,9 +247,10 @@ def run_pipeline():
             logger.info(f"Uploading to YouTube channel: {channel_handle}")
             logger.info(f"Video title: {video_title}")
             upload_result = upload_to_youtube(
-                file_path=processed,
-                title=video_title,
-                channel=channel_handle,
+                audio_path=processed,
+                config=config,
+                genre=genre,
+                mood=mood,
                 thumbnail_path=thumbnail_path
             )
             if not upload_result or not upload_result.get("video_id"):
