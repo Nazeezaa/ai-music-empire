@@ -105,6 +105,97 @@ def concatenate_audio(audio_files, output_path=None, config=None):
             pass
 
 
+def loop_to_duration(input_path, target_duration, config=None):
+    """Loop/repeat audio to fill a target duration using FFmpeg stream_loop.
+
+    If the input audio is already >= target_duration, it is trimmed to exactly
+    target_duration. If shorter, it is looped until the target is reached.
+
+    Args:
+        input_path: Path to input audio file.
+        target_duration: Target duration in seconds (e.g. 3600 for 1 hour).
+        config: Pipeline config dict. Loaded from config.yaml if None.
+
+    Returns:
+        Path to the looped audio file, or input_path if looping is not needed
+        or fails.
+    """
+    if config is None:
+        config = load_config()
+    if not check_ffmpeg():
+        return input_path
+    if not os.path.exists(input_path):
+        logger.error(f"Input not found for looping: {input_path}")
+        return input_path
+
+    current_duration = get_duration(input_path)
+    if current_duration is None:
+        logger.warning("Could not determine duration for looping, skipping")
+        return input_path
+
+    # If already at or very close to target, no looping needed
+    if current_duration >= target_duration - 5:
+        logger.info(f"Audio already {current_duration:.0f}s >= target {target_duration}s, trimming if needed")
+        if current_duration <= target_duration + 5:
+            return input_path
+        # Trim to exact target
+        base, ext = os.path.splitext(input_path)
+        trimmed_path = f"{base}_trimmed{ext}"
+        cmd = [
+            "ffmpeg", "-y",
+            "-i", input_path,
+            "-t", str(target_duration),
+            "-c", "copy",
+            trimmed_path
+        ]
+        try:
+            result = subprocess.run(cmd, capture_output=True, text=True, timeout=300)
+            if result.returncode == 0:
+                logger.info(f"Trimmed to {target_duration}s: {trimmed_path}")
+                return trimmed_path
+        except Exception as e:
+            logger.warning(f"Trim failed, using original: {e}")
+        return input_path
+
+    # Loop the audio to fill target_duration
+    base, ext = os.path.splitext(input_path)
+    looped_path = f"{base}_looped_{target_duration}s{ext}"
+
+    logger.info(
+        f"Looping audio from {current_duration:.0f}s to {target_duration}s "
+        f"({target_duration / current_duration:.1f}x repeats)"
+    )
+
+    cmd = [
+        "ffmpeg", "-y",
+        "-stream_loop", "-1",
+        "-i", input_path,
+        "-t", str(target_duration),
+        "-c", "copy",
+        looped_path
+    ]
+
+    try:
+        result = subprocess.run(cmd, capture_output=True, text=True, timeout=600)
+        if result.returncode == 0:
+            final_duration = get_duration(looped_path)
+            size_mb = os.path.getsize(looped_path) / 1024 / 1024
+            logger.info(
+                f"Looped audio ready: {looped_path} "
+                f"({final_duration:.0f}s, {size_mb:.1f} MB)"
+            )
+            return looped_path
+        else:
+            logger.error(f"Loop failed: {result.stderr[-500:]}")
+            return input_path
+    except subprocess.TimeoutExpired:
+        logger.error("Loop timed out")
+        return input_path
+    except Exception as e:
+        logger.error(f"Loop error: {e}")
+        return input_path
+
+
 def process_track(input_path, config=None):
     if config is None:
         config = load_config()
