@@ -106,7 +106,7 @@ def concatenate_audio(audio_files, output_path=None, config=None):
 
 
 def loop_to_duration(input_path, target_duration, config=None):
-    """Loop/repeat audio to fill a target duration using FFmpeg stream_loop.
+    """Loop/repeat audio to fill a target duration using FFmpeg .
 
     If the input audio is already >= target_duration, it is trimmed to exactly
     target_duration. If shorter, it is looped until the target is reached.
@@ -166,11 +166,20 @@ def loop_to_duration(input_path, target_duration, config=None):
         f"({target_duration / current_duration:.1f}x repeats)"
     )
 
+    # Use concat demuxer (stream_loop fails on MP3)
+    abs_input = os.path.abspath(input_path)
+    repeats = int(target_duration / current_duration) + 2
+    list_file = f"{base}_loop_list.txt"
+    with open(list_file, 'w') as lf:
+        for _ in range(repeats):
+            lf.write(f"file '{abs_input}'\n")
+
     cmd = [
         "ffmpeg", "-y",
-        "-stream_loop", "-1",
-        "-i", input_path,
-        "-t", str(target_duration),
+        "-f", "concat",
+        "-safe", "0",
+        "-i", list_file,
+        "-t", str(int(target_duration)),
         "-c", "copy",
         looped_path
     ]
@@ -194,6 +203,9 @@ def loop_to_duration(input_path, target_duration, config=None):
     except Exception as e:
         logger.error(f"Loop error: {e}")
         return input_path
+    finally:
+        if os.path.exists(list_file):
+            os.remove(list_file)
 
 
 def process_track(input_path, config=None):
