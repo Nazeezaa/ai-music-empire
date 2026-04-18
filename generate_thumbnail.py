@@ -1,4 +1,4 @@
-"""
+h"""
 generate_thumbnail.py - Auto-generate YouTube thumbnails for AI Music Empire
 Uses Pillow to create channel-specific 1280x720 thumbnails with bold colors,
 channel branding, volume info, and music-themed geometric elements.
@@ -17,7 +17,7 @@ CHANNEL_PALETTES = {
     "lofi_barista": {
         "bg": "#3B2F2F",
         "accent": "#D4A574",
-        "text": "#FFF8F0",
+        "text": "#FFF8F0",h
         "shapes": "#8B6F47",
     },
     "rain_walker": {
@@ -32,7 +32,7 @@ CHANNEL_PALETTES = {
         "text": "#F5E6CC",
         "shapes": "#8B3A62",
     },
-    "piano_drifter": {
+    "piano_ghost": {
         "bg": "#1C1C2E",
         "accent": "#C0C0C0",
         "text": "#EAEAEA",
@@ -44,7 +44,7 @@ CHANNEL_DISPLAY_NAMES = {
     "lofi_barista": "LOFI BARISTA",
     "rain_walker": "RAIN WALKER",
     "velvet_groove": "VELVET GROOVE",
-    "piano_drifter": "PIANO DRIFTER",
+    "piano_ghost": "PIANO GHOST",
 }
 
 WIDTH, HEIGHT = 1280, 720
