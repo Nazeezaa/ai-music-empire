@@ -170,8 +170,8 @@ channels:
       - "Late Night Jazz Grooves 🌙 {mood} Instrumental Mix"
       - "Neo Soul & Jazz Funk 🎹 {duration} Smooth Vibes"
       - "Velvet Groove Sessions 🎶 {mood} Jazz Mix | Vol.{vol}"
-    thumbnail_style:
-      color_palette: ["#1a0a2e", "#FFD700", "#800020", "#FF4500"]
+    artwork_style:
+      colors: ["#1a0a2e", "#FFD700", "#800020", "#FF4500"]
       elements: ["saxophone closeup", "Rhodes piano keys", "jazz club neon", "retro 70s funk elements", "vinyl record"]
       font_style: "large bold playful display"
 
