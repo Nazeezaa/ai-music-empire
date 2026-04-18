@@ -137,7 +137,7 @@ def generate_track(config, genre=None, mood=None, duration=None):
     return None
 
 
-def generate_multiple_tracks(config, count=None):
+def generate_multiple_tracks(config, genre=None, mood=None, count=None):
     """Generate multiple tracks for long-form video concatenation.
 
     Args:
@@ -155,7 +155,7 @@ def generate_multiple_tracks(config, count=None):
 
     for i in range(count):
         logger.info(f"Generating track {i + 1}/{count}...")
-        audio_path = generate_track(config)
+        audio_path = generate_track(config, genre=genre, mood=mood)
 
         if audio_path:
             audio_files.append(audio_path)
